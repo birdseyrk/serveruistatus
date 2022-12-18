@@ -1,0 +1,7 @@
+---
+
+- hosts: dockerhost
+
+  tasks:
+  - name: create serveruistatus
+    command: docker run -d --name serveruistatus-app -h server1   --ip 172.17.0.095  -p 8095:8095 birdseyrk/serveruistatus:latest

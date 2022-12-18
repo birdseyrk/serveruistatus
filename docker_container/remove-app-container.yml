@@ -1,0 +1,12 @@
+---
+
+- hosts: dockerhost
+
+  tasks:
+  - name: stop existing delpoyer-app
+    command: docker stop serveruistatus-app
+    ignore_errors: yes
+
+  - name: remove the serveruistatus-app
+    command: docker rm serveruistatus-app
+    ignore_errors: yes

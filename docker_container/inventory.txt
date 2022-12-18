@@ -1,0 +1,15 @@
+# ansible host inventory file
+# host alias host=ipaddress ansibile_user=username ansible_password=password
+
+[creedeserver]
+creede  dockerhost=192.168.1.100
+creede1 dockerhost=192.168.1.169
+[dockerhost]
+ubuntu2 dockerhost=192.168.1.102
+creede  dockerhost=192.168.1.100
+
+[ansiblehost]
+ubuntu1 ansiblehost=192.168.1.101
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3

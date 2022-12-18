@@ -1,0 +1,14 @@
+---
+- hosts: ansiblehost
+
+  tasks:
+  - name: create node image
+    command: docker build -t serveruistatus:latest .
+    args:
+     chdir: /local/docker/serveruistatus/container
+
+  - name: create tag to push image onto docker hub
+    command: docker tag serveruistatus:latest birdseyrk/serveruistatus:latest
+
+  - name: push docker image
+    command: docker push birdseyrk/serveruistatus:latest

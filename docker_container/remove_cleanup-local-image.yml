@@ -1,0 +1,17 @@
+---
+
+- hosts: ansiblehost
+
+  tasks:
+
+  - name: remove image
+    command: docker rmi --force birdseyrk/serveruistatus:latest
+    ignore_errors: yes
+
+  - name: remove image
+    command: docker rmi --force serveruistatus:latest
+    ignore_errors: yes
+
+  - name: remove prune image
+    command: docker image prune --force
+    ignore_errors: yes
