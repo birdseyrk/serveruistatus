@@ -1,0 +1,69 @@
+.processLabels {
+    text-decoration: underline;
+    font-style: italic;
+    font-size: 26px;
+    padding: 10px;
+}
+
+a.disabled {
+    color: gray;
+    cursor: not-allowed;
+    text-decoration: underline;
+}
+
+/* 
+.ui-panel .ui-panel-titlebar-icon .p-panel-header-icon {
+    float: right;
+} */
+/* 
+::ng-deep .custom-panel .p-panel-header {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  
+  ::ng-deep .custom-panel .p-panel-title {
+    margin-left: auto;
+  }
+  
+  ::ng-deep .custom-panel .p-panel .p-panel-icons-end {
+    margin-left: 0;
+  } */
+
+.p-scrollpanel {
+
+    p : {
+        padding: .1rem;
+        line-height: 1.5;
+        margin: 00;
+    }
+
+    &.custombar1 {
+        .p-scrollpanel-wrapper {
+            border-right: 9px solid var(--layer-1);
+        }
+
+        .p-scrollpanel-bar {
+            background-color: var(--primary-color);
+            opacity: 1;
+            transition: background-color .2s;
+
+            &:hover {
+                background-color: #007ad9;
+            }
+        }
+    }
+
+    &.custombar2 {
+        .p-scrollpanel-wrapper {
+            border-right: 9px solid var(--layer-1);
+            border-bottom: 9px solid var(--layer-1);
+        }
+
+        .p-scrollpanel-bar {
+            background-color: var(--layer-2);
+            border-radius: 0;
+            opacity: 1;
+            transition: background-color .2s;
+        }
+    }
+}

@@ -1,0 +1,49 @@
+
+<div class="row">
+    <p style="font-size: 1rem;">Last Update : {{serverService.lastStatusUpdate}}</p>
+    <!-- <textarea pInputTextarea>{{serverService.lastStatusUpdate}}</textarea> -->
+</div>
+<div class="row">
+    <div class="card">
+        <!--<p-table [columns]="cols" [value]="hosts" selectionMode="single" [(selection)]="selectedServer" (onRowSelect)="onRowSelect($event)" [tableStyle]="{'min-width': '50rem'}">-->
+        <p-table [columns]="cols" [value]="hosts" (sortFunction)="customSort($event)" [customSort]="true" selectionMode="single" [(selection)]="selectedServer" (onRowSelect)="onRowSelect($event)" [tableStyle]="{'min-width': '50rem'}">
+                <ng-template pTemplate="header" >
+                <tr>
+                    
+                    <th pSortableColumn="suite">Suite<p-sortIcon field="suite"></p-sortIcon></th>
+                    <th pSortableColumn="status">icon<p-sortIcon field="icon"></p-sortIcon></th>
+                    <th pSortableColumn="hostName">Host Name<p-sortIcon field="hostName"></p-sortIcon></th>
+                    <th pSortableColumn="uptime">Up Time (Hrs)<p-sortIcon field="uptime"></p-sortIcon></th>
+                    <th pSortableColumn="lastUpdate">Last Update<p-sortIcon field="lastUpdate"></p-sortIcon></th>
+                    <th pSortableColumn="epoch">Epoch<p-sortIcon field="epoch"></p-sortIcon></th>
+                        
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-hosts let-columns="columns">
+                <tr [pSelectableRow]="servers[hosts]">
+
+                    <td>{{servers[hosts].suite}}</td>
+                    <td><i class="{{servers[hosts].icon}}" style="font-size: 1rem; color:{{servers[hosts].status}}"></i></td>
+                    <td>{{servers[hosts].hostName}}</td>
+                    <td>{{servers[hosts].uptime}}</td>
+                    <td>{{servers[hosts].lastUpdate}}</td>
+                    <td>{{servers[hosts].epoch}}</td>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<div class="row">
+    <button  class="p-button-sm" pButton type="button" (click)="getStatus()">
+    Fetch Status
+    </button>
+
+    <button  class="p-button-sm p-button-warning" pButton type="button" (click)="deleteStatus()">
+    Delete Status
+    </button>
+
+    <button  class="p-button-sm" pButton type="button" (click)="setStatus()">
+    Set Status
+    </button>
+</div>
