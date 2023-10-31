@@ -1,6 +1,6 @@
 ---
 
-- hosts: dockerhost
+- hosts: uihosts
 
   tasks:
 
