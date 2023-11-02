@@ -93,7 +93,7 @@ export class ServerService {
                 //console.log("serverData[host].hostname ["+ serverData[host].hostname + "]");
                 
                 //TODO remove this
-                if (serverData[host].hostname === 'creede') {
+                if ((serverData[host].hostname === 'creede') || (serverData[host].hostname === 'creed01') || (serverData[host].hostname === 'creed02')) {
                   serverData[host].suite = "Server"
                 } else {
                   serverData[host].suite = "Laptop"
