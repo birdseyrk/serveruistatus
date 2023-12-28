@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ServersComponent } from './servers/servers.component';
 import { ServerComponent }  from './servers/server/server.component';
-import { HomeComponent } from './home/home.component';
+import { ServerStatusComponent } from './serverstatus/serverstatus.component';
 
 import { ServerService } from './servers/servers.Service';
 import { ErrorPageComponent } from './error-page/error-page.component';
@@ -29,7 +29,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     AppComponent,
     ServersComponent,
     ServerComponent,
-    HomeComponent,
+    ServerStatusComponent,
     ErrorPageComponent
   ],
   imports: [

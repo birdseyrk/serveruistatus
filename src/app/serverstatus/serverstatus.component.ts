@@ -6,11 +6,11 @@ import { ServerService } from '../servers/servers.Service';
 import { Server } from '../servers/server.module';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-serverstatus',
+  templateUrl: './serverstatus.component.html',
+  styleUrls: ['./serverstatus.component.css']
 })
-export class HomeComponent {
+export class ServerStatusComponent {
 
   paramsSubscription: Subscription;
   hostname:string ="";
