@@ -7,7 +7,7 @@ import { ServerComponent } from './servers/server/server.component';
 import { ServersComponent } from './servers/servers.component';
 
 const routes: Routes = [
-  { path: 'status', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'servers', component:ServersComponent},
   { path: 'server',  component:ServerComponent},
   { path: 'server/:server',  component:ServerComponent},
