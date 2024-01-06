@@ -10,7 +10,7 @@ import { interval, Subscription, take } from 'rxjs';  // throws something every 
 export class ServerService {
 
     //TODO Get from somewhere else - more dynamic
-    private baseHostIP:   string = `${process.env.SERVICE_ADDRESS}`; //"mynginx.192.168.1.100.nip.io"; //"192.168.1.100";
+    private baseHostIP:   string = "serverstatus-service.default"; //"mynginx.192.168.1.100.nip.io"; //"192.168.1.100";
     private basePort:     string = "8085";
     private baseUrl:      string = "http://"+ this.baseHostIP +":" + this.basePort +"/" ;
      
@@ -200,7 +200,7 @@ export class ServerService {
     }
 
     clearServers() {
-        console.log("--------- ServerService clearServers --------- " this.uptimeUrl);
+        console.log("--------- ServerService clearServers --------- " + this.uptimeUrl);
         
         this.http
         .delete(this.uptimeUrl)
