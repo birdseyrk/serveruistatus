@@ -9,9 +9,9 @@ import { interval, Subscription, take } from 'rxjs';  // throws something every 
 @Injectable()
 export class ServerService {
 
-    //TODO Get from somewhere else - more dynamic
+    //TODO Get from somewhere else - more dynamic  This needs to use properties
     private baseHostIP:   string = "serverstatus-service.default"; //"mynginx.192.168.1.100.nip.io"; //"192.168.1.100";
-    private basePort:     string = "8085";
+    private basePort:     string = "30850";
     private baseUrl:      string = "http://"+ this.baseHostIP +":" + this.basePort +"/" ;
      
     
@@ -81,6 +81,7 @@ export class ServerService {
                 postsArray.push({ ...responseData[key], id: key });
               }
             }
+            console.log("--------- ServerService getStatus postsArray --------- [" + postsArray +"]");
             return postsArray;
           })
         )
