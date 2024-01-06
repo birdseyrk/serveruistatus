@@ -10,7 +10,7 @@ import { interval, Subscription, take } from 'rxjs';  // throws something every 
 export class ServerService {
 
     //TODO Get from somewhere else - more dynamic
-    private baseHostIP:   string = "mynginx.192.168.1.100.nip.io"; //"192.168.1.100";
+    private baseHostIP:   string = `${process.env.SERVICE_ADDRESS}`; //"mynginx.192.168.1.100.nip.io"; //"192.168.1.100";
     private basePort:     string = "8085";
     private baseUrl:      string = "http://"+ this.baseHostIP +":" + this.basePort +"/" ;
      
@@ -69,7 +69,7 @@ export class ServerService {
 
     getStatus() {
       // Send Http request
-      console.log("--------- ServerService getStatus ---------");
+      console.log("--------- ServerService getStatus --------- " + this.uptimeUrl);
       //this.hosts = [];
       this.http
         .get(this.uptimeUrl)
@@ -200,7 +200,7 @@ export class ServerService {
     }
 
     clearServers() {
-        console.log("--------- ServerService clearServers ---------");
+        console.log("--------- ServerService clearServers --------- " this.uptimeUrl);
         
         this.http
         .delete(this.uptimeUrl)
@@ -220,7 +220,7 @@ export class ServerService {
   
     getMemInfo(host:string) {
       // Send Http request
-      console.log("getMemInfo- Server Component [" + host + "]");
+      console.log("getMemInfo- Server Component [" + host + "] " + this.upMemUrl);
       
       const postsArray = [];
 
@@ -250,7 +250,7 @@ export class ServerService {
     
     getDiskInfo(host:string) {
       // Send Http request
-      console.log("getDiskInfo- Server Component [" + host + "]");
+      console.log("getDiskInfo- Server Component [" + host + "] " + this.upDiskUrl);
       
       const postsArray = [];
 
@@ -295,7 +295,7 @@ export class ServerService {
     
     getCPUInfo(host:string) {
       // Send Http request
-      console.log("getCPUInfo- Server Component [" + host + "]");
+      console.log("getCPUInfo- Server Component [" + host + "] " + this.upCPUUrl);
       
       const postsArray = [];
       var headerData = [];
@@ -357,7 +357,7 @@ export class ServerService {
     
     getProcessInfo(host:string) {
       // Send Http request
-      console.log("getProcessInfo- Server Component [" + host + "]");
+      console.log("getProcessInfo- Server Component [" + host + "] " + this.upProcessUrl);
       
       const postsArray = [];
       
