@@ -8,5 +8,8 @@ ubuntu2 dockerhost=192.168.1.102
 [ansiblehost]
 ubuntu1 ansiblehost=192.168.1.101
 
+[k8s]
+192.168.1.100
+
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
