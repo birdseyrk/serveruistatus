@@ -4,5 +4,5 @@
 
   tasks:
   - name: create serveruistatus
-    command: docker run -d --name serveruistatus-app -p 8086:80 birdseyrk/serveruistatus:latest
+    command: docker run -d --rm --name serveruistatus-app -p 8086:80 birdseyrk/serveruistatus:latest
     #command: docker run -d --name serveruistatus-app -h server86   --ip 172.17.0.086  -p 8086:80 birdseyrk/serveruistatus:latest
