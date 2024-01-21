@@ -7,6 +7,7 @@ import { ServerComponent } from './servers/server/server.component';
 import { ServersComponent } from './servers/servers.component';
 
 const routes: Routes = [
+  { path: '', component: ServerStatusComponent },
   { path: 'serverstatus', component: ServerStatusComponent },
   { path: 'servers', component:ServersComponent},
   { path: 'server',  component:ServerComponent},
