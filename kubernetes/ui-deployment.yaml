@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myuistatus
+  template:
+    metadata:
+      labels:
+        app: myuistatus
+    spec:
+      containers:
+        - name: status-ui
+          image: birdseyrk/serveruistatus:latest
+          imagePullPolicy: Always
+          env: 
+            - name: SERVICE_ADDRESS
+              value: "serverstatus-service.default"
+          ports:
+            - containerPort: 80

@@ -1,0 +1,208 @@
+#apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  namespace: default
+  annotations:
+    kubernetes.io/ingressClassName.class: public
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    #- host: mynginx.192.168.1.100.nip.io
+    - host: nginx.ingress.192.168.1.100.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ui-service
+                port:
+                  number: 8086 
+          - path: /redis
+            pathType: Prefix
+            backend:
+              service:
+                name: redis-server
+                port:
+                  number: 6379
+          - path: /console
+            pathType: Prefix
+            backend:
+              service:
+                name: activemqartemis-service
+                port:
+                  number: 8161 
+          - path: /serverstatus
+            pathType: Prefix
+            backend:
+              service:
+                name: ui-service
+                port:
+                  number: 8086 
+          - path: /uptime
+            pathType: Prefix
+            backend:
+              service:
+                name: serverstatus-service
+                port:
+                  number: 8085 
+          - path: /meminfo
+            pathType: Prefix
+            backend:
+              service:
+                name: serverstatus-service
+                port:
+                  number: 8085 
+          - path: /diskinfo
+            pathType: Prefix
+            backend:
+              service:
+                name: serverstatus-service
+                port:
+                  number: 8085 
+          - path: /cpuinfo
+            pathType: Prefix
+            backend:
+              service:
+                name: serverstatus-service
+                port:
+                  number: 8085 
+    - host: my.fruits.com
+      http:
+        paths:
+          - path: /apple
+            pathType: Prefix
+            backend:
+              service:
+                name: apple-service
+                port:
+                  number: 5678 
+    - host: my.fruits.com
+      http:
+        paths:
+          - path: /banana
+            pathType: Prefix
+            backend:
+              service:
+                name: banana-service
+                port:
+                  number: 5678 
+    - host: my.uistatus.com
+      http:
+        paths:
+        #- path: /serverstatus
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: ui-service
+              port:
+                number: 8086
+    - host: blue.nginx.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-clusterip-blue
+                port:
+                  number: 80
+    - host: green.nginx.example.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nginx-clusterip-green
+              port:
+                number: 80
+    - host: main.nginx.example.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nginx-clusterip-main
+              port:
+                number: 80
+    - host: nginx.example.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nginx-clusterip-main
+              port:
+                number: 80
+    - host: my.serverstatus.com
+      http:
+        paths:
+        - path: /uptime
+          pathType: Prefix
+          backend:
+            service:
+              name: serverstatus-service
+              port:
+                number: 8085
+    - host: my.serverstatus.com
+      http:
+        paths:
+        - path: /meminfo
+          pathType: Prefix
+          backend:
+            service:
+              name: serverstatus-service
+              port:
+                number: 30850
+    - host: my.serverstatus.com
+      http:
+        paths:
+        - path: /diskinfo
+          pathType: Prefix
+          backend:
+            service:
+              name: serverstatus-service
+              port:
+                number: 30850
+    - host: my.serverstatus.com
+      http:
+        paths:
+        - path: /cpuinfo
+          pathType: Prefix
+          backend:
+            service:
+              name: serverstatus-service
+              port:
+                number: 30850
+    - host: my.fruits.com
+    - http:
+        paths:
+          - path: /apple
+          #   pathType: Prefix
+          # - path: /(/|$)(.*)
+          #   pathType: ImplementationSpecific
+          # - path: /(.*)  #half way works with IP address if /$1 or $2 is above
+            pathType: Prefix
+            #pathType: ImplementationSpecific
+            backend:
+              service:
+                name: apple-service
+                port:
+                  number: 5678 
+              #serviceName: apple-service
+              #servicePort: 5678
+          - path: /banana
+            pathType: Prefix
+            backend:
+              service:
+                name: banana-service
+                port:
+                  number: 5678 
+              #serviceName: banana-service
+              #servicePort: 5678

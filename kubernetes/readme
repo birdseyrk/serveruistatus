@@ -1,0 +1,24 @@
+ubuntu1
+/share/dev/1-kubernetes-deployments/serverstatus
+/share/dev/1-kubernetes-deployments/ingress
+/share/dev/1-kubernetes-deployments/ingress-configmaps
+
+kubectl apply -f ui-deployment.yaml
+kubectl apply -f ui-service-clusterip.yaml
+
+kubectl apply -f nginx-ingress.yaml
+
+kubectl apply -f nginx-configmap-ingress-tcp-microk8s.yaml
+kubectl apply -f nginx-configmap-ingress-udp-microk8s.yaml
+kubectl apply -f nginx-configmap-load-balancer-microk8s.yaml
+
+kubectl delete -f ui-deployment.yaml
+kubectl delete -f ui-service-clusterip.yaml
+
+kubectl delete -f nginx-ingress.yaml
+
+kubectl delete -f nginx-configmap-ingress-tcp-microk8s.yaml
+kubectl delete -f nginx-configmap-ingress-udp-microk8s.yaml
+kubectl delete -f nginx-configmap-load-balancer-microk8s.yaml
+
+see notepad++ notes on kubernetes

@@ -25,16 +25,19 @@ export class ServerComponent implements OnInit, OnDestroy {
   memInfoAvailable     = false;
   diskInfoAvailable    = false;
   cpuInfoAvailable     = false;
+  osInfoAvailable      = false;
   processInfoAvailable = false;
   
   memCols: any[];
   diskCols: any[];
   cpuCols: any[];
+  osCols: any[];
   processCols: any[];
 
   memInfo     = {};
   diskInfo    = {};
   cpuInfo     = {};
+  osInfo      = {};
   processInfo = {};
 
   selectedMemRow: {};
@@ -74,6 +77,7 @@ export class ServerComponent implements OnInit, OnDestroy {
     this.memInfoAvailable     = false;
     this.diskInfoAvailable    = false;
     this.cpuInfoAvailable     = false;
+    this.osInfoAvailable      = false;
     this.processInfoAvailable = false;
 
     this.memCols = [
@@ -119,6 +123,11 @@ export class ServerComponent implements OnInit, OnDestroy {
       { field: 'powermanagement', header: 'Power Management' }
     ];
 
+    this.osCols = [
+      { field: '0', header: 'Name' },
+      { field: '1', header: 'Value' }
+    ];
+
     this.processCols = [
       { field: 'processor', header: 'Process' }
     ];
@@ -160,6 +169,11 @@ export class ServerComponent implements OnInit, OnDestroy {
     console.log(event)
   }
 
+  onRowOSSelect(event) {
+    console.log("---------- onRowOSSelect ----------");
+    console.log(event)
+  }
+
   onRowProcessSelect(event) {
     console.log("---------- onRowProcessSelect ----------");
     console.log(event)
@@ -181,9 +195,25 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.memInfoAvailable     = true;
       this.diskInfoAvailable    = false;
       this.cpuInfoAvailable     = false;
+      this.osInfoAvailable      = false;
       this.processInfoAvailable = false;
 
       console.log(this.memInfo);
+    }
+  }
+
+  getOSInfo() {
+   // console.log("----------ServerComponent - getOSInfo [" + this.host + "] ----------");
+    if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
+      this.osInfo = this.serverService.getOSInfo(this.host);
+
+      this.memInfoAvailable     = false;
+      this.diskInfoAvailable    = false;
+      this.cpuInfoAvailable     = false;
+      this.osInfoAvailable      = true;
+      this.processInfoAvailable = false;
+
+      console.log(this.osInfo);
     }
   }
   
@@ -195,6 +225,7 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.memInfoAvailable     = false;
       this.diskInfoAvailable    = true;
       this.cpuInfoAvailable     = false;
+      this.osInfoAvailable      = false;
       this.processInfoAvailable = false;
       
       console.log(this.diskInfo);
@@ -209,6 +240,7 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.memInfoAvailable     = false;
       this.diskInfoAvailable    = false;
       this.cpuInfoAvailable     = true;
+      this.osInfoAvailable      = false;
       this.processInfoAvailable = false;
       
       console.log(this.cpuInfo);
@@ -224,6 +256,7 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.memInfoAvailable     = false;
       this.diskInfoAvailable    = false;
       this.cpuInfoAvailable     = false;
+      this.osInfoAvailable      = false;
       this.processInfoAvailable = true;
       
       console.log(this.processInfo);

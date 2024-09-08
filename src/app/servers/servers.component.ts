@@ -44,7 +44,7 @@ export class ServersComponent implements OnInit {
 
     this.cols = [
         { field: 'hostName', header: 'Host Name' },
-        { field: 'suite', header: 'Suite' },
+        { field: 'type', header: 'type' },
         { field: 'icon', header: 'Icon' },
         { field: 'epoch', header: 'Epoch' },
         { field: 'lastUpdate', header: 'Last Update' },

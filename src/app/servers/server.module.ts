@@ -1,5 +1,5 @@
 export class Server {
-    public suite: string = "";
+    public type: string = "";
     public hostName: string = "";
     public epoch: string = "";
     public lastUpdate: string = "";
@@ -7,10 +7,10 @@ export class Server {
     public uptime: string = "0.000";
     public icon: string = "";
 
-    constructor(hostName: string, suite:string,  icon:string, epoch:string, lastUpdate:string, upTime:string, status:string) {
+    constructor(hostName: string, type:string,  icon:string, epoch:string, lastUpdate:string, upTime:string, status:string) {
         
         this.hostName = hostName;
-        this.suite = suite;
+        this.type = type;
         this.icon = icon;
         this.epoch = epoch;
         this.lastUpdate = lastUpdate;
@@ -18,13 +18,18 @@ export class Server {
         this.status = status;
         //this.logServerModule();
     }
+
+    setIcon(icon:string) {
+        this.icon = icon;
+    }
+
     
 
     logServerModule() {
         console.log("--------- Server Module Log Server ---------");
         console.log (
             "hostName " + this.hostName + 
-            " suite " + this.suite + 
+            " type " + this.type + 
             " icon " + this.icon + 
             " epoch " + this.epoch +
             " lastUpdate " + this.lastUpdate + 

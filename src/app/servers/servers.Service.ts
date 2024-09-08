@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Server } from "./server.module";
 
 import { Injectable } from '@angular/core';
-import { interval, Subscription, take } from 'rxjs';  // throws something every second or whatyou define
+import { interval, Subscription, take } from 'rxjs';  // throws something every second or what you define
 
 @Injectable()
 export class ServerService {
@@ -19,6 +19,8 @@ export class ServerService {
     private upDiskUrl:    string = this.baseUrl + "diskinfo";
     private upCPUUrl:     string = this.baseUrl + "cpuinfo";
     private upProcessUrl: string = this.baseUrl + "processinfo";
+    
+    private upOSUrl:     string = this.baseUrl + "os";
 
     private servers:Server[];
     private loadedServers:Server[];
@@ -29,7 +31,6 @@ export class ServerService {
     //private takeFourNumbers = this.numbers.pipe(take(4)); // only emits four numbers, if you leave off it will keep going
     private takeFourNumbers = this.numbers.pipe();
     private nextStatusTime = this.numbers.pipe();
-    
     
     constructor(
         private http: HttpClient
@@ -90,26 +91,38 @@ export class ServerService {
           //console.log(serverData);
   
           for (const host in serverData) {
-                //console.log(this.hosts);
+                console.log(this.hosts);
                 //console.log("serverData[host].hostname ["+ serverData[host].hostname + "]");
                 
                 //TODO remove this
                 if ((serverData[host].hostname === '192.168.1.100') || (serverData[host].hostname === '192.168.1.104') || (serverData[host].hostname === '192.168.1.105')) {
-                  serverData[host].suite = "Server"
+                  serverData[host].type = "Server"
+                } else if (serverData[host].hostname.substring(0,3) === '172') {
+                  serverData[host].type = "Cloud"
                 } else {
-                  serverData[host].suite = "Laptop"
+                  serverData[host].type = "Laptop"
                 }
 
             if ( this.hosts.includes(serverData[host].hostname) ) {
-                //console.log("ServerService loadServers serverData - update server");
+                console.log("ServerService loadServers serverData - update server");
                 this.loadedServers[serverData[host].hostname].hostName = serverData[host].hostname;
                 this.loadedServers[serverData[host].hostname].epoch = serverData[host].epoch;
                 this.loadedServers[serverData[host].hostname].lastUpdate = serverData[host].lastupdate;
                 this.loadedServers[serverData[host].hostname].uptime = (Number(Number(serverData[host].uptime)/3600)).toFixed(3);
             
             } else {
-                //console.log("ServerService loadServers serverData - new server " + (Number(Number(serverData[host].uptime)/3600)).toFixed(3));
-                const myServer = new Server(serverData[host].hostname, serverData[host].suite, "pi pi-server", serverData[host].epoch, serverData[host].lastupdate, (Number(Number(serverData[host].uptime)/3600)).toFixed(3), "red");
+                console.log("ServerService loadServers serverData - new server " + serverData[host].type + " " + (Number(Number(serverData[host].uptime)/3600)).toFixed(3));
+                const myServer = new Server(serverData[host].hostname, serverData[host].type, "pi pi-server", serverData[host].epoch, serverData[host].lastupdate, (Number(Number(serverData[host].uptime)/3600)).toFixed(3), "red");
+                if (serverData[host].type === "Cloud")  {
+                  console.log("In Cloud " + serverData[host].hostname);
+                  myServer.setIcon("pi pi-cloud");
+                } else if (serverData[host].type === "Laptop") {
+                  console.log("In else - Laptop " + serverData[host].hostname);
+                  myServer.setIcon("pi pi-briefcase");
+                } else {
+                  console.log("In else - Server " + serverData[host].hostname);
+                  myServer.setIcon("pi pi-server");
+                }
                 this.loadedServers[serverData[host].hostname] = myServer;
                 this.hosts.push(serverData[host].hostname);
             }
@@ -235,6 +248,36 @@ export class ServerService {
           )
           .subscribe(serverData => {
             //console.log("--------------------- getMemInfo serverData ---------------------");
+            Object.values(serverData).forEach(function (value) {
+                var newValue= value.split(":");
+                newValue[0] = newValue[0].toString().trim();
+                newValue[1] = newValue[1].toString().trim();
+                postsArray.push(newValue);
+            });
+            
+          });
+        }
+        
+        return postsArray;
+    }
+  
+    getOSInfo(host:string) {
+      // Send Http request
+      console.log("getOSInfo- Server Component [" + host + "] " + this.upOSUrl);
+      
+      const postsArray = [];
+
+      if ( (typeof host !== 'undefined') && (host.length > 1)) {
+        this.http
+          .get(this.upOSUrl+"/"+host)
+          .pipe(
+            map(responseData => {
+                // no change
+                return responseData;
+            })
+          )
+          .subscribe(serverData => {
+            //console.log("--------------------- getOSInfo serverData ---------------------");
             Object.values(serverData).forEach(function (value) {
                 var newValue= value.split(":");
                 newValue[0] = newValue[0].toString().trim();
