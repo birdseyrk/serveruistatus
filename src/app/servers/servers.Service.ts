@@ -95,7 +95,7 @@ export class ServerService {
                 //console.log("serverData[host].hostname ["+ serverData[host].hostname + "]");
                 
                 //TODO remove this
-                if ((serverData[host].hostname === 'creede') || (serverData[host].hostname === 'creede02') || (serverData[host].hostname === 'creed03')) {
+                if ((serverData[host].hostname === 'creede') || (serverData[host].hostname === 'creede02') || (serverData[host].hostname === 'creede03')) {
                   serverData[host].type = "Server"
                 } else if (serverData[host].hostname === 'ansible-master') {
                   serverData[host].type = "Cloud"
