@@ -203,7 +203,7 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   getOSInfo() {
-   // console.log("----------ServerComponent - getOSInfo [" + this.host + "] ----------");
+    console.log("----------ServerComponent - getOSInfo [" + this.host + "] ----------");
     if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
       this.osInfo = this.serverService.getOSInfo(this.host);
 
