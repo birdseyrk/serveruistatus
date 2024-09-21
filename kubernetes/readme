@@ -1,5 +1,5 @@
 ubuntu1
-/share/dev/1-kubernetes-deployments/serverstatus
+/local/serverstatus
 /share/dev/1-kubernetes-deployments/ingress
 /share/dev/1-kubernetes-deployments/ingress-configmaps
 
