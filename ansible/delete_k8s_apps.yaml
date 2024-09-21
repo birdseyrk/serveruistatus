@@ -1,0 +1,8 @@
+---
+- name: Deploy k8s file.
+  hosts: "{{ myhost | default('k8s') }}"
+
+  tasks:
+  - name: deploy k8s by file
+    shell: "microk8s kubectl delete -f {{myfile}}"
+    
