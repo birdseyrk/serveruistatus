@@ -42,6 +42,7 @@ export class ServerComponent implements OnInit, OnDestroy {
 
   selectedMemRow: {};
   selectedDiskRow: {};
+  selectedOSRow: {};
   selectedCpuRow: {};
   selectedProcessRow: {};
 
@@ -124,8 +125,9 @@ export class ServerComponent implements OnInit, OnDestroy {
     ];
 
     this.osCols = [
-      { field: '0', header: 'Name' },
-      { field: '1', header: 'Value' }
+      { field: 'hostname', header: 'Host Name' },
+      { field: 'os', header: 'OS' },
+      { field: 'version', header: 'Version' }
     ];
 
     this.processCols = [
@@ -289,6 +291,29 @@ export class ServerComponent implements OnInit, OnDestroy {
 
   customDiskSort(event: SortEvent) {
     console.log("---------- ServerComponent - customDiskSort ----------");
+    event.data.sort((data1, data2) => {
+
+        let value1 = data1[event.field];
+        let value2 = data2[event.field];
+        let result = null;
+
+        if (value1 == null && value2 != null)
+            result = -1;
+        else if (value1 != null && value2 == null)
+            result = 1;
+        else if (value1 == null && value2 == null)
+            result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string')
+            result = value1.localeCompare(value2);
+        else
+            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+
+        return (event.order * result);
+    });
+  }
+
+  customOSSort(event: SortEvent) {
+    console.log("---------- ServerComponent - customOSSort ----------");
     event.data.sort((data1, data2) => {
 
         let value1 = data1[event.field];

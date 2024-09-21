@@ -33,17 +33,39 @@
                         <p-table [columns]="memCols" [value]="memInfo"  (sortFunction)="customMemSort($event)" [customSort]="true" selectionMode="single" [(selection)]="selectedMemRow" (onRowSelect)="onRowMemSelect($event)" [tableStyle]="{'min-width': '50rem'}">
                                 <ng-template pTemplate="header" >
                                 <tr>
-                                    
+<!--                                     
                                     <th pSortableColumn=0>Name<p-sortIcon field="name"></p-sortIcon></th>
-                                    <th pSortableColumn=1>Value<p-sortIcon field="value"></p-sortIcon></th>
+                                    <th pSortableColumn=1>Value<p-sortIcon field="value"></p-sortIcon></th> -->
+                                    <th>real-free</th>
+                                    <th>real-used</th>
+                                    <th>real-total</th>
+
+                                    <th>swap-free</th>
+                                    <th>swap-used</th>
+                                    <th>swap-cached</th>
+                                    <th>swap-total</th>
+
+                                    <th>nocache-free</th>
+                                    <th>nocache-used</th>
                                         
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-item let-columns="columns">
                                 <tr [pSelectableRow]="item">
-            
+                                    <td>{{item.real.free}}</td>
+                                    <td>{{item.real.used}}</td>
+                                    <td>{{item.real.total}}</td>
+
+                                    <td>{{item.swap.free}}</td>
+                                    <td>{{item.swap.used}}</td>
+                                    <td>{{item.swap.cached}}</td>
+                                    <td>{{item.swap.total}}</td>
+
+                                    <td>{{item.nocache.free}}</td>
+                                    <td>{{item.nocache.used}}</td>
+<!--             
                                     <td>{{item[0]}}</td>
-                                    <td>{{item[1]}}</td>
+                                    <td>{{item[1]}}</td> -->
             
                                 </tr>
                             </ng-template>
@@ -61,24 +83,51 @@
                                 <ng-template pTemplate="header" >
                                 <tr>
                                     
-                                    <th pSortableColumn=0>File System<p-sortIcon field="filesystem"></p-sortIcon></th>
+                                    <!-- <th pSortableColumn=0>File System<p-sortIcon field="filesystem"></p-sortIcon></th>
                                     <th pSortableColumn=1>Size<p-sortIcon field="size"></p-sortIcon></th>
                                     <th pSortableColumn=2>Used<p-sortIcon field="used"></p-sortIcon></th>
                                     <th pSortableColumn=3>Available<p-sortIcon field="avail"></p-sortIcon></th>
                                     <th pSortableColumn=4>Use %<p-sortIcon field="use"></p-sortIcon></th>
-                                    <th pSortableColumn=5>Mounted On<p-sortIcon field="mounted"></p-sortIcon></th>
+                                    <th pSortableColumn=5>Mounted On<p-sortIcon field="mounted"></p-sortIcon></th> -->
+
+                                    <th>ops-total</th>
+                                    <th>ops-available</th>
+                                    <th>ops-used</th>
+                                    <th>ops-percent</th>
+                                    <th>log-total</th>
+                                    <th>log-available</th>
+                                    <th>log-used</th>
+                                    <th>log-percent</th>
+                                    <th>tmp-total</th>
+                                    <th>tmp-available</th>
+                                    <th>tmp-used</th>
+                                    <th>tmp-percent</th>
                                         
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-item let-columns="columns">
                                 <tr [pSelectableRow]="item">
-            
+                                    <td>{{item.opstotal}}</td>
+                                    <td>{{item.opsavail}}</td>
+                                    <td>{{item.opsused}}</td>
+                                    <td>{{item.opspercent}}</td>
+
+                                    <td>{{item.logtotal}}</td>
+                                    <td>{{item.logavail}}</td>
+                                    <td>{{item.logused}}</td>
+                                    <td>{{item.logpercent}}</td>
+
+                                    <td>{{item.tmptotal}}</td>
+                                    <td>{{item.tmpavail}}</td>
+                                    <td>{{item.tmpused}}</td>
+                                    <td>{{item.tmppercent}}</td>
+<!--             
                                     <td>{{item[0]}}</td>
                                     <td>{{item[1]}}</td>
                                     <td>{{item[2]}}</td>
                                     <td>{{item[3]}}</td>
                                     <td>{{item[4]}}</td>
-                                    <td>{{item[5]}}</td>
+                                    <td>{{item[5]}}</td> -->
             
                                 </tr>
                             </ng-template>
@@ -86,6 +135,38 @@
                     </div>
                 </div>
             </div>
+
+
+            <div *ngIf="osInfoAvailable">
+                <div class="row" style="padding-left: 10px; font-size: 12px;">
+                    <b>OS Information - {{host}}</b>
+                </div>
+                <div class="row">
+                    <div class="card">
+                        <p-table [columns]="osCols" [value]="osInfo" (sortFunction)="customOSSort($event)" [customSort]="true" selectionMode="single" [(selection)]="selectedOSRow" (onRowSelect)="onRowDiskSelect($event)" [tableStyle]="{'min-width': '50rem'}">
+                                <ng-template pTemplate="header" >
+                                <tr>
+                                    
+                                    <th pSortableColumn=0>Host Name<p-sortIcon field="hostname"></p-sortIcon></th>
+                                    <th pSortableColumn=1>OS<p-sortIcon field="os"></p-sortIcon></th>
+                                    <th pSortableColumn=2>Version<p-sortIcon field="version"></p-sortIcon></th>
+                                        
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-columns="columns">
+                                <tr [pSelectableRow]="item">
+            
+                                    <td>{{item.hostname}}</td>
+                                    <td>{{item.os}}</td>
+                                    <td>{{item.osversion}}</td> 
+            
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+
             <div *ngIf="cpuInfoAvailable">
                 <div class="row" style="padding-left: 10px; font-size: 12px;">
                     <b>CPU Information - {{host}}</b>

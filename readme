@@ -1,0 +1,23 @@
+The files are put on ubuntu1
+ansadmin@ubuntu1:/local/serveruistatus
+http://nginx.ingress.192.168.1.100.nip.io/servers/  <--- does not work right now
+
+service calls
+format
+http://nginx.ingress.192.168.1.100.nip.io:30850/{service}
+http://nginx.ingress.192.168.1.100.nip.io:30850/{service}/{host}
+
+service calls
+hoststatus  <--- gets all the info.
+uptime
+meminfo
+os
+diskinfo
+cpuinfo
+processinfo
+I need to add more,
+
+http://nginx.ingress.192.168.1.100.nip.io:30850/uptime/
+http://nginx.ingress.192.168.1.100.nip.io:30850/uptime/creede
+http://nginx.ingress.192.168.1.100.nip.io:30850/os
+http://nginx.ingress.192.168.1.100.nip.io:30850/os/creede

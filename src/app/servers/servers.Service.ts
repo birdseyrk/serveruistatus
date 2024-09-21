@@ -99,7 +99,7 @@ export class ServerService {
                   serverData[host].type = "Server"
                 } else if (serverData[host].hostname === 'ansible-master') {
                   serverData[host].type = "Cloud"
-                } else if (serverData[host].hostname.substring(0,10) === 'ubuntu-node') {
+                } else if (serverData[host].hostname.substring(0,11) === 'ubuntu-node') {
                   serverData[host].type = "Cloud"
                 } else if (serverData[host].hostname.substring(0,3) === '172') {
                   serverData[host].type = "Cloud"
@@ -252,12 +252,16 @@ export class ServerService {
           )
           .subscribe(serverData => {
             //console.log("--------------------- getMemInfo serverData ---------------------");
-            Object.values(serverData).forEach(function (value) {
-                var newValue= value.split(":");
-                newValue[0] = newValue[0].toString().trim();
-                newValue[1] = newValue[1].toString().trim();
-                postsArray.push(newValue);
-            });
+            console.log('serverData');
+            console.log(serverData);
+            postsArray.push(serverData);
+
+            // Object.values(serverData).forEach(function (value) {
+            //     var newValue= value.split(":");
+            //     newValue[0] = newValue[0].toString().trim();
+            //     newValue[1] = newValue[1].toString().trim();
+            //     postsArray.push(newValue);
+            // });
             
           });
         }
@@ -267,7 +271,7 @@ export class ServerService {
   
     getOSInfo(host:string) {
       // Send Http request
-      console.log("getOSInfo- Server Component [" + host + "] " + this.upOSUrl);
+      console.log("getOSInfo- Server Component [" + host + "] " + this.upOSUrl +"/" + host);
       
       const postsArray = [];
 
@@ -277,17 +281,16 @@ export class ServerService {
           .pipe(
             map(responseData => {
                 // no change
+                // console.log("--- responseData ---");
+                // console.log(responseData);
                 return responseData;
             })
           )
           .subscribe(serverData => {
-            //console.log("--------------------- getOSInfo serverData ---------------------");
-            Object.values(serverData).forEach(function (value) {
-                var newValue= value.split(":");
-                newValue[0] = newValue[0].toString().trim();
-                newValue[1] = newValue[1].toString().trim();
-                postsArray.push(newValue);
-            });
+            console.log("--------------------- getOSInfo serverData ---------------------");
+            //console.log(serverData);
+
+            postsArray.push(serverData);
             
           });
         }
@@ -297,7 +300,7 @@ export class ServerService {
     
     getDiskInfo(host:string) {
       // Send Http request
-      console.log("getDiskInfo- Server Component [" + host + "] " + this.upDiskUrl);
+      console.log("getDiskInfo- Server Component [" + host + "] " + this.upDiskUrl +"/" + host);
       
       const postsArray = [];
 
@@ -307,34 +310,37 @@ export class ServerService {
           .pipe(
             map(responseData => {
                 //Do nothing - pass through
+                console.log(responseData);
                 return responseData;
             })
           )
           .subscribe(serverData => {
-
+            postsArray.push(serverData);
+            console.log('postArray');
+            console.log(postsArray);
             //console.log("--------------------- getDiskInfo serverData ---------------------");
 
-            var header = true;
-            Object.values(serverData).forEach(function (value: string) {
-                var rowData = [];
-                var newValue= value.split(" ");
+            // var header = true;
+            // Object.values(serverData).forEach(function (value: string) {
+            //     var rowData = [];
+            //     var newValue= value.split(" ");
 
-                if (header) {
-                    header = false;
-                    // Object.values(newValue).forEach(function (value: string) {
-                    //     if ( (value.length > 0) && (value !== "on")) {
-                    //         rowData[rowData.length] = value;
-                    //     }
-                    // });
-                } else {
-                    Object.values(newValue).forEach(function (value: string) {
-                        if ( value.length > 0 ) {
-                            rowData[rowData.length] = value;
-                        }
-                    });
-                    postsArray.push(rowData);
-                }
-            });
+            //     if (header) {
+            //         header = false;
+            //         // Object.values(newValue).forEach(function (value: string) {
+            //         //     if ( (value.length > 0) && (value !== "on")) {
+            //         //         rowData[rowData.length] = value;
+            //         //     }
+            //         // });
+            //     } else {
+            //         Object.values(newValue).forEach(function (value: string) {
+            //             if ( value.length > 0 ) {
+            //                 rowData[rowData.length] = value;
+            //             }
+            //         });
+            //         postsArray.push(rowData);
+            //     }
+            // });
           });
         }
         return postsArray;
