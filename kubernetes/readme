@@ -22,3 +22,25 @@ kubectl delete -f nginx-configmap-ingress-udp-microk8s.yaml
 kubectl delete -f nginx-configmap-load-balancer-microk8s.yaml
 
 see notepad++ notes on kubernetes
+
+User interface
+http://nginx.ingress.192.168.1.100.nip.io/serverstatus
+
+server endpoints 
+
+nodeports
+http://nginx.ingress.192.168.1.100.nip.io:30850/{service}/{host}
+http://nginx.ingress.192.168.1.100.nip.io:30850/uptime/creede
+
+http://nginx.ingress.192.168.1.100.nip.io:30850/newhostStatus/
+
+services 
+newhoststatus
+uptime
+groups
+meminfo
+os
+diskinfo
+cpuinfo
+processinfo
+-- more to add --

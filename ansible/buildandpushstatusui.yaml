@@ -2,6 +2,9 @@
 - hosts: ansiblehost
 
   tasks:
+  - name: copy dist to docker
+    command: cp -pr /local/serveruistatus/dist /local/serveruistatus/docker/.
+
   - name: create node image
     command: docker build -t serveruistatus:latest .
     args:
