@@ -25,18 +25,21 @@ export class ServerComponent implements OnInit, OnDestroy {
   memInfoAvailable     = false;
   diskInfoAvailable    = false;
   cpuInfoAvailable     = false;
+  groupInfoAvailable   = false;
   osInfoAvailable      = false;
   processInfoAvailable = false;
   
   memCols: any[];
   diskCols: any[];
   cpuCols: any[];
+  groupCols: any[];
   osCols: any[];
   processCols: any[];
 
   memInfo     = {};
   diskInfo    = {};
   cpuInfo     = {};
+  groupInfo   = {};
   osInfo      = {};
   processInfo = {};
 
@@ -78,6 +81,7 @@ export class ServerComponent implements OnInit, OnDestroy {
     this.memInfoAvailable     = false;
     this.diskInfoAvailable    = false;
     this.cpuInfoAvailable     = false;
+    this.groupInfoAvailable   = false;
     this.osInfoAvailable      = false;
     this.processInfoAvailable = false;
 
@@ -128,6 +132,10 @@ export class ServerComponent implements OnInit, OnDestroy {
       { field: 'hostname', header: 'Host Name' },
       { field: 'os', header: 'OS' },
       { field: 'version', header: 'Version' }
+    ];
+
+    this.groupCols = [
+      { field: 'group', header: 'Group' }
     ];
 
     this.processCols = [
@@ -197,6 +205,7 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.memInfoAvailable     = true;
       this.diskInfoAvailable    = false;
       this.cpuInfoAvailable     = false;
+      this.groupInfoAvailable   = false;
       this.osInfoAvailable      = false;
       this.processInfoAvailable = false;
 
@@ -212,10 +221,27 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.memInfoAvailable     = false;
       this.diskInfoAvailable    = false;
       this.cpuInfoAvailable     = false;
+      this.groupInfoAvailable   = false;
       this.osInfoAvailable      = true;
       this.processInfoAvailable = false;
 
       console.log(this.osInfo);
+    }
+  }
+
+  getGroupInfo() {
+    console.log("----------ServerComponent - getGroupInfo [" + this.host + "] ----------");
+    if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
+      this.groupInfo = this.serverService.getGroupInfo(this.host);
+
+      this.memInfoAvailable     = false;
+      this.diskInfoAvailable    = false;
+      this.cpuInfoAvailable     = false;
+      this.groupInfoAvailable   = true;
+      this.osInfoAvailable      = false;
+      this.processInfoAvailable = false;
+
+      console.log(this.groupInfo);
     }
   }
   
@@ -227,6 +253,7 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.memInfoAvailable     = false;
       this.diskInfoAvailable    = true;
       this.cpuInfoAvailable     = false;
+      this.groupInfoAvailable   = false;
       this.osInfoAvailable      = false;
       this.processInfoAvailable = false;
       
@@ -242,6 +269,7 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.memInfoAvailable     = false;
       this.diskInfoAvailable    = false;
       this.cpuInfoAvailable     = true;
+      this.groupInfoAvailable   = false;
       this.osInfoAvailable      = false;
       this.processInfoAvailable = false;
       
@@ -258,6 +286,7 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.memInfoAvailable     = false;
       this.diskInfoAvailable    = false;
       this.cpuInfoAvailable     = false;
+      this.groupInfoAvailable   = false;
       this.osInfoAvailable      = false;
       this.processInfoAvailable = true;
       
@@ -314,6 +343,29 @@ export class ServerComponent implements OnInit, OnDestroy {
 
   customOSSort(event: SortEvent) {
     console.log("---------- ServerComponent - customOSSort ----------");
+    event.data.sort((data1, data2) => {
+
+        let value1 = data1[event.field];
+        let value2 = data2[event.field];
+        let result = null;
+
+        if (value1 == null && value2 != null)
+            result = -1;
+        else if (value1 != null && value2 == null)
+            result = 1;
+        else if (value1 == null && value2 == null)
+            result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string')
+            result = value1.localeCompare(value2);
+        else
+            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+
+        return (event.order * result);
+    });
+  }
+
+  customGroupSort(event: SortEvent) {
+    console.log("---------- ServerComponent - customGroupSort ----------");
     event.data.sort((data1, data2) => {
 
         let value1 = data1[event.field];

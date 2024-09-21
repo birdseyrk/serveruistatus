@@ -4,6 +4,8 @@
 <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8">
 
+        <span class="processLabels"><a [class.disabled]="disabled" style="font-size: 1rem;" class="p-button-sm" (click)="getGroupInfo()">Group</a></span>
+
         <span class="processLabels"><a [class.disabled]="disabled" style="font-size: 1rem;" class="p-button-sm" (click)="getMemInfo()">Memory</a></span>
 
         <span class="processLabels"><a [class.disabled]="disabled" style="font-size: 1rem;" class="p-button-sm"  (click)="getDiskInfo()">Disk</a></span>
@@ -15,6 +17,7 @@
         <span class="processLabels"><a [class.disabled]="disabled" style="font-size: 1rem;" class="p-button-sm"  (click)="getProcessInfo()">Processes</a></span>
     </div>
 </div>
+
 <div class="row">
     
     <p-scrollPanel [style]="{width: '100%', height: '800px'}" styleClass="custom" styleClass="custom">
@@ -166,6 +169,37 @@
                     </div>
                 </div>
             </div>
+
+            
+
+
+            <div *ngIf="groupInfoAvailable">
+                <div class="row" style="padding-left: 10px; font-size: 12px;">
+                    <b>Group Information - {{host}}</b>
+                </div>
+                <div class="row">
+                    <div class="card">
+                        <p-table [columns]="groupCols" [value]="groupInfo" (sortFunction)="customGroupSort($event)" [customSort]="true" selectionMode="single" [(selection)]="selectedOSRow" (onRowSelect)="onRowDiskSelect($event)" [tableStyle]="{'min-width': '50rem'}">
+                                <ng-template pTemplate="header" >
+                                <tr>
+                                    
+                                    <th pSortableColumn=0>Group<p-sortIcon field="group"></p-sortIcon></th>
+                                        
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item let-columns="columns">
+                                <tr [pSelectableRow]="item">
+            
+                                    <td>{{item}}</td>
+            
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+
+
 
             <div *ngIf="cpuInfoAvailable">
                 <div class="row" style="padding-left: 10px; font-size: 12px;">

@@ -21,6 +21,7 @@ export class ServerService {
     private upProcessUrl: string = this.baseUrl + "processinfo";
     
     private upOSUrl:     string = this.baseUrl + "os";
+    private upGroupUrl:  string = this.baseUrl + "groups";
 
     private servers:Server[];
     private loadedServers:Server[];
@@ -291,6 +292,37 @@ export class ServerService {
             //console.log(serverData);
 
             postsArray.push(serverData);
+            
+          });
+        }
+        
+        return postsArray;
+    }
+  
+    getGroupInfo(host:string) {
+      // Send Http request
+      console.log("getGroupInfo- Server Component [" + host + "] " + this.upGroupUrl +"/" + host);
+      
+      const postsArray = [];
+
+      if ( (typeof host !== 'undefined') && (host.length > 1)) {
+        this.http
+          .get(this.upGroupUrl +"/"+host)
+          .pipe(
+            map(responseData => {
+                // no change
+                // console.log("--- responseData ---");
+                // console.log(responseData);
+                return responseData;
+            })
+          )
+          .subscribe(serverData => {
+            console.log("--------------------- getGroupInfo serverData ---------------------");
+            console.log(serverData);Object.values(serverData).forEach(function (value: string) {
+              postsArray.push(value);
+            });
+
+            //postsArray.push(serverData);
             
           });
         }
