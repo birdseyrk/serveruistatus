@@ -1,4 +1,31 @@
 .container {
     margin-top: 30px;
-  }
+}
+
+.green-icon a span:first-child {
+  color: rgb(21, 158, 21);
+}
+
+.red-icon a span:first-child {
+  color: rgb(242, 66, 66);
+}
   
+.p-button.red-button {
+    background-color: red !important;
+}
+  
+.p-button.yellow-button {
+    background-color: yellow;
+}
+  
+.p-button.green-button {
+    background-color: green;
+}
+  
+.p-button.orange-button {
+    background-color: orange;
+}
+  
+.p-button.purple-button {
+    background-color: purple;
+}

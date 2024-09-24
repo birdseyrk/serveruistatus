@@ -1,18 +1,36 @@
 
 <h4>Server Manager</h4>
-<p>Manage your Servers and Get Status</p>
-<!----
-<button class="btn btn-primary" (click)="onLoadServer(1)">Load Server 1</button>
-<button class="btn btn-default" (click)="onLogin()">Login</button>
-<button class="btn btn-default" (click)="onLogout()">Logout</button>
----->
+<div *ngIf="dataReady">
+        <!-- <p-card header="Server Status" subheader="Host - {{hoststatus[0].hostname}}" [style]="{width: '360px'}" styleClass="shadow-2">
+            
+            <span *ngIf="dataReady"><b>{{hoststatus[0].checksum}}</b></span>
+            
+            
+                <ng-template pTemplate="footer">
+            </ng-template>
+        </p-card> -->
 
-<div class="row">
-    <button class="p-button-sm" pButton type="button" (click)="getServers()">
-    Servers 
-    </button>
-
-    <button class="p-button-sm p-button-warning" pButton type="button" (click)="getHosts()">
-    Hosts
-    </button>
+    <!-- <div class="flex align-items-center justify-content-start">
+        <div *ngFor="let group of groups" >
+            <p-button label="{{group.name}}" styleClass="w-12rem h-4rem bg-{{group.status}}-500 flex align-items-center justify-content-center p-4 border-round mr-1" (onClick)="showGroups(group.name)"></p-button>
+        </div>
+    </div> -->
+        
+    <!-- <div *ngFor="let status of hoststatus">
+        <span *ngIf="dataReady"><b>{{status.hostname}}</b></span>
+        <p-card header="{{status.hostname}}" subheader="Host - {{status.hostname}}" [style]="{width: '360px'}" styleClass="shadow-2">
+            <span class="{{status.icon}}"  style="font-size: 1rem; color:{{status.status}}"></span>
+            <span *ngIf="dataReady"><b>{{status.checksum}}</b></span>
+            
+            
+                <ng-template pTemplate="footer">
+            </ng-template>
+        </p-card>
+    </div> -->
 </div>
+
+<p-button label="Status" icon="pi pi-check"  (click)="getStatus()"></p-button>
+<p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
+
+<p-menubar [model]="menuItems">
+</p-menubar>

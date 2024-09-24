@@ -5,6 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from "@angular/router";
 
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+// import { IconFieldModule } from 'primeng/iconfield';
+// import { InputIconModule } from 'primeng/inputicon';
+import {MenubarModule} from 'primeng/menubar';
+import {MenuItem} from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
@@ -39,7 +44,9 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     AppRoutingModule,
     //RouterModule.forRoot(appRoutes),
     ButtonModule,
+    CardModule,
     InputTextareaModule,
+    MenubarModule,
     MenuModule,
     PanelModule,
     ScrollPanelModule,
