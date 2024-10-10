@@ -47,3 +47,35 @@
     Set Status
     </button>
 </div>
+<!--   
+<p-table [scrollable]="true" scrollHeight="900px" [value]="serverService.groups" [tableStyle]="{ 'min-width': '120rem' }" [autoLayout]="true">
+    <ng-template pTemplate="header">
+        <tr padding="3px">
+            <th width="15px" class="text-left">Group</th>
+            <th width="5px"  class="text-center">Status</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-myGroup >  
+           
+            <tr padding="3px">
+                                    
+                <td width="5px"  class="text-center"  >{{myGroup.group}}</td>  
+                <td width="5px"  class="text-center"  >{{myGroup.status}}</td>  
+                
+            </tr>
+        </ng-template>
+</p-table> -->
+<!-- 
+<div *ngFor="let group of serverService.groups">
+    {{group.group}}  {{group.status}}
+    <div *ngFor="let host of group.hosts">
+        {{host.hostname}}  {{host.status}}
+    </div>
+
+    <div class="flex">
+        <div class="flex flex-column col max-w-15rem">
+          <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{group.status}}-500 font-bold px-5 py-3 border-round border-noround-bottom max-h-1rem ">{{group.group}}</div>
+          <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-5 py-3 border-solid border-1 border-{{groups.status}}-500 border-noround-top"><p-button class="text-sm" label="{{group.group}}"  (onClick)="onServer(group.group)" ></p-button></div>
+        </div>
+    </div>
+</div> -->

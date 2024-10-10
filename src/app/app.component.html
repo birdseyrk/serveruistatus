@@ -3,10 +3,13 @@
     <div class="row no-gutters">
       <div class="col-xs-12 col-sm-10 col-md-8">
         <ul class="nav nav-tabs">
+
           <li role="presentation"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{exact: true}">
-            <a routerLink="serverstatus">Home</a>
+            <!-- <a routerLink="serverstatus">Home</a> -->
+            <!-- <a [routerLink]="['server']">Server</a> -->
+            <a routerLink="servers">Server Status</a>
           </li>
           
           <!-- <li role="presentation"
@@ -16,11 +19,13 @@
        
           <li role="presentation"
               routerLinkActive="active">
-            <a routerLink="servers">Server Status</a>
+            <!-- <a routerLink="servers">Server Status</a> -->
+            <a [routerLink]="['server']">Server</a>
           </li>
           <li role="presentation"
               routerLinkActive="active">
-            <a [routerLink]="['server']">Server</a>
+            <!-- <a [routerLink]="['server']">Server</a> -->
+            <a routerLink="serverstatus">Status</a>
           </li>
         </ul>
       </div>

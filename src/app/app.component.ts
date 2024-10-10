@@ -18,7 +18,7 @@ export class AppComponent {
   ngOnInit() {
     console.log('******** AppComponent ********');
     this.serverService.getStatus();
-    this.serverService.setLastStatusUpdate();
+    //this.serverService.setLastStatusUpdate();
     this.serverService.startStatusTimer();
   }
 }

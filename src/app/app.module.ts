@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from "@angular/router";
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import  {DividerModule } from 'primeng/divider';
 // import { IconFieldModule } from 'primeng/iconfield';
 // import { InputIconModule } from 'primeng/inputicon';
 import {MenubarModule} from 'primeng/menubar';
@@ -45,6 +47,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     //RouterModule.forRoot(appRoutes),
     ButtonModule,
     CardModule,
+    DatePipe,
+    DividerModule,
     InputTextareaModule,
     MenubarModule,
     MenuModule,
@@ -54,7 +58,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     TabViewModule,
     ToastModule
   ],
-  providers: [ServerService],
+  providers: [ServerService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

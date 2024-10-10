@@ -22,7 +22,8 @@ import { Server } from './server.module';
 export class ServersComponent implements OnInit {
 
   cols: any[];
-  servers: Server[]; 
+  servers: Server[];
+  groups: any[]; 
   hosts: string[]; 
   myServers: any[]; 
   //lastStatusUpdate: string = "No Update";
@@ -53,12 +54,13 @@ export class ServersComponent implements OnInit {
     ];
 
     this.hosts = [];
+    this.groups = [];
     this.servers = [];
     this.getStatus();
     //this.lastStatusUpdate = this.serverService.getLastStatusUpdate();
     
     // this.takeFourNumbers.subscribe(x => {
-    //   console.log('********** ServersComponent Get Status: ********** ', x);
+    // console.log('********** ServersComponent Get Status: ********** ', x);
     //   this.getStatus();
     // });
 
@@ -84,8 +86,10 @@ export class ServersComponent implements OnInit {
     
     //console.log(this.hosts);
     this.hosts = this.serverService.getHosts();
-    //console.log(this.serverService.getServers());
+    // console.log(this.serverService.getServers());
     this.servers = this.serverService.getServers();
+    this.groups = this.serverService.getGroupStatus();
+    // console.log(this.groups);
     this.serverService.checkStatus();
     //this.lastStatusUpdate = this.serverService.getLastStatusUpdate();
     //this.lastStatusUpdate = this.serverService.lastStatusUpdate;
@@ -100,6 +104,8 @@ export class ServersComponent implements OnInit {
   setStatus() {
     console.log("--------- serversComponent setStatus ---------");
     this.serverService.setServersStatus("purple");
+    //this.groups = this.serverService.getGroupStatus();
+    this.groups = [];
   }
 
   mySort(event: SortEvent) {

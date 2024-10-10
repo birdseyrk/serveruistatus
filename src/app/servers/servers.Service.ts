@@ -2,12 +2,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Server } from "./server.module";
+import { DatePipe } from '@angular/common';
 
 import { Injectable } from '@angular/core';
 import { interval, Subscription, take } from 'rxjs';  // throws something every second or what you define
 
 @Injectable()
 export class ServerService {
+
+  
+  datePipe = new DatePipe('en-US');
 
     //TODO Get from somewhere else - more dynamic  This needs to use properties
     private baseHostIP:   string = "192.168.1.100"; //"my.serverstatus.com/"; //"nginx.ingress.192.168.1.100.nip.io"; //"serverstatus-service.default"; //"mynginx.192.168.1.100.nip.io"; //"192.168.1.100";
@@ -27,19 +31,22 @@ export class ServerService {
     private servers:Server[] = [];
     private loadedServers:Server[] = [];
     private hosts: string[] = []; 
-    private groups: string[] = [];
+    //private groups: string[] = [];
+    public groups: any[] = [];
+    public group:any = {};
+    public groupHost:any = {};
+    private lastGroup:string = "";
+    private lastHost:string = "";
+
     private status: any = [] = [];
     public lastStatusUpdate: string = "No Update";
 
     private numbers = interval(60000); //one minute
-    //private takeFourNumbers = this.numbers.pipe(take(4)); // only emits four numbers, if you leave off it will keep going
     private takeFourNumbers = this.numbers.pipe();
-    private nextStatusTime = this.numbers.pipe();
     
     constructor(
         private http: HttpClient
     ) {
-        //console.log("ServerService constructor");
         this.hosts   = [];
         this.groups  = [];
         this.status  = [];
@@ -51,31 +58,23 @@ export class ServerService {
     ngOnInit() {
     }
 
-    // startNextTimer() {
-    //     this.nextStatusTime.subscribe(x => {
-        
-    //     });
-    // }
-
     startStatusTimer() {
         
-        //console.log("--------- ServerService startStatusTimer ---------");
+        // console.log("--------- ServerService startStatusTimer ---------");
         this.takeFourNumbers.subscribe(x => {
-            //console.log("");
-            //console.log("");
-            //console.log('********** Timer Calling ServerService Get Status: ********** ', x);
             this.getStatus();
-            this.setLastStatusUpdate();
-            // const myDate = new Date();
-            // this.lastStatusUpdate = "" + myDate.toDateString() + ":" + myDate.toTimeString();
-            // console.log(this.lastStatusUpdate);
+            this.getHostStatus();
         });
 
     }
 
     getStatus() {
       // Send Http request
-      console.log("--------- ServerService getStatus --------- " + this.uptimeUrl);
+      const pad = (i) => (i < 10) ? "0" + i : "" + i;
+      const myDate = new Date();
+      //console.log("ServerService - getHostStatus " + this.hostStatusUrl + " " + myDate.getFullYear() + "-" + pad(myDate.getMonth() + 1) + "-" + pad(myDate.getDate()) + ":" + pad(myDate.getHours()) + ":" + pad(myDate.getMinutes()) + ":" + pad(myDate.getSeconds()));
+      
+      console.log("--------- ServerService getStatus --------- " + this.uptimeUrl + " " + myDate.getFullYear() + "-" + pad(myDate.getMonth() + 1) + "-" + pad(myDate.getDate()) + ":" + pad(myDate.getHours()) + ":" + pad(myDate.getMinutes()) + ":" + pad(myDate.getSeconds()));
       this.hosts = [];
       this.http
         .get(this.uptimeUrl)
@@ -87,18 +86,18 @@ export class ServerService {
                 postsArray.push({ ...responseData[key], id: key });
               }
             }
-            //console.log("--------- ServerService getStatus postsArray --------- [" + postsArray +"]");
+            // console.log("--------- ServerService getStatus postsArray --------- [" + postsArray +"]");
             return postsArray;
           })
         )
         .subscribe(serverData => {
-          // ...
-          //console.log("--------- ServerService loadServers serverData ---------");
-          //console.log(serverData);
+          
+          // console.log("--------- ServerService loadServers serverData ---------");
+          // console.log(serverData);
   
           for (const host in serverData) {
-                //console.log(this.hosts);
-                //console.log("serverData[host].hostname ["+ serverData[host].hostname + "]");
+                // console.log(this.hosts);
+                // console.log("serverData[host].hostname ["+ serverData[host].hostname + "] epoch [" + serverData[host].hostname + "]");
                 
                 //TODO remove this
                 if ((serverData[host].hostname === 'creede') || (serverData[host].hostname === 'creede02') || (serverData[host].hostname === 'creede03')) {
@@ -114,125 +113,264 @@ export class ServerService {
                 }
 
             if ( this.hosts.includes(serverData[host].hostname) ) {
-                //console.log("ServerService loadServers serverData - update server");
                 this.loadedServers[serverData[host].hostname].hostName = serverData[host].hostname;
                 this.loadedServers[serverData[host].hostname].epoch = serverData[host].epoch;
                 this.loadedServers[serverData[host].hostname].lastUpdate = serverData[host].lastupdate;
                 this.loadedServers[serverData[host].hostname].uptime = (Number(Number(serverData[host].uptime)/3600)).toFixed(3);
             
             } else {
-                //console.log("ServerService loadServers serverData - new server " + serverData[host].type + " " + (Number(Number(serverData[host].uptime)/3600)).toFixed(3));
                 const myServer = new Server(serverData[host].hostname, serverData[host].type, "pi pi-server", serverData[host].epoch, serverData[host].lastupdate, (Number(Number(serverData[host].uptime)/3600)).toFixed(3), "red");
                 if (serverData[host].type === "Cloud")  {
-                  //console.log("In Cloud " + serverData[host].hostname);
+                  // console.log("In Cloud " + serverData[host].hostname);
                   myServer.setIcon("pi pi-cloud");
                 } else if (serverData[host].type === "Laptop") {
-                  //console.log("In else - Laptop " + serverData[host].hostname);
+                  // console.log("In else - Laptop " + serverData[host].hostname);
                   myServer.setIcon("pi pi-briefcase");
                 } else {
-                  //console.log("In else - Server " + serverData[host].hostname);
+                  // console.log("In else - Server " + serverData[host].hostname);
                   myServer.setIcon("pi pi-server");
                 }
                 this.loadedServers[serverData[host].hostname] = myServer;
                 this.hosts.push(serverData[host].hostname);
             }
-            //console.log("--------- ServerService loadServers addServer  ---------");
-            //console.log(this.loadedServers[serverData[host].hostname]);
-            this.addServer(this.loadedServers[serverData[host].hostname]);
 
-  
+            this.addServer(this.loadedServers[serverData[host].hostname]);
           }
           this.hosts = this.hosts.sort();
-          //this.logServers()
+
           this.checkStatus();
+        
+          this.setGroupStatus();
         });
     }
 
+  translateToGroups(data:any[]): any {
+    // console.log("====================================  start translateToGroups ====================================");
+    let myTempGroups:any = [];
+    let myGroups:any = [];
+    
+    for (let i = 0; i < data.length; i++) {
+      for (let group = 0; group < data[i].groups.length; group++) {
+        let myGroup:any = {"group":"", "status":"", hosts:[]}
+        let myHost:any = {"checksum":"", "disks":[], "epoch":0, "hostname": "", "icon":"", "lastUpdate":"",
+           "local":"", "logavail":"", "logpercent":"", "logtotal":"", "logused":"", "memory":{}, 
+          "nodemanagers":[], "opsavail":"", "opspercent":"", "opstotal":"", "opsused":"", 
+          "os":"", "osversion":"", "status":"", "subagent":[], "tmpavail":"", 
+          "tmppercent":"", "tmptotal":"", "tmpused":"", "type":"", "uptime":0};
+        myGroup.group = data[i].groups[group];
+        myGroup.status = "";
+
+        myHost.checksum = data[i].checksum;
+        myHost.epoch = data[i].epoch;
+        myHost.hostname = data[i].hostname;
+        myHost.icon = data[i].icon;
+        myHost.lastUpdate = data[i].lastUpdate;
+        myHost.local = data[i].local;
+        myHost.logavail = data[i].logavail;
+        myHost.logpercent = data[i].logpercent;
+        myHost.logtotal = data[i].logtotal;
+        myHost.logused = data[i].logused;
+        myHost.memory = data[i].memory;
+        myHost.nodemanagers = data[i].nodemanagers;
+        myHost.opsavail = data[i].opsavail;
+        myHost.opspercent = data[i].opspercent;
+        myHost.opstotal = data[i].opstotal;
+        myHost.opsused = data[i].opsused;
+        myHost.os = data[i].os;
+        myHost.osversion = data[i].osversion;
+        myHost.status =  this.getServerStatus(myHost.hostname);
+        //remove myHost.statusDate = this.getStatusDate(myHost.epoch);
+        myHost.subagent = data[i].subagent;
+        myHost.tmpavail = data[i].tmpavail;
+        myHost.tmppercent = data[i].tmppercent;
+        myHost.tmptotal = data[i].tmptotal;
+        myHost.tmpused = data[i].tmpused;
+        myHost.disks.push({"name":"OPS", "avail":data[i].opsavail, "used":data[i].opsused, "total":data[i].opstotal, "percent":data[i].opspercent});
+        myHost.disks.push({"name":"LOG", "avail":data[i].logavail, "used":data[i].logused, "total":data[i].logtotal, "percent":data[i].logpercent});
+        myHost.disks.push({"name":"TMP", "avail":data[i].tmpavail, "used":data[i].tmpused, "total":data[i].tmptotal, "percent":data[i].tmppercent});
+        myHost.type = data[i].type;
+        myHost.uptime = data[i].uptime;
+        myGroup.hosts.push(myHost);
+        myTempGroups.push(myGroup);
+      }
+
+    }
+
+    for (let i = 0; i < myTempGroups.length; i++) {
+      let index = -1;
+      let myStatus = "";
+      if (myGroups.length == 0 ) {
+        myTempGroups[i].status = myTempGroups[i].hosts[0].status;
+        myGroups.push(myTempGroups[i]);
+      } else {
+        for (let group = 0; group < myGroups.length; group++) {
+          if (myTempGroups[i].group == myGroups[group].group) {
+            index = group;
+            break;
+          }
+        }
+        if (index == -1 ) {
+          myTempGroups[i].status = myTempGroups[i].hosts[0].status;
+          myGroups.push(myTempGroups[i]);
+        } else {
+          if (myTempGroups[i].hosts[0].status == "red" ) {
+            myTempGroups[i].status = myTempGroups[i].hosts[0].status;
+          } else if (myGroups.status == "green" ) {
+            myTempGroups[i].status = myTempGroups[i].hosts[0].status;
+          }
+          myGroups[index].hosts.push(myTempGroups[i].hosts[0]);
+        }
+      }
+    } 
+
+    this.groups = myGroups;
+    //this.rollupGroup(this.group);
+
+    // console.log("---------------------- Translated myGroups ----------------------");
+    // console.log(myGroups);
+    
+    // console.log("====================================  end translateToGroups ====================================");
+    return myGroups;
+  }
+
     addServer(server: Server) {
-        //console.log("--------- ServerService addServer ---------");
-        //console.log(server);
+        // console.log("--------- ServerService addServer ---------");
+        // console.log(server);
         this.servers[server.hostName] = server;
     }
 
     getServers() {
-        //console.log("--------- ServerService getServers ---------");
+        // console.log("--------- ServerService getServers ---------");
         return this.servers;
     }
 
     getServer(host: string) {
-        //console.log("--------- ServerService getServer " + host + "---------");
+        // console.log("--------- ServerService getServer " + host + "---------");
         return this.servers[host];
     }
 
+    getServerStatus(host: string) {
+        // console.log("--------- ServerService getServerStatus " + host + "[" + this.servers[host].status + "] ---------");
+        return this.servers[host].status;
+    }
+
     getAllStatus() {
-      console.log("--------- ServerService getAllStatus ---------");
-      console.log("status length " + this.status.length);
+      // console.log("--------- ServerService getAllStatus ---------");
       return this.status;
     }
 
     getHosts() {
-        //console.log("--------- ServerService getHostNames ---------");
-        // var myHosts:string[];
-        // myHosts=[];
-        // for (const host in this.servers) {
-        //     myHosts[myHosts.length] = this.servers[host].hostName;
-        // }
-       // return myHosts.sort();
+        // console.log("--------- ServerService getHostNames ---------");
        return this.hosts.sort();  
     }
 
-    setLastStatusUpdate() {
-        //console.log("--------- ServerService setLastStatusUpdate " + this.lastStatusUpdate + " ---------");
-        const myDate = new Date();
-        this.lastStatusUpdate = "" + myDate.toDateString() + ":" + myDate.toTimeString();
-        //console.log(this.getLastStatusUpdate()); // this is just to check it.
-    }
-
     getLastStatusUpdate() {
-        //console.log("--------- ServerService getLastStatusUpdate " + this.lastStatusUpdate + " ---------");
+        // console.log("--------- ServerService getLastStatusUpdate " + this.lastStatusUpdate + " ---------");
         return this.lastStatusUpdate;
     }
 
     setServersStatus(status: string) {
-        //console.log("--------- ServerService setServersStatus ---------");
+        // console.log("--------- ServerService setServersStatus ---------");
         for (const host in this.servers) {
             this.servers[host].status = status;
         }
+
+        this.group = {};
+        this.groupHost = {};
     }
 
     setServerStatus(host: string, status: string) {
-        //console.log("--------- ServerService setServerStatus ---------");
+        // console.log("--------- ServerService setServerStatus ---------");
         this.servers[host].status = status;
-        //this.servers[host].uptime = "0.000";
     }
 
     setServerUptime(host: string, uptime: string) {
-        //console.log("--------- ServerService setServerUptime " + uptime + " ---------");
+        // console.log("--------- ServerService setServerUptime " + uptime + " ---------");
         this.servers[host].uptime = uptime;
     }
 
     checkStatus() {
-      //console.log("--------- ServerService checkStatus ---------");
+      // console.log("--------- ServerService checkStatus ---------");
       const myDate = new Date();
   
       const currentEpoch = (myDate.valueOf() / 1000);
 
-      //console.log("--------- ServerService checkStatus time " + currentEpoch + " ---------");
-      //this.logServers();
-  
       for (const host in this.getServers()) {
+        //console.log(host);
+        // console.log(this.servers[host]);
+        // console.log("this.servers[host].hostname ["+ this.servers[host].hostName + "] epoch [" + this.servers[host].epoch + "] diff " + (currentEpoch - Number(this.servers[host].epoch)) );
         if (currentEpoch - Number(this.servers[host].epoch) > 300) { 
           this.setServerStatus(host, "red");
           this.setServerUptime(host, "0.000");
+          this.rollupGroup(this.group);
         } else {
           this.setServerStatus(host, "green");
+          this.rollupGroup(this.group);
         }
       }
-      //this.logServers();
+    }
+
+    rollupGroups(groups:any, group: string, status:string) {  
+      
+      // console.log("--- rollupGroups ---");
+      // console.log(group);
+      // console.log(status);
+      // console.log(groups);
+      
+      if (!this.groups) {
+        return;
+      }
+      for (let myGroup = 0; myGroup < groups.length; myGroup++) {
+        if (groups[myGroup].group === group) {
+          groups[myGroup].status = status;
+          break;
+        }
+      }
+    }
+
+    rollupGroup(group:any) {
+      // console.log("--- rollupGroup ---");
+
+      group.status = ""
+      let oneHostUp = false;
+      let oneHostDown = false;
+      
+      if (!group.hosts) {
+        return;
+      }
+
+      for (let  host = 0; host < group.hosts.length; host++) {
+        // console.log(group.hosts[host].hostname + " is " + group.hosts[host].status);
+        if ( group.hosts[host].status === "red") {
+          group.status = "red";
+          oneHostDown = true;
+        } else if (group.hosts[host].status === "green") {
+          oneHostUp = true;
+        }
+      }
+
+      // console.log("oneHostDown " + oneHostDown + " oneHostUp " + oneHostUp);
+      if (oneHostDown) {
+        if (oneHostUp) {
+          // console.log("setting group.status orange");
+          group.status = "orange";
+          this.rollupGroups(this.groups, group.group, group.status);
+        } else {
+          // console.log("setting group.status red");
+          group.status = "red";
+          this.rollupGroups(this.groups, group.group, group.status);
+        }
+      } else if (oneHostUp) {
+        // console.log("setting group.status green");
+        group.status = "green";
+        this.rollupGroups(this.groups, group.group, group.status);
+      }
+      // console.log(group);
+      
     }
 
     clearServers() {
-        //console.log("--------- ServerService clearServers --------- " + this.uptimeUrl);
+        // console.log("--------- ServerService clearServers --------- " + this.uptimeUrl);
         
         this.http
         .delete(this.uptimeUrl)
@@ -244,7 +382,7 @@ export class ServerService {
         )
         .subscribe(deleteStatus => {
           
-          //console.log(deleteStatus);
+          // console.log(deleteStatus);
         });
         this.hosts = [];
         this.servers = [];
@@ -252,7 +390,9 @@ export class ServerService {
   
     getHostStatus() {
       // Send Http request
-      console.log("getHostStatus- Server Component " + this.hostStatusUrl);
+      const pad = (i) => (i < 10) ? "0" + i : "" + i;
+      const myDate = new Date();
+      console.log("ServerService - getHostStatus " + this.hostStatusUrl + " " + myDate.getFullYear() + "-" + pad(myDate.getMonth() + 1) + "-" + pad(myDate.getDate()) + ":" + pad(myDate.getHours()) + ":" + pad(myDate.getMinutes()) + ":" + pad(myDate.getSeconds()));
       
       let postsArray: any[] = [];
       this.http
@@ -260,16 +400,15 @@ export class ServerService {
         .pipe(
           map(responseData => {
               // console.log("--- responseData ---");
-              // console.log(responseData);
+              // console.log(responseData); 
               return responseData;
           })
         )
         .subscribe(serverData => {
-          console.log("--------------------- getHostStatus serverData ---------------------");
-          //console.log(serverData);
+          // console.log("--------------------- ServerService - getHostStatus serverData ---------------------");
+          // console.log(serverData);
          for (const host in serverData) {
-          //postsArray[serverData[host].hostname] = JSON.parse(JSON.stringify(serverData[host]));
-          //postsArray.push(JSON.parse(JSON.stringify(serverData[host])));
+          
           if ((serverData[host].hostname === 'creede') || (serverData[host].hostname === 'creede02') || (serverData[host].hostname === 'creede03')) {
             serverData[host].type = "Server"
             serverData[host].icon = "pi pi-server"
@@ -295,17 +434,28 @@ export class ServerService {
           postsArray.push(serverData[host]);
 
          }
+
          this.status = postsArray;
-        //  console.log('--- getHostStatus this.status ---');
-        //  console.log(this.status);
+         this.groups = this.translateToGroups(this.status);
+
+         for (let group = 0; group < this.groups.length; group++) {
+            this.rollupGroup(this.groups[group]);
+          }
+
+          //Need to roll up the displayed group
+          this.rollupGroup(this.group);
+
         });
+
+        // console.log("return postsArray");
+        // console.log(postsArray);
         
         return postsArray;
     }
   
     getMemInfo(host:string) {
       // Send Http request
-      //console.log("getMemInfo- Server Component [" + host + "] " + this.upMemUrl);
+      // console.log("getMemInfo- Server Component [" + host + "] " + this.upMemUrl);
       
       const postsArray = [];
 
@@ -319,17 +469,10 @@ export class ServerService {
             })
           )
           .subscribe(serverData => {
-            //console.log("--------------------- getMemInfo serverData ---------------------");
-            //console.log('serverData');
-            //console.log(serverData);
+            // console.log("--------------------- getMemInfo serverData ---------------------");
+            // console.log('serverData');
+            // console.log(serverData);
             postsArray.push(serverData);
-
-            // Object.values(serverData).forEach(function (value) {
-            //     var newValue= value.split(":");
-            //     newValue[0] = newValue[0].toString().trim();
-            //     newValue[1] = newValue[1].toString().trim();
-            //     postsArray.push(newValue);
-            // });
             
           });
         }
@@ -339,7 +482,7 @@ export class ServerService {
   
     getOSInfo(host:string) {
       // Send Http request
-      //console.log("getOSInfo- Server Component [" + host + "] " + this.upOSUrl +"/" + host);
+      // console.log("getOSInfo- Server Component [" + host + "] " + this.upOSUrl +"/" + host);
       
       const postsArray = [];
 
@@ -355,8 +498,8 @@ export class ServerService {
             })
           )
           .subscribe(serverData => {
-            //console.log("--------------------- getOSInfo serverData ---------------------");
-            //console.log(serverData);
+            // console.log("--------------------- getOSInfo serverData ---------------------");
+            // console.log(serverData);
 
             postsArray.push(serverData);
             
@@ -368,7 +511,7 @@ export class ServerService {
   
     getGroupInfo(host:string) {
       // Send Http request
-      //console.log("getGroupInfo- Server Component [" + host + "] " + this.upGroupUrl +"/" + host);
+      // console.log("getGroupInfo- Server Component [" + host + "] " + this.upGroupUrl +"/" + host);
       
       const postsArray = [];
 
@@ -384,8 +527,8 @@ export class ServerService {
             })
           )
           .subscribe(serverData => {
-            //console.log("--------------------- getGroupInfo serverData ---------------------");
-            //console.log(serverData);
+            // console.log("--------------------- getGroupInfo serverData ---------------------");
+            // console.log(serverData);
             Object.values(serverData).forEach(function (value: string) {
               postsArray.push(value);
             });
@@ -400,7 +543,7 @@ export class ServerService {
     
     getDiskInfo(host:string) {
       // Send Http request
-      //console.log("getDiskInfo- Server Component [" + host + "] " + this.upDiskUrl +"/" + host);
+      // console.log("getDiskInfo- Server Component [" + host + "] " + this.upDiskUrl +"/" + host);
       
       const postsArray = [];
 
@@ -410,37 +553,12 @@ export class ServerService {
           .pipe(
             map(responseData => {
                 //Do nothing - pass through
-                //console.log(responseData);
+                // console.log(responseData);
                 return responseData;
             })
           )
           .subscribe(serverData => {
             postsArray.push(serverData);
-            //console.log('postArray');
-            //console.log(postsArray);
-            //console.log("--------------------- getDiskInfo serverData ---------------------");
-
-            // var header = true;
-            // Object.values(serverData).forEach(function (value: string) {
-            //     var rowData = [];
-            //     var newValue= value.split(" ");
-
-            //     if (header) {
-            //         header = false;
-            //         // Object.values(newValue).forEach(function (value: string) {
-            //         //     if ( (value.length > 0) && (value !== "on")) {
-            //         //         rowData[rowData.length] = value;
-            //         //     }
-            //         // });
-            //     } else {
-            //         Object.values(newValue).forEach(function (value: string) {
-            //             if ( value.length > 0 ) {
-            //                 rowData[rowData.length] = value;
-            //             }
-            //         });
-            //         postsArray.push(rowData);
-            //     }
-            // });
           });
         }
         return postsArray;
@@ -448,7 +566,7 @@ export class ServerService {
     
     getCPUInfo(host:string) {
       // Send Http request
-      //console.log("getCPUInfo- Server Component [" + host + "] " + this.upCPUUrl);
+      // console.log("getCPUInfo- Server Component [" + host + "] " + this.upCPUUrl);
       
       const postsArray = [];
       var headerData = [];
@@ -466,7 +584,7 @@ export class ServerService {
           )
           .subscribe(serverData => {
             
-            //console.log("--------------------- getCPUInfo serverData ---------------------");
+            // console.log("--------------------- getCPUInfo serverData ---------------------");
             
             Object.values(serverData).forEach(function (value: string) {
 
@@ -480,9 +598,9 @@ export class ServerService {
 
                     rowData[rowData.length] = newValue[1].toString().trim();
                 } else {
-                    if (header) {
-                        //postsArray.push(headerData);
-                    }
+                    // if (header) {
+                    //     //postsArray.push(headerData);
+                    // }
                     rowData[0] = parseInt(rowData[0]); 
                     rowData[2] = parseInt(rowData[2]); 
                     rowData[3] = parseInt(rowData[3]); 
@@ -497,7 +615,7 @@ export class ServerService {
                     rowData[22] = parseFloat(rowData[22]); 
                     rowData[23] = parseInt(rowData[23]); 
                     rowData[24] = parseInt(rowData[24]); 
-                    //console.log(rowData);
+                    
                     postsArray.push(rowData);
                     rowData = [];
                     header = false;
@@ -510,7 +628,7 @@ export class ServerService {
     
     getProcessInfo(host:string) {
       // Send Http request
-      //console.log("getProcessInfo- Server Component [" + host + "] " + this.upProcessUrl);
+      // console.log("getProcessInfo- Server Component [" + host + "] " + this.upProcessUrl);
       
       const postsArray = [];
       
@@ -524,7 +642,7 @@ export class ServerService {
             })
           )
           .subscribe(serverData => {
-            //console.log("--------------------- getProcessInfo serverData ---------------------");
+            // console.log("--------------------- ServerService getProcessInfo serverData ---------------------");
             
             Object.values(serverData).forEach(function (value: string) {
               postsArray.push(value);
@@ -534,11 +652,86 @@ export class ServerService {
         return postsArray;
     }
 
+    setGroupStatus() {
+      // console.log('--- serversService setGroupStatus ---');
+      // console.log(this.status);
+      this.groups = this.translateToGroups(this.status);
+      // console.log(this.groups);
+
+      // console.log("this.lastGroup ["+ this.lastGroup + "]");
+      if (this.lastGroup) {
+        this.onServer(this.lastGroup);
+      }
+      
+      // console.log("this.lastHost ["+ this.lastHost + "]");
+      if (this.lastHost) {
+        this.onHost(this.lastHost);
+      }
+    }
+
+    getGroupStatus():any {
+      // console.log('--- serversService getGroupStatus ---');
+      
+      this.groups = this.translateToGroups(this.status);
+
+      return this.groups;
+    }
+
+    getStatusDate(epoch:any):string {
+
+      let myDate = new Date(0);
+      
+      this.datePipe = new DatePipe('en-US');
+      myDate.setUTCSeconds(epoch);
+      return this.datePipe.transform(myDate,"yyyy-MM-dd hh:mm:ss");
+    }
+
+    public onServer(myGroup:any) {
+      // console.log('--- serversService onServer ---');
+      // console.log(myGroup);
+      // console.log('--- groups[0] ---');
+      // console.log(this.groups[0].group);
+      this.groupHost = {};
+  
+      for (let group = 0; group < this.groups.length; group++) {
+        if (this.groups[group].group == myGroup) {
+          this.group = this.groups[group];
+          break;
+        }
+      }
+      this.lastGroup = myGroup;
+      
+      // console.log("*** setting lastGroup [" + this.lastGroup + "]");
+      // console.log(this.group);
+    }
+  
+    public onHost(myHost:any) {
+      // console.log('--- serversService onHost ---');
+      // console.log(myHost);
+
+      for (let thisHost = 0; thisHost < this.groups.length; thisHost++) {  
+        
+        if (this.group.hosts[thisHost].hostname == myHost) {
+          
+          this.groupHost =this.group.hosts[thisHost];
+          break;
+        }
+      }
+
+      this.groupHost.lastUpdate = this.getStatusDate(this.groupHost.epoch);
+
+      // console.log("this.groupHost");
+      // console.log(this.groupHost);
+      
+      this.lastHost = myHost;
+      
+    }
+
     logServers() {
-        //console.log(this.servers);
+        // console.log(this.servers);
     }
 
     logHosts() {
-        //console.log(this.getHosts());
+        // console.log(this.getHosts());
     }
 }
