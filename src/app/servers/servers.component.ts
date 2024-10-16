@@ -10,8 +10,9 @@ import { map } from 'rxjs/operators';
 
 import { catchError, retry } from 'rxjs/operators';
 
-import { ServerService } from './servers.Service';
-import { Server } from './server.module';
+import { ServerService } from '../../services/servers.Service';
+import { TestserviceService } from '../../tests/testservice.Service';
+import { Server } from '../../modules/server.module';
 
 @Component({
   selector: 'app-servers',
@@ -39,7 +40,9 @@ export class ServersComponent implements OnInit {
   constructor( 
     private http: HttpClient, 
     private router: Router,
-    public serverService: ServerService) { }
+    public serverService: ServerService,
+    public testserviceService: TestserviceService
+  ) { }
 
   ngOnInit() {
 
@@ -55,7 +58,7 @@ export class ServersComponent implements OnInit {
 
     this.hosts = [];
     this.groups = [];
-    this.servers = [];
+    //this.servers = [];
     this.getStatus();
     //this.lastStatusUpdate = this.serverService.getLastStatusUpdate();
     
@@ -73,7 +76,7 @@ export class ServersComponent implements OnInit {
 
   onRowSelect(event) {
     console.log(this.selectedServer);
-    this.router.navigate(['/server', this.selectedServer.hostName]);
+    this.router.navigate(['/server', this.selectedServer.hostname]);
   }
 
   onCreatePost(postData: { title: string; content: string }) {
@@ -101,23 +104,78 @@ export class ServersComponent implements OnInit {
     this.serverService.clearServers();
   }
 
-  setStatus() {
-    console.log("--------- serversComponent setStatus ---------");
-    this.serverService.setServersStatus("purple");
+  setTestStatus() {
+    console.log("--------- serversComponent setTestStatus ---------");
+    this.testserviceService.setTestServersStatus("purple");
     //this.groups = this.serverService.getGroupStatus();
     this.groups = [];
+  }
+
+  set100Hosts() {
+    console.log("--------- serversComponent set100Hosts ---------");
+    this.testserviceService.setTest100ServersStatus("purple");
+  }
+
+  setHostStatus(host:string) {
+    // console.log('---- setHostStatus ----');
+    // console.log(host);
+    //console.log(this.servers);
+    this.testserviceService.setTestHostStatus(host);
+
   }
 
   mySort(event: SortEvent) {
     console.log("--------- serversComponent mySort ---------");
     console.log(event);
   }
+
   customSort(event: SortEvent) {
-    console.log("--------- serversComponent customSort ---------");
+    // console.log("--------- serversComponent customSort ---------");
+    //arrayOfObjects.sort((a, b) => (a.propertyToSortBy < b.propertyToSortBy ? -1 : 1));
+    // console.log(event.field);
+
     event.data.sort((data1, data2) => {
+      
+    let value1:any = "";
+    let value2:any = ""; 
         
-        let value1 = this.servers[data1][event.field];
-        let value2 = this.servers[data2][event.field];
+      switch(event.field) { 
+        case "hostname": { 
+          value1 = data1.hostname;
+          value2 = data2.hostname; 
+           break; 
+        } 
+        case "icon": { 
+          value1 = data1.icon;
+          value2 = data2.icon; 
+           break; 
+        } 
+        case "uptime": { 
+          value1 = data1.uptime;
+          value2 = data2.uptime; 
+           break; 
+        } 
+        case "type": { 
+          value1 = data1.type;
+          value2 = data2.type; 
+           break; 
+        } 
+        case "lastUpdate": {
+        value1 = data1.lastUpdate;
+        value2 = data2.lastUpdate; 
+           break; 
+        } 
+        case "epoch": { 
+          value1 = data1.epoch;
+          value2 = data2.epoch; 
+           break; 
+        } 
+        default: { 
+          value1 = data1.hostname;
+          value2 = data2.hostname; 
+           break; 
+        } 
+     } 
         let result = null;
 
         if (value1 == null && value2 != null)

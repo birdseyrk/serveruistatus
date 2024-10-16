@@ -7,8 +7,8 @@ import { ActivatedRoute, Params, Data } from '@angular/router';
 //import { map } from 'rxjs/operators';
 import { SortEvent } from 'primeng/api';
 
-import { ServerService } from '../../servers/servers.Service';
-import { Server } from '../server.module';
+import { ServerService } from '../../../services/servers.Service';
+import { Server } from '../../../modules/server.module';
 
 //import { Subscription } from 'rxjs/Subscription';
 
@@ -19,7 +19,40 @@ import { Server } from '../server.module';
 })
 export class ServerComponent implements OnInit, OnDestroy {
 
-  server: Server = new Server("", "", "pi pi-server", "", "", "", "red");
+  //server: Server = new Server("", "", "pi pi-server", "", "", "", "red");
+        
+  server: Server = new Server(
+    /*checksun*/       "",
+    /*cpuinfo*/        [],
+    /*disks*/          [],
+    /*epoch*/          "",
+    /*groups*/         [],
+    /*hostname*/       "",
+    /*icon*/           "pi pi-server",
+    /*lastUpdate*/     "",
+    /*local*/          "",
+    /*logavail*/       "",
+    /*logpercent*/     "",
+    /*logtotal*/       "",
+    /*logused*/        "",
+    /*memory*/         {},
+    /*nodemanagers*/   [],
+    /*opsavail*/       "",
+    /*opspercent*/     "",
+    /*opstotal*/       "",
+    /*opsused*/        "",
+    /*os*/             "",
+    /*osversion*/      "",
+    /*processinfo*/    [],
+    /*status*/         "red",
+    /*subagent*/       [],
+    /*tmpavail*/       "",
+    /*tmppercent*/     "",
+    /*tmptotal*/       "",
+    /*tmpused*/        "",
+    /*type*/           "",
+    /*uptime*/         ""
+  );
   
   
   memInfoAvailable     = false;
@@ -192,7 +225,7 @@ export class ServerComponent implements OnInit, OnDestroy {
   getServer() {
     //console.log("---------- ServerComponent - getServer [" + this.host + "] ----------");
     if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
-      this.server = this.serverService.getServer(this.host);
+      //this.server = this.serverService.getServer(this.host);
       //console.log(this.server);
     }
   }

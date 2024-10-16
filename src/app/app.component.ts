@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { Injectable } from '@angular/core';
 
-import { ServerService } from './servers/servers.Service';
+import { MessageService } from 'primeng/api';
+import { ServerService } from '../services/servers.Service';
+import { HeartbeatService } from '../services/heartbeat.Service';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +14,15 @@ import { ServerService } from './servers/servers.Service';
 })
 export class AppComponent {
   constructor(
-    private serverService: ServerService
+    private heartbeatService: HeartbeatService,
+    private serverService: ServerService,
+    private messageService: MessageService
     ) { }
 
   ngOnInit() {
     console.log('******** AppComponent ********');
     this.serverService.getStatus();
-    //this.serverService.setLastStatusUpdate();
     this.serverService.startStatusTimer();
+    this.heartbeatService.startStatusTimer();
   }
 }

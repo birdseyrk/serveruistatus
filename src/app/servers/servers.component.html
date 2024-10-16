@@ -5,29 +5,41 @@
 </div>
 <div class="row">
     <div class="card">
-        <!--<p-table [columns]="cols" [value]="hosts" selectionMode="single" [(selection)]="selectedServer" (onRowSelect)="onRowSelect($event)" [tableStyle]="{'min-width': '50rem'}">-->
-        <p-table [columns]="cols" [value]="hosts" (sortFunction)="customSort($event)" [customSort]="true" selectionMode="single" [(selection)]="selectedServer" (onRowSelect)="onRowSelect($event)" [tableStyle]="{'min-width': '50rem'}">
+        <!-- <p-table [columns]="cols" [value]="hosts" (sortFunction)="customSort($event)" [customSort]="true" selectionMode="single" [(selection)]="selectedServer" (onRowSelect)="onRowSelect($event)" [tableStyle]="{'min-width': '50rem'}"> -->
+        <p-table [columns]="cols" [value]="serverService.status" (sortFunction)="customSort($event)" [customSort]="true" selectionMode="single" [(selection)]="selectedServer" (onRowSelect)="onRowSelect($event)" [tableStyle]="{'min-width': '50rem'}">
                 <ng-template pTemplate="header" >
                 <tr>
                     
                     <th pSortableColumn="type">type<p-sortIcon field="type"></p-sortIcon></th>
-                    <th pSortableColumn="status">icon<p-sortIcon field="icon"></p-sortIcon></th>
-                    <th pSortableColumn="hostName">Host Name<p-sortIcon field="hostName"></p-sortIcon></th>
+                    <th pSortableColumn="icon">icon<p-sortIcon field="icon"></p-sortIcon></th>
+                    <th pSortableColumn="hostname">Host Name<p-sortIcon field="hostname"></p-sortIcon></th>
                     <th pSortableColumn="uptime">Up Time (Hrs)<p-sortIcon field="uptime"></p-sortIcon></th>
                     <th pSortableColumn="lastUpdate">Last Update<p-sortIcon field="lastUpdate"></p-sortIcon></th>
                     <th pSortableColumn="epoch">Epoch<p-sortIcon field="epoch"></p-sortIcon></th>
                         
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-hosts let-columns="columns">
-                <tr [pSelectableRow]="servers[hosts]">
+            <!-- <ng-template pTemplate="body" let-host let-columns="columns">
+                <tr [pSelectableRow]="servers[host]">
 
-                    <td>{{servers[hosts].type}}</td>
-                    <td><i class="{{servers[hosts].icon}}" style="font-size: 1rem; color:{{servers[hosts].status}}"></i></td>
-                    <td>{{servers[hosts].hostName}}</td>
-                    <td>{{servers[hosts].uptime}}</td>
-                    <td>{{servers[hosts].lastUpdate}}</td>
-                    <td>{{servers[hosts].epoch}}</td>
+                    <td>{{servers[host].type}}</td>
+                    <td><i class="{{servers[host].icon}}" style="font-size: 1rem; color:{{servers[host].status}}"></i></td>
+                    <td>{{servers[host].hostname}}</td>
+                    <td>{{servers[host].uptime}}</td>
+                    <td>{{servers[host].lastUpdate}}</td>
+                    <td>{{servers[host].epoch}}</td>
+
+                </tr> 
+            </ng-template>-->
+            <ng-template pTemplate="body" let-host let-columns="columns">
+                <tr [pSelectableRow]="host">
+
+                    <td>{{host.type}}</td>
+                    <td><i class="{{host.icon}}" style="font-size: 1rem; color:{{host.status}}"></i></td>
+                    <td>{{host.hostname}}</td>
+                    <td>{{host.uptime}}</td>
+                    <td>{{host.lastUpdate}}</td>
+                    <td>{{host.epoch}}</td>
 
                 </tr>
             </ng-template>
@@ -43,39 +55,15 @@
     Delete Status
     </button>
 
-    <button  class="p-button-sm" pButton type="button" (click)="setStatus()">
-    Set Status
+    <button  class="p-button-sm" pButton type="button" (click)="set100Hosts()">
+    Set 100 hosts
+    </button>
+
+    <button  class="p-button-sm" pButton type="button" (click)="setTestStatus()">
+    Test Status
+    </button>
+
+    <button  class="p-button-sm" pButton type="button" (click)="setHostStatus('ubuntu-node01')">
+    Set hosts Green
     </button>
 </div>
-<!--   
-<p-table [scrollable]="true" scrollHeight="900px" [value]="serverService.groups" [tableStyle]="{ 'min-width': '120rem' }" [autoLayout]="true">
-    <ng-template pTemplate="header">
-        <tr padding="3px">
-            <th width="15px" class="text-left">Group</th>
-            <th width="5px"  class="text-center">Status</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-myGroup >  
-           
-            <tr padding="3px">
-                                    
-                <td width="5px"  class="text-center"  >{{myGroup.group}}</td>  
-                <td width="5px"  class="text-center"  >{{myGroup.status}}</td>  
-                
-            </tr>
-        </ng-template>
-</p-table> -->
-<!-- 
-<div *ngFor="let group of serverService.groups">
-    {{group.group}}  {{group.status}}
-    <div *ngFor="let host of group.hosts">
-        {{host.hostname}}  {{host.status}}
-    </div>
-
-    <div class="flex">
-        <div class="flex flex-column col max-w-15rem">
-          <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{group.status}}-500 font-bold px-5 py-3 border-round border-noround-bottom max-h-1rem ">{{group.group}}</div>
-          <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-5 py-3 border-solid border-1 border-{{groups.status}}-500 border-noround-top"><p-button class="text-sm" label="{{group.group}}"  (onClick)="onServer(group.group)" ></p-button></div>
-        </div>
-    </div>
-</div> -->

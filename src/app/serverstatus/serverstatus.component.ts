@@ -5,16 +5,18 @@ import { DatePipe } from '@angular/common';
 //import { Subscription } from 'rxjs-compat/Subscription';
 
 import {MenuItem} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 
-import { ServerService } from '../servers/servers.Service';
-import { Server } from '../servers/server.module';
+import { ServerService } from '../../services/servers.Service';
+import { Server } from '../../modules/server.module';
 
 import { interval, Subscription, take } from 'rxjs';  // throws something every second or what you define
 
-@Component({
+@Component ({
   selector: 'app-serverstatus',
   templateUrl: './serverstatus.component.html',
-  styleUrls: ['./serverstatus.component.css']
+  styleUrls: ['./serverstatus.component.css'],
+  providers: [MessageService]
 })
 
 export class ServerStatusComponent {
@@ -36,15 +38,18 @@ export class ServerStatusComponent {
   status:any = [];
   menuItems: MenuItem[] = [];
 
-  dataReady = false;
+  showCPUInfo:boolean = false;
+  displaySideCarInfo:string = "";
+  displaySideCarHeader:string = "";
 
-  //constructor(private router: Router, private authService: AuthService) { }
+  dataReady = false;
   
   constructor(
     private route: ActivatedRoute,
-    public serverService: ServerService
+    public serverService: ServerService,
+    private messageService: MessageService
+     /*,TODO what is this private primengConfig: PrimeNGConfig*/
   ) { }
-  //constructor() { }
 
   ngOnInit() {
     //TODO not sure this is needed
@@ -75,12 +80,62 @@ export class ServerStatusComponent {
     
   }
 
+  closeGroups() {
+    this.serverService.group = [];
+    this.serverService.groupHost = {};
+  }
+
+  closeHost() {
+    this.serverService.groupHost = {}
+  }
+
+  setHostUp(host:Server) {
+    console.log("--- setHostUp --- " + host.hostname);
+    console.log(host);
+    const myEpochDate = new Date();
+
+    const currentEpoch = (myEpochDate.valueOf() / 1000);
+    host.epoch = (Number(Number(currentEpoch)).toFixed(3));
+
+    let myLastUpdate = new Date();
+      
+    this.datePipe = new DatePipe('en-US');
+
+    this.messageService.add({severity:'info', summary:  host.hostname, detail: 'Setting Host - ' + host.hostname + ' to Up'});
+
+    //host.lastUpdate = this.datePipe.transform(myLastUpdate,"yyyy-MM-dd hh:mm:ss");
+
+  }
+
+  setHostDown(host:Server) {
+    console.log("--- setHostDown --- " + host.hostname);
+    host.epoch = "1728597022";
+    this.messageService.add({severity:'info', summary:  host.hostname, detail: 'Setting Host - ' + host.hostname + ' to down'});
+  }
+
+  deleteHost(group:any, hostname:string) {
+    console.log("--- deleteHost --- " + hostname);
+    this.serverService.deleteHost(group, hostname);
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Host - ' + hostname});
+  }
+
+  cpuInfo() {
+    this.showCPUInfo = true;
+    this.displaySideCarHeader = "CPU Information"
+    this.displaySideCarInfo =  this.serverService.groupHost.cpuinfo;
+  }
+
   onLogin() {
     //this.authService.login();
   }
 
   onLogout() {
     //this.authService.logout();
+  }
+
+  public setMessage(serverity:string, summary:string, detail:string) {
+    
+    this.messageService.add({severity:serverity, summary:summary, detail:detail});
   }
 
   // getHostandGroups(data:any, hosts:any): any {
