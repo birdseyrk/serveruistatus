@@ -76,30 +76,16 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-<<<<<<< HEAD
               "buildTarget": "statusui:build:production"
             },
             "development": {
               "buildTarget": "statusui:build:development"
-=======
-              "buildTarget": "primeng:build:production"
-            },
-            "development": {
-              "buildTarget": "primeng:build:development"
->>>>>>> c954cecb6f7964efbe236ff9b6c3a670243d31f2
             }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-<<<<<<< HEAD
           "builder": "@angular-devkit/build-angular:extract-i18n"
-=======
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "primeng:build"
-          }
->>>>>>> c954cecb6f7964efbe236ff9b6c3a670243d31f2
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
