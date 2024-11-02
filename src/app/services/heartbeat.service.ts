@@ -48,7 +48,7 @@ export class HeartbeatService {
   } 
 
   getStatus() { // combine this and the gethost status
-    console.log("--- heartbeat getStatus ---");
+    console.log("--- heartbeat getStatus  ---");
 
     // Send Http request
     const pad = (i:number) => (i < 10) ? "0" + i : "" + i;
@@ -90,8 +90,8 @@ export class HeartbeatService {
       )
       .subscribe(serverData => {
         
-        // console.log("--------- ServerService subscribe serverData ---------");
-        // console.log(serverData);
+        console.log("--------- ServerService subscribe serverData ---------");
+        console.log(serverData);
 
         let myIcon:string = "";
 

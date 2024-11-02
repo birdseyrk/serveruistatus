@@ -818,8 +818,14 @@ export class ServerService {
       
       this.datePipe = new DatePipe('en-US');
       if (epoch) {
+        console.log("--- epoch ---")
+        console.log(epoch);
         myDate.setUTCSeconds(epoch);
-        myStatusDate = this.datePipe.transform(myDate,"yyyy-MM-dd hh:mm:ss");
+        console.log("--- myDate ---");
+        console.log(myDate);
+        if (myDate) {
+          myStatusDate = this.datePipe.transform(myDate,"yyyy-MM-dd hh:mm:ss");
+        }
       }
 
       return myStatusDate;
