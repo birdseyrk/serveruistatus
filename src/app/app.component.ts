@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-//import { ConsoleReporter } from 'jasmine';
 
-import { Injectable } from '@angular/core';
-
-import { ServerService } from './servers/servers.Service';
+import { MessageService } from 'primeng/api';
+import { ServerService } from './services/server.service';
+import { HeartbeatService } from './services/heartbeat.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrl: './app.component.css'
 })
 export class AppComponent {
   constructor(
-    private serverService: ServerService
+    private heartbeatService: HeartbeatService,
+    private serverService: ServerService,
+    private messageService: MessageService
     ) { }
 
   ngOnInit() {
     console.log('******** AppComponent ********');
-    this.serverService.getStatus();
-    //this.serverService.setLastStatusUpdate();
-    this.serverService.startStatusTimer();
+    this.heartbeatService.getStatus();
+    this.heartbeatService.startStatusTimer();
   }
 }

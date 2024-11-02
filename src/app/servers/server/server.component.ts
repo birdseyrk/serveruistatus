@@ -1,25 +1,54 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Data } from '@angular/router';
-//import { HttpClient } from '@angular/common/http';
-//import { Router } from '@angular/router';
 
-//import { interval, Subscription, take } from 'rxjs';  // throws something every second or whatyou define
-//import { map } from 'rxjs/operators';
 import { SortEvent } from 'primeng/api';
 
-import { ServerService } from '../../servers/servers.Service';
-import { Server } from '../server.module';
+import { ServerService } from '../../services/server.service';
+import { Server } from '../../modules/server.module';
 
-//import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-server',
   templateUrl: './server.component.html',
-  styleUrls: ['./server.component.css']
+  styleUrl: './server.component.css'
 })
 export class ServerComponent implements OnInit, OnDestroy {
 
-  server: Server = new Server("", "", "pi pi-server", "", "", "", "red");
+        
+  // server: Server = new Server(
+  //   /*checksun*/       "",
+  //   /*cpuinfo*/        [],
+  //   /*disks*/          [],
+  //   /*epoch*/          "",
+  //   /*groups*/         [],
+  //   /*hostname*/       "",
+  //   /*icon*/           "pi pi-server",
+  //   /*lastUpdate*/     "",
+  //   /*local*/          "",
+  //   /*logavail*/       "",
+  //   /*logpercent*/     "",
+  //   /*logtotal*/       "",
+  //   /*logused*/        "",
+  //   /*memory*/         {},
+  //   /*nodemanagers*/   [],
+  //   /*opsavail*/       "",
+  //   /*opspercent*/     "",
+  //   /*opstotal*/       "",
+  //   /*opsused*/        "",
+  //   /*os*/             "",
+  //   /*osversion*/      "",
+  //   /*processinfo*/    [],
+  //   /*status*/         "red",
+  //   /*subagent*/       [],
+  //   /*tmpavail*/       "",
+  //   /*tmppercent*/     "",
+  //   /*tmptotal*/       "",
+  //   /*tmpused*/        "",
+  //   /*type*/           "",
+  //   /*uptime*/         ""
+  // ); 
+  
+  server: Server = new Server();
   
   
   memInfoAvailable     = false;
@@ -29,12 +58,12 @@ export class ServerComponent implements OnInit, OnDestroy {
   osInfoAvailable      = false;
   processInfoAvailable = false;
   
-  memCols: any[];
-  diskCols: any[];
-  cpuCols: any[];
-  groupCols: any[];
-  osCols: any[];
-  processCols: any[];
+  memCols: any = [];
+  diskCols: any = [];
+  cpuCols: any = [];
+  groupCols: any = [];
+  osCols: any = [];
+  processCols: any = [];
 
   memInfo     = {};
   diskInfo    = {};
@@ -43,11 +72,11 @@ export class ServerComponent implements OnInit, OnDestroy {
   osInfo      = {};
   processInfo = {};
 
-  selectedMemRow: {};
-  selectedDiskRow: {};
-  selectedOSRow: {};
-  selectedCpuRow: {};
-  selectedProcessRow: {};
+  selectedMemRow:any = {};
+  selectedDiskRow:any = {};
+  selectedOSRow:any = {};
+  selectedCpuRow:any = {};
+  selectedProcessRow:any = {};
 
   disabled = true;
 
@@ -164,27 +193,27 @@ export class ServerComponent implements OnInit, OnDestroy {
     //this.paramSubscription.unsubscribe();
   }
 
-  onRowMemSelect(event) {
+  onRowMemSelect(event:any) {
     console.log("---------- onRowMemSelect ----------");
     // console.log(event)
   }
 
-  onRowDiskSelect(event) {
+  onRowDiskSelect(event:any) {
     console.log("---------- onRowDiskSelect ----------");
     // console.log(event)
   }
 
-  onRowCpuSelect(event) {
+  onRowCpuSelect(event:any) {
     console.log("---------- onRowCPUSelect ----------");
     // console.log(event)
   }
 
-  onRowOSSelect(event) {
+  onRowOSSelect(event:any) {
     console.log("---------- onRowOSSelect ----------");
     // console.log(event)
   }
 
-  onRowProcessSelect(event) {
+  onRowProcessSelect(event:any) {
     console.log("---------- onRowProcessSelect ----------");
     // console.log(event)
   }
@@ -192,7 +221,7 @@ export class ServerComponent implements OnInit, OnDestroy {
   getServer() {
     //console.log("---------- ServerComponent - getServer [" + this.host + "] ----------");
     if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
-      this.server = this.serverService.getServer(this.host);
+      //this.server = this.serverService.getServer(this.host);
       //console.log(this.server);
     }
   }
@@ -297,141 +326,141 @@ export class ServerComponent implements OnInit, OnDestroy {
   
   customMemSort(event: SortEvent) {
     console.log("---------- ServerComponent - customMemSort ----------");
-    event.data.sort((data1, data2) => {
+    // event.data.sort((data1, data2) => {
         
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result = null;
+    //     let value1 = data1[event.field];
+    //     let value2 = data2[event.field];
+    //     let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+    //     if (value1 == null && value2 != null)
+    //         result = -1;
+    //     else if (value1 != null && value2 == null)
+    //         result = 1;
+    //     else if (value1 == null && value2 == null)
+    //         result = 0;
+    //     else if (typeof value1 === 'string' && typeof value2 === 'string')
+    //         result = value1.localeCompare(value2);
+    //     else
+    //         result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
-    });
+    //     return (event.order * result);
+    // });
   }
 
   customDiskSort(event: SortEvent) {
     console.log("---------- ServerComponent - customDiskSort ----------");
-    event.data.sort((data1, data2) => {
+    // event.data.sort((data1, data2) => {
 
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result = null;
+    //     let value1 = data1[event.field];
+    //     let value2 = data2[event.field];
+    //     let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+    //     if (value1 == null && value2 != null)
+    //         result = -1;
+    //     else if (value1 != null && value2 == null)
+    //         result = 1;
+    //     else if (value1 == null && value2 == null)
+    //         result = 0;
+    //     else if (typeof value1 === 'string' && typeof value2 === 'string')
+    //         result = value1.localeCompare(value2);
+    //     else
+    //         result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
-    });
+    //     return (event.order * result);
+    // });
   }
 
   customOSSort(event: SortEvent) {
     console.log("---------- ServerComponent - customOSSort ----------");
-    event.data.sort((data1, data2) => {
+    // event.data.sort((data1, data2) => {
 
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result = null;
+    //     let value1 = data1[event.field];
+    //     let value2 = data2[event.field];
+    //     let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+    //     if (value1 == null && value2 != null)
+    //         result = -1;
+    //     else if (value1 != null && value2 == null)
+    //         result = 1;
+    //     else if (value1 == null && value2 == null)
+    //         result = 0;
+    //     else if (typeof value1 === 'string' && typeof value2 === 'string')
+    //         result = value1.localeCompare(value2);
+    //     else
+    //         result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
-    });
+    //     return (event.order * result);
+    // });
   }
 
   customGroupSort(event: SortEvent) {
     console.log("---------- ServerComponent - customGroupSort ----------");
-    event.data.sort((data1, data2) => {
+    // event.data.sort((data1, data2) => {
 
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result = null;
+    //     let value1 = data1[event.field];
+    //     let value2 = data2[event.field];
+    //     let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+    //     if (value1 == null && value2 != null)
+    //         result = -1;
+    //     else if (value1 != null && value2 == null)
+    //         result = 1;
+    //     else if (value1 == null && value2 == null)
+    //         result = 0;
+    //     else if (typeof value1 === 'string' && typeof value2 === 'string')
+    //         result = value1.localeCompare(value2);
+    //     else
+    //         result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
-    });
+    //     return (event.order * result);
+    // });
   }
 
   customCpuSort(event: SortEvent) {
     console.log("---------- ServerComponent - customCpuSort ----------");
     // console.log(event);
-    event.data.sort((data1, data2) => {
-      // console.log(data1);
-     // console.log(data2);
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result = null;
+    // event.data.sort((data1, data2) => {
+    //   // console.log(data1);
+    //  // console.log(data2);
+    //     let value1 = data1[event.field];
+    //     let value2 = data2[event.field];
+    //     let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+    //     if (value1 == null && value2 != null)
+    //         result = -1;
+    //     else if (value1 != null && value2 == null)
+    //         result = 1;
+    //     else if (value1 == null && value2 == null)
+    //         result = 0;
+    //     else if (typeof value1 === 'string' && typeof value2 === 'string')
+    //         result = value1.localeCompare(value2);
+    //     else
+    //         result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
-    });
+    //     return (event.order * result);
+    // });
   }
 
   customProcessSort(event: SortEvent) {
     console.log("---------- ServerComponent - customProcfessSort ----------");
-    event.data.sort((data1, data2) => {
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result = null;
+    // event.data.sort((data1, data2) => {
+    //     let value1 = data1[event.field];
+    //     let value2 = data2[event.field];
+    //     let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+    //     if (value1 == null && value2 != null)
+    //         result = -1;
+    //     else if (value1 != null && value2 == null)
+    //         result = 1;
+    //     else if (value1 == null && value2 == null)
+    //         result = 0;
+    //     else if (typeof value1 === 'string' && typeof value2 === 'string')
+    //         result = value1.localeCompare(value2);
+    //     else
+    //         result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
-    });
+    //     return (event.order * result);
+    // });
   }
 
   roleUpHostStatus(myGroup:any) {

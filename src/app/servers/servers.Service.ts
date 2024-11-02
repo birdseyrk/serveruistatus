@@ -296,8 +296,8 @@ export class ServerService {
       const currentEpoch = (myDate.valueOf() / 1000);
 
       for (const host in this.getServers()) {
-        //console.log(host);
-        // console.log(this.servers[host]);
+        console.log(host);
+        console.log(this.servers[host]);
         // console.log("this.servers[host].hostname ["+ this.servers[host].hostName + "] epoch [" + this.servers[host].epoch + "] diff " + (currentEpoch - Number(this.servers[host].epoch)) );
         if (currentEpoch - Number(this.servers[host].epoch) > 300) { 
           this.setServerStatus(host, "red");

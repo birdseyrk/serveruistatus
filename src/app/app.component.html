@@ -1,39 +1,34 @@
-<div style="padding-left: 20px;">
-<div class="container-fluid p-0" >
-    <div class="row no-gutters">
-      <div class="col-xs-12 col-sm-10 col-md-8">
-        <ul class="nav nav-tabs">
 
-          <li role="presentation"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: true}">
-            <!-- <a routerLink="serverstatus">Home</a> -->
-            <!-- <a [routerLink]="['server']">Server</a> -->
-            <a routerLink="servers">Server Status</a>
-          </li>
-          
-          <!-- <li role="presentation"
-              routerLinkActive="active">
-            <a routerLink="serverstatus">Home</a>
-          </li> -->
-       
-          <li role="presentation"
-              routerLinkActive="active">
-            <!-- <a routerLink="servers">Server Status</a> -->
-            <a [routerLink]="['server']">Server</a>
-          </li>
-          <li role="presentation"
-              routerLinkActive="active">
-            <!-- <a [routerLink]="['server']">Server</a> -->
-            <a routerLink="serverstatus">Status</a>
-          </li>
-        </ul>
+<div style="padding-left: 20px;">
+  <div class="container-fluid p-0" >
+      <div class="row no-gutters">
+        <div class="col-xs-12 col-sm-10 col-md-8">
+          <ul class="nav nav-tabs">
+  
+            <li role="presentation"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+              <a routerLink="/servers">Servers</a>
+            </li>
+         
+            <li role="presentation"
+                routerLinkActive="active">
+              <a [routerLink]="['/server']">Server</a>
+            </li>
+
+            <li role="presentation"
+                routerLinkActive="active">
+              <a routerLink="/serverstatus">Status</a>
+            </li>
+
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="row no-gutters">
-      <div class="col-xs-12 col-sm-10 col-md-8">
-        <router-outlet></router-outlet>
+
+      <div class="row no-gutters">
+        <div class="col-xs-12 col-sm-10 col-md-8">
+          <router-outlet></router-outlet>
+        </div>
       </div>
-    </div>
-</div>
-</div>
+  </div>
+  </div>
