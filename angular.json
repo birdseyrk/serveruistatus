@@ -63,6 +63,13 @@
                   "maximumError": "6mb"
                 }
               ],
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                    "minify": true,
+                    "inlineCritical": false
+                }
+              },
               "outputHashing": "all"
             },
             "development": {
