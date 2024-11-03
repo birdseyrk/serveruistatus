@@ -3,7 +3,7 @@
 
   tasks:
   - name: copy dist to docker
-    command: cp -pr /local/serveruistatus/dist /local/serveruistatus/docker/.
+    command: cp -pr /local/serveruistatus/dist/statusui/browser/* /local/serveruistatus/docker/dist
 
   - name: create node image
     command: docker build -t serveruistatus:latest .
