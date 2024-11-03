@@ -118,7 +118,7 @@ export class ServersComponent implements OnInit {
 
   getStatus() {
     
-    console.log("---------- serversComponent getStatus ----------");
+    // console.log("---------- serversComponent getStatus ----------");
     
     //console.log(this.hosts);
     this.hosts = this.serverService.getHosts();

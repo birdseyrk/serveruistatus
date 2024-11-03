@@ -1,2 +1,2 @@
 FROM nginx:latest
-COPY ./dist/uistatus /usr/share/nginx/html/
+COPY ./dist/statusui/browser /usr/share/nginx/html/

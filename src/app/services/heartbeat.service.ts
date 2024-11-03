@@ -55,7 +55,7 @@ export class HeartbeatService {
     const myDate = new Date();
     
     this.serverService.lastStatusUpdate =  myDate.getFullYear() + "-" + pad(myDate.getMonth() + 1) + "-" + pad(myDate.getDate()) + ":" + pad(myDate.getHours()) + ":" + pad(myDate.getMinutes()) + ":" + pad(myDate.getSeconds());
-    // console.log("ServerService - getStatus "  + this.hostStatusUrl + " " + this.serverService.lastStatusUpdate);
+    console.log("ServerService - getStatus "  + this.hostStatusUrl + " " + this.serverService.lastStatusUpdate);
     
     //console.log("--------- ServerService getStatus --------- " + this.uptimeUrl + " " + myDate.getFullYear() + "-" + pad(myDate.getMonth() + 1) + "-" + pad(myDate.getDate()) + ":" + pad(myDate.getHours()) + ":" + pad(myDate.getMinutes()) + ":" + pad(myDate.getSeconds()));
    
@@ -90,8 +90,8 @@ export class HeartbeatService {
       )
       .subscribe(serverData => {
         
-        console.log("--------- ServerService subscribe serverData ---------");
-        console.log(serverData);
+        // console.log("--------- ServerService subscribe serverData ---------");
+        // console.log(serverData);
 
         let myIcon:string = "";
 
@@ -212,6 +212,7 @@ export class HeartbeatService {
       });
   }
   
+  // remove this procedure
   getHostStatus() {  // remove this in the index.js return everything on the uptime
     // Send Http request
     const pad = (i:number) => (i < 10) ? "0" + i : "" + i;

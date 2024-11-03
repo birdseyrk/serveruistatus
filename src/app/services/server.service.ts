@@ -818,11 +818,11 @@ export class ServerService {
       
       this.datePipe = new DatePipe('en-US');
       if (epoch) {
-        console.log("--- epoch ---")
-        console.log(epoch);
+        // console.log("--- epoch ---")
+        // console.log(epoch);
         myDate.setUTCSeconds(epoch);
-        console.log("--- myDate ---");
-        console.log(myDate);
+        // console.log("--- myDate ---");
+        // console.log(myDate);
         if (myDate) {
           myStatusDate = this.datePipe.transform(myDate,"yyyy-MM-dd hh:mm:ss");
         }
@@ -839,7 +839,7 @@ export class ServerService {
 
       for (let host = 0; host < group.hosts.length; host++) {
         if (hostname === group.hosts[host].hostname) {
-          console.log("--- Deleting group host [" + group.hosts[host].hostname + "]");
+          // console.log("--- Deleting group host [" + group.hosts[host].hostname + "]");
           group.hosts.splice(host, 1);
           break;
         }
@@ -847,17 +847,17 @@ export class ServerService {
 
       for (let host = 0; host < this.status.length; host++) {
         if (hostname === this.status[host].hostname) {
-          console.log("--- Deleting status host [" + this.status[host].hostname + "]");
+          // console.log("--- Deleting status host [" + this.status[host].hostname + "]");
           this.status.splice(host, 1);
           break;
         }
       }
 
       if (group.hosts.length === 0 ) {
-        console.log("--- Deleteing group [ " + group.group + " ]");
+        // console.log("--- Deleteing group [ " + group.group + " ]");
         for (let myGroup = 0; myGroup < this.groups.length; myGroup++) {
           if (group.group === this.groups[myGroup].group) {
-            console.log("--- Deleting group [" + this.groups[myGroup].group + "]");
+            // console.log("--- Deleting group [" + this.groups[myGroup].group + "]");
             this.group = [];
             this.lastGroup = "";
             this.groups.splice(myGroup, 1);
