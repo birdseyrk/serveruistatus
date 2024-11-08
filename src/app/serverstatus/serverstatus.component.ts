@@ -104,6 +104,8 @@ export class ServerstatusComponent {
   deleteHost(group: any, hostname: string) {
     console.log('--- deleteHost --- ' + hostname);
     this.serverService.deleteHost(group, hostname);
+    this.serverService.rollupGroup(this.serverService.group);
+
     this.messageService.add({
       severity: 'info',
       summary: 'Delete Host',

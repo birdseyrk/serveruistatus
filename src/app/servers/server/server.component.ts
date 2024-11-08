@@ -6,24 +6,21 @@ import { SortEvent } from 'primeng/api';
 import { ServerService } from '../../../services/server.service';
 import { Server } from '../../modules/server.module';
 
-
 @Component({
   selector: 'app-server',
   templateUrl: './server.component.html',
-  styleUrl: './server.component.css'
+  styleUrl: './server.component.css',
 })
 export class ServerComponent implements OnInit, OnDestroy {
-  
   server: Server = new Server();
-  
-  
-  memInfoAvailable     = false;
-  diskInfoAvailable    = false;
-  cpuInfoAvailable     = false;
-  groupInfoAvailable   = false;
-  osInfoAvailable      = false;
+
+  memInfoAvailable = false;
+  diskInfoAvailable = false;
+  cpuInfoAvailable = false;
+  groupInfoAvailable = false;
+  osInfoAvailable = false;
   processInfoAvailable = false;
-  
+
   memCols: any = [];
   diskCols: any = [];
   cpuCols: any = [];
@@ -31,38 +28,36 @@ export class ServerComponent implements OnInit, OnDestroy {
   osCols: any = [];
   processCols: any = [];
 
-  memInfo     = {};
-  diskInfo    = {};
-  cpuInfo     = {};
-  groupInfo   = {};
-  osInfo      = {};
+  memInfo = {};
+  diskInfo = {};
+  cpuInfo = {};
+  groupInfo = {};
+  osInfo = {};
   processInfo = {};
 
-  selectedMemRow:any = {};
-  selectedDiskRow:any = {};
-  selectedOSRow:any = {};
-  selectedCpuRow:any = {};
-  selectedProcessRow:any = {};
+  selectedMemRow: any = {};
+  selectedDiskRow: any = {};
+  selectedOSRow: any = {};
+  selectedCpuRow: any = {};
+  selectedProcessRow: any = {};
 
   disabled = true;
 
-  host = "";
+  host = '';
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     public serverService: ServerService
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
-    console.log("----------  ServerComponent  ngOnInit ----------"); 
+    console.log('----------  ServerComponent  ngOnInit ----------');
     const myServer = this.route.snapshot.params['server'];
     //console.log(this.route.snapshot.params);
-     this.host = this.route.snapshot.params['server'];
+    this.host = this.route.snapshot.params['server'];
     // console.log("The host is " + this.host);
-    
-     if ((typeof this.host === 'undefined') || this.host.length < 1) {
+
+    if (typeof this.host === 'undefined' || this.host.length < 1) {
       this.disabled = true;
     } else {
       this.server = this.serverService.getServer(this.host);
@@ -71,16 +66,16 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.disabled = false;
     }
 
-    this.memInfoAvailable     = false;
-    this.diskInfoAvailable    = false;
-    this.cpuInfoAvailable     = false;
-    this.groupInfoAvailable   = false;
-    this.osInfoAvailable      = false;
+    this.memInfoAvailable = false;
+    this.diskInfoAvailable = false;
+    this.cpuInfoAvailable = false;
+    this.groupInfoAvailable = false;
+    this.osInfoAvailable = false;
     this.processInfoAvailable = false;
 
     this.memCols = [
       { field: '0', header: 'Name' },
-      { field: '1', header: 'Value' }
+      { field: '1', header: 'Value' },
     ];
 
     this.diskCols = [
@@ -89,7 +84,7 @@ export class ServerComponent implements OnInit, OnDestroy {
       { field: 'used', header: 'Used' },
       { field: 'avail', header: 'Available' },
       { field: 'use', header: 'Used %' },
-      { field: 'mounted', header: 'Mounted On' }
+      { field: 'mounted', header: 'Mounted On' },
     ];
 
     this.cpuCols = [
@@ -118,71 +113,67 @@ export class ServerComponent implements OnInit, OnDestroy {
       { field: 'clflushsize', header: 'clflush Size' },
       { field: 'cachealignment', header: 'Cache Alignment' },
       { field: 'addresssizes', header: 'Address Sizes' },
-      { field: 'powermanagement', header: 'Power Management' }
+      { field: 'powermanagement', header: 'Power Management' },
     ];
 
     this.osCols = [
       { field: 'hostname', header: 'Host Name' },
       { field: 'os', header: 'OS' },
-      { field: 'version', header: 'Version' }
+      { field: 'version', header: 'Version' },
     ];
 
-    this.groupCols = [
-      { field: 'group', header: 'Group' }
-    ];
+    this.groupCols = [{ field: 'group', header: 'Group' }];
 
-    this.processCols = [
-      { field: 'processor', header: 'Process' }
-    ];
+    this.processCols = [{ field: 'processor', header: 'Process' }];
   }
 
   ngOnDestroy() {
     //this.paramSubscription.unsubscribe();
   }
 
-  onRowMemSelect(event:any) {
-    console.log("---------- onRowMemSelect ----------");
+  onRowMemSelect(event: any) {
+    console.log('---------- onRowMemSelect ----------');
     // console.log(event)
   }
 
-  onRowDiskSelect(event:any) {
-    console.log("---------- onRowDiskSelect ----------");
+  onRowDiskSelect(event: any) {
+    console.log('---------- onRowDiskSelect ----------');
     // console.log(event)
   }
 
-  onRowCpuSelect(event:any) {
-    console.log("---------- onRowCPUSelect ----------");
+  onRowCpuSelect(event: any) {
+    console.log('---------- onRowCPUSelect ----------');
     // console.log(event)
   }
 
-  onRowOSSelect(event:any) {
-    console.log("---------- onRowOSSelect ----------");
+  onRowOSSelect(event: any) {
+    console.log('---------- onRowOSSelect ----------');
     // console.log(event)
   }
 
-  onRowProcessSelect(event:any) {
-    console.log("---------- onRowProcessSelect ----------");
+  onRowProcessSelect(event: any) {
+    console.log('---------- onRowProcessSelect ----------');
     // console.log(event)
   }
-  
+
   getServer() {
     //console.log("---------- ServerComponent - getServer [" + this.host + "] ----------");
-    if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
+    if (typeof this.host !== 'undefined' && this.host.length > 1) {
       //this.server = this.serverService.getServer(this.host);
       //console.log(this.server);
     }
   }
 
   getMemInfo() {
-   // console.log("---------- ServerComponent - getMemInfo [" + this.host + "] ----------");
-    if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
+    // console.log("---------- ServerComponent - getMemInfo [" + this.host + "] ----------");
+    if (typeof this.host !== 'undefined' && this.host.length > 1) {
       this.memInfo = this.serverService.getMemInfo(this.host);
 
-      this.memInfoAvailable     = true;
-      this.diskInfoAvailable    = false;
-      this.cpuInfoAvailable     = false;
-      this.groupInfoAvailable   = false;
-      this.osInfoAvailable      = false;
+      this.memInfoAvailable = true;
+      this.diskInfoAvailable = false;
+      this.cpuInfoAvailable = false;
+      this.groupInfoAvailable = false;
+      this.osInfoAvailable = false;
       this.processInfoAvailable = false;
 
       console.log(this.memInfo);
@@ -190,15 +181,17 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   getOSInfo() {
-    console.log("---------- ServerComponent - getOSInfo [" + this.host + "] ----------");
-    if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
+    console.log(
+      '---------- ServerComponent - getOSInfo [' + this.host + '] ----------'
+    );
+    if (typeof this.host !== 'undefined' && this.host.length > 1) {
       this.osInfo = this.serverService.getOSInfo(this.host);
 
-      this.memInfoAvailable     = false;
-      this.diskInfoAvailable    = false;
-      this.cpuInfoAvailable     = false;
-      this.groupInfoAvailable   = false;
-      this.osInfoAvailable      = true;
+      this.memInfoAvailable = false;
+      this.diskInfoAvailable = false;
+      this.cpuInfoAvailable = false;
+      this.groupInfoAvailable = false;
+      this.osInfoAvailable = true;
       this.processInfoAvailable = false;
 
       // console.log(this.osInfo);
@@ -206,75 +199,76 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   getGroupInfo() {
-    console.log("---------- ServerComponent - getGroupInfo [" + this.host + "] ----------");
-    if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
+    console.log(
+      '---------- ServerComponent - getGroupInfo [' + this.host + '] ----------'
+    );
+    if (typeof this.host !== 'undefined' && this.host.length > 1) {
       this.groupInfo = this.serverService.getGroupInfo(this.host);
 
-      this.memInfoAvailable     = false;
-      this.diskInfoAvailable    = false;
-      this.cpuInfoAvailable     = false;
-      this.groupInfoAvailable   = true;
-      this.osInfoAvailable      = false;
+      this.memInfoAvailable = false;
+      this.diskInfoAvailable = false;
+      this.cpuInfoAvailable = false;
+      this.groupInfoAvailable = true;
+      this.osInfoAvailable = false;
       this.processInfoAvailable = false;
 
       // console.log(this.groupInfo);
     }
   }
-  
+
   getDiskInfo() {
     //console.log("---------- ServerComponent - getDiskInfo [" + this.host + "] ----------");
-    if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
+    if (typeof this.host !== 'undefined' && this.host.length > 1) {
       this.diskInfo = this.serverService.getDiskInfo(this.host);
 
-      this.memInfoAvailable     = false;
-      this.diskInfoAvailable    = true;
-      this.cpuInfoAvailable     = false;
-      this.groupInfoAvailable   = false;
-      this.osInfoAvailable      = false;
+      this.memInfoAvailable = false;
+      this.diskInfoAvailable = true;
+      this.cpuInfoAvailable = false;
+      this.groupInfoAvailable = false;
+      this.osInfoAvailable = false;
       this.processInfoAvailable = false;
-      
+
       // console.log(this.diskInfo);
     }
   }
-  
+
   getCPUInfo() {
     //console.log("---------- ServerComponent - getCPUInfo [" + this.host + "] ----------");
-    if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
+    if (typeof this.host !== 'undefined' && this.host.length > 1) {
       this.cpuInfo = this.serverService.getCPUInfo(this.host);
 
-      this.memInfoAvailable     = false;
-      this.diskInfoAvailable    = false;
-      this.cpuInfoAvailable     = true;
-      this.groupInfoAvailable   = false;
-      this.osInfoAvailable      = false;
+      this.memInfoAvailable = false;
+      this.diskInfoAvailable = false;
+      this.cpuInfoAvailable = true;
+      this.groupInfoAvailable = false;
+      this.osInfoAvailable = false;
       this.processInfoAvailable = false;
-      
+
       // console.log(this.cpuInfo);
     }
   }
-  
+
   getProcessInfo() {
     //console.log("---------- ServerComponent - getProcessInfo [" + this.host + "] ----------");
-    
-    if ( (typeof this.host !== 'undefined') && (this.host.length > 1)) {
+
+    if (typeof this.host !== 'undefined' && this.host.length > 1) {
       this.processInfo = this.serverService.getProcessInfo(this.host);
 
-      this.memInfoAvailable     = false;
-      this.diskInfoAvailable    = false;
-      this.cpuInfoAvailable     = false;
-      this.groupInfoAvailable   = false;
-      this.osInfoAvailable      = false;
+      this.memInfoAvailable = false;
+      this.diskInfoAvailable = false;
+      this.cpuInfoAvailable = false;
+      this.groupInfoAvailable = false;
+      this.osInfoAvailable = false;
       this.processInfoAvailable = true;
-      
+
       // console.log(this.processInfo);
-      
     }
   }
-  
+
   customMemSort(event: SortEvent) {
-    console.log("---------- ServerComponent - customMemSort ----------");
+    console.log('---------- ServerComponent - customMemSort ----------');
     // event.data.sort((data1, data2) => {
-        
+
     //     let value1 = data1[event.field];
     //     let value2 = data2[event.field];
     //     let result = null;
@@ -295,7 +289,7 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   customDiskSort(event: SortEvent) {
-    console.log("---------- ServerComponent - customDiskSort ----------");
+    console.log('---------- ServerComponent - customDiskSort ----------');
     // event.data.sort((data1, data2) => {
 
     //     let value1 = data1[event.field];
@@ -318,7 +312,7 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   customOSSort(event: SortEvent) {
-    console.log("---------- ServerComponent - customOSSort ----------");
+    console.log('---------- ServerComponent - customOSSort ----------');
     // event.data.sort((data1, data2) => {
 
     //     let value1 = data1[event.field];
@@ -341,7 +335,7 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   customGroupSort(event: SortEvent) {
-    console.log("---------- ServerComponent - customGroupSort ----------");
+    console.log('---------- ServerComponent - customGroupSort ----------');
     // event.data.sort((data1, data2) => {
 
     //     let value1 = data1[event.field];
@@ -364,7 +358,7 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   customCpuSort(event: SortEvent) {
-    console.log("---------- ServerComponent - customCpuSort ----------");
+    console.log('---------- ServerComponent - customCpuSort ----------');
     // console.log(event);
     // event.data.sort((data1, data2) => {
     //   // console.log(data1);
@@ -389,7 +383,7 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   customProcessSort(event: SortEvent) {
-    console.log("---------- ServerComponent - customProcfessSort ----------");
+    console.log('---------- ServerComponent - customProcfessSort ----------');
     // event.data.sort((data1, data2) => {
     //     let value1 = data1[event.field];
     //     let value2 = data2[event.field];
@@ -410,16 +404,16 @@ export class ServerComponent implements OnInit, OnDestroy {
     // });
   }
 
-  roleUpHostStatus(myGroup:any) {
+  roleUpHostStatus(myGroup: any) {
     console.log('--- roleUpHostStatus ---');
 
-    let myStatus:string = "green";
+    let myStatus: string = 'green';
 
     for (let i = 0; i < myGroup.hosts.length; i++) {
       // console.log ( myGroup.hosts[i]);
-      if (myGroup.hosts[i].status === "yellow") {
+      if (myGroup.hosts[i].status === 'yellow') {
         myStatus = myGroup.hosts[i].status;
-      } else if (myGroup.hosts[i].status === "red") {
+      } else if (myGroup.hosts[i].status === 'red') {
         myStatus = myGroup.hosts[i].status;
         return myGroup.hosts[i].status;
       }
@@ -429,12 +423,11 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   //TODO Remove this
-  onServer(myHost:any) {
+  onServer(myHost: any) {
     console.log('--- TODO Remove this - onServer ---');
     // console.log(myHost);
     // myHost.status = this.roleUpHostStatus(myHost);
     // this.host=myHost
     // this.hostStatusVisable = true;
   }
-
 }

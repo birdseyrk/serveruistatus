@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
-import { Routes, RouterModule } from "@angular/router";
-
-
+import { Routes, RouterModule } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import  {DividerModule } from 'primeng/divider';
+import { DividerModule } from 'primeng/divider';
 // import { IconFieldModule } from 'primeng/iconfield';
 // import { InputIconModule } from 'primeng/inputicon';
 import { MenubarModule } from 'primeng/menubar';
@@ -24,7 +22,6 @@ import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
@@ -34,11 +31,10 @@ import { ServerComponent } from './servers/server/server.component';
 
 import { ServerService } from '../services/server.service';
 
-
 const appRoutes: Routes = [
-  {path: 'servers',      component: ServersComponent},
-  {path: 'server',       component: ServerComponent},
-  {path: 'serverstatus', component: ServerstatusComponent}
+  { path: 'servers', component: ServersComponent },
+  { path: 'server', component: ServerComponent },
+  { path: 'serverstatus', component: ServerstatusComponent },
 ];
 
 @NgModule({
@@ -47,7 +43,7 @@ const appRoutes: Routes = [
     ErrorPageComponent,
     ServersComponent,
     ServerstatusComponent,
-    ServerComponent
+    ServerComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -68,10 +64,10 @@ const appRoutes: Routes = [
     SidebarModule,
     TableModule,
     TabViewModule,
-    ToastModule
+    ToastModule,
   ],
   exports: [RouterModule],
   providers: [provideHttpClient(), DatePipe, MessageService, ServerService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

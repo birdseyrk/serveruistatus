@@ -3,8 +3,9 @@
     Last Update : {{ serverService.lastStatusUpdate }}
   </p>
 </div>
+<div >
 <div
-  class="flex-initial flex w-60rem flex-shrink-0 flex-grow-0 m-2 p-2 border-solid border-1 border-blue-300 border-round border-noround-bottom"
+  class="flex-initial col-5 flex flex-shrink-0 flex-grow-0 m-2 p-2 border-solid border-1 border-blue-300 border-round border-noround-bottom"
 >
   <p-table
     [columns]="cols"
@@ -14,7 +15,7 @@
     selectionMode="single"
     [(selection)]="selectedServer"
     (onRowSelect)="onRowSelect($event)"
-    [tableStyle]="{ 'min-width': '50rem' }"
+    [tableStyle]="{ 'min-width': '43rem' }"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -120,4 +121,5 @@
       </button>
     </div>
   </div>
+</div>
 </div>
