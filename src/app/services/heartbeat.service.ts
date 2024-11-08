@@ -86,7 +86,11 @@ export class HeartbeatService {
           // console.log("--------- ServerService getStatus postsArray --------- ");
           // console.log(postsArray);
           return postsArray;
-        })
+        },
+      error => {
+        console.log('rsponse error');
+        console.log(error.message);
+      })
       )
       .subscribe(serverData => {
         
