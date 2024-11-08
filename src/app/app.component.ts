@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MessageService } from 'primeng/api';
-import { ServerService } from './services/server.service';
-import { HeartbeatService } from './services/heartbeat.service';
+import { ServerService } from '../services/server.service';
+import { HeartbeatService } from '../services/heartbeat.service';
 
 @Component({
   selector: 'app-root',

@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Data } from '@angular/router';
 
 import { SortEvent } from 'primeng/api';
 
-import { ServerService } from '../../services/server.service';
+import { ServerService } from '../../../services/server.service';
 import { Server } from '../../modules/server.module';
 
 

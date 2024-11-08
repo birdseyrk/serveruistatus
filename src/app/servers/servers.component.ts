@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 
 import { catchError, retry } from 'rxjs/operators';
 
-import { ServerService } from '../services/server.service';
+import { ServerService } from '../../services/server.service';
 import { TestserviceService } from '../tests/testservice.service';
 import { Server } from '../modules/server.module';
 

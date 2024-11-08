@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 
 import { interval, Subscription, take } from 'rxjs';  // throws something every second or what you define
 //import { ServerStatusComponent } from "../serverstatus/serverstatus.component";
-import { Server } from "../modules/server.module";
+import { Server } from "../app/modules/server.module";
 import { ServerService } from './server.service';
 
 

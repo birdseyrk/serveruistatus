@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 import {MenuItem} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 
-import { ServerService } from '../services/server.service';
+import { ServerService } from '../../services/server.service';
 import { Server } from '../modules/server.module';
 
 import { interval, Subscription, take } from 'rxjs';  // throws something every second or what you define

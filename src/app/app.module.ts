@@ -32,7 +32,7 @@ import { ServersComponent } from './servers/servers.component';
 import { ServerstatusComponent } from './serverstatus/serverstatus.component';
 import { ServerComponent } from './servers/server/server.component';
 
-import { ServerService } from './services/server.service';
+import { ServerService } from '../services/server.service';
 
 
 const appRoutes: Routes = [
