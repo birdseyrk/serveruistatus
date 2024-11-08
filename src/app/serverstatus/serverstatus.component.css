@@ -1,5 +1,5 @@
 .container {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .green-icon a span:first-child {
@@ -9,23 +9,23 @@
 .red-icon a span:first-child {
   color: rgb(242, 66, 66);
 }
-  
+
 .p-button.red-button {
-    background-color: red !important;
+  background-color: red !important;
 }
-  
+
 .p-button.yellow-button {
-    background-color: yellow;
+  background-color: yellow;
 }
-  
+
 .p-button.green-button {
-    background-color: green;
+  background-color: green;
 }
-  
+
 .p-button.orange-button {
-    background-color: orange;
+  background-color: orange;
 }
-  
+
 .p-button.purple-button {
-    background-color: purple;
+  background-color: purple;
 }

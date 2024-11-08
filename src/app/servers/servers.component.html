@@ -1,60 +1,123 @@
-
-
 <div class="flex-initial flex m-2">
-    <p style="font-size: 1rem;">Last Update : {{serverService.lastStatusUpdate}}</p>
-    <!-- <textarea pInputTextarea>{{serverService.lastStatusUpdate}}</textarea> -->
+  <p style="font-size: 1rem">
+    Last Update : {{ serverService.lastStatusUpdate }}
+  </p>
 </div>
-<div class="flex-initial flex w-60rem flex-shrink-0 flex-grow-0  m-2 p-2 border-solid border-1 border-blue-300 border-round border-noround-bottom">
-    <!-- <div class="card"> -->
-        <!-- <p-table [columns]="cols" [value]="hosts" (sortFunction)="customSort($event)" [customSort]="true" selectionMode="single" [(selection)]="selectedServer" (onRowSelect)="onRowSelect($event)" [tableStyle]="{'min-width': '50rem'}"> -->
-        <p-table [columns]="cols" [value]="serverService.status" (sortFunction)="customSort($event)" [customSort]="true" selectionMode="single" [(selection)]="selectedServer" (onRowSelect)="onRowSelect($event)" [tableStyle]="{'min-width': '50rem'}">
-                <ng-template pTemplate="header" >
-                <tr>
-                    
-                    <th pSortableColumn="type">type<p-sortIcon field="type"></p-sortIcon></th>
-                    <th pSortableColumn="icon">icon<p-sortIcon field="icon"></p-sortIcon></th>
-                    <th pSortableColumn="hostname">Host Name<p-sortIcon field="hostname"></p-sortIcon></th>
-                    <th pSortableColumn="type">Type<p-sortIcon field="type"></p-sortIcon></th>
-                    <th pSortableColumn="uptime">Up Time<p-sortIcon field="uptime"></p-sortIcon></th>
-                    <th pSortableColumn="lastUpdate">Last Update<p-sortIcon field="lastUpdate"></p-sortIcon></th>
-                    <!-- <th pSortableColumn="epoch">Epoch<p-sortIcon field="epoch"></p-sortIcon></th> -->
-                        
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-host let-columns="columns">
-                <tr [pSelectableRow]="host">
-
-                    <td>{{host.type}}</td>
-                    <td><i class="{{host.icon}}" style="font-size: 1rem; color:{{host.status}}"></i> </td>
-                    <td>{{host.hostname}}</td>
-                    <td>{{host.type}}</td>
-                    <!-- <td>{{ (host.uptime /60 /60 /24 ).toFixed(2) }} Days</td>   -->
-                    <td>{{ host.uptime}} {{ host.uptimeLabel }}</td>   
-                    <td>{{host.lastUpdate}}</td>
-                    <!-- <td>{{host.epoch}}</td> -->
-
-                </tr>
-            </ng-template>
-        </p-table>
-    <!-- </div> -->
+<div
+  class="flex-initial flex w-60rem flex-shrink-0 flex-grow-0 m-2 p-2 border-solid border-1 border-blue-300 border-round border-noround-bottom"
+>
+  <p-table
+    [columns]="cols"
+    [value]="serverService.status"
+    (sortFunction)="customSort($event)"
+    [customSort]="true"
+    selectionMode="single"
+    [(selection)]="selectedServer"
+    (onRowSelect)="onRowSelect($event)"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="type">
+          type<p-sortIcon field="type"></p-sortIcon>
+        </th>
+        <th pSortableColumn="icon">
+          icon<p-sortIcon field="icon"></p-sortIcon>
+        </th>
+        <th pSortableColumn="hostname">
+          Host Name<p-sortIcon field="hostname"></p-sortIcon>
+        </th>
+        <th pSortableColumn="type">
+          Type<p-sortIcon field="type"></p-sortIcon>
+        </th>
+        <th pSortableColumn="uptime">
+          Up Time<p-sortIcon field="uptime"></p-sortIcon>
+        </th>
+        <th pSortableColumn="lastUpdate">
+          Last Update<p-sortIcon field="lastUpdate"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-host let-columns="columns">
+      <tr [pSelectableRow]="host">
+        <td>{{ host.type }}</td>
+        <td>
+          <i
+            class="{{ host.icon }}"
+            style="font-size: 1rem; color:{{ host.status }}"
+          ></i>
+        </td>
+        <td>{{ host.hostname }}</td>
+        <td>{{ host.type }}</td>
+        <td>{{ host.uptime }} {{ host.uptimeLabel }}</td>
+        <td>{{ host.lastUpdate }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
 <div class="flex row m-3 p-2">
-    <div class="flex m-1 align-items-center justify-content-center">
-        <button pButton type="button"  class="flex h-2rem p-button-sm text-sm" pButton type="button" (click)="getStatus()">Fetch Status</button>
+  <div class="flex m-1 align-items-center justify-content-center">
+    <button
+      pButton
+      type="button"
+      class="flex h-2rem p-button-sm text-sm"
+      pButton
+      type="button"
+      (click)="getStatus()"
+    >
+      Fetch Status
+    </button>
+  </div>
+
+  <div class="flex m-1 h-2rem align-items-center justify-content-center">
+    <button
+      pButton
+      type="button"
+      class="flex h-2rem p-button-sm text-sm p-button-warning"
+      pButton
+      type="button"
+      (click)="deleteStatus()"
+    >
+      Delete Status
+    </button>
+  </div>
+
+  <div class="flex m-1 h-2rem align-items-center justify-content-center">
+    <button
+      pButton
+      type="button"
+      class="flex h-2rem p-button-sm text-sm"
+      pButton
+      type="button"
+      (click)="set100Hosts()"
+    >
+      Set 100 hosts
+    </button>
+
+    <div class="flex m-1 h-2rem align-items-center justify-content-center">
+      <button
+        pButton
+        type="button"
+        class="flex h-2rem p-button-sm text-sm"
+        pButton
+        type="button"
+        (click)="setTestStatus()"
+      >
+        Test Status
+      </button>
     </div>
 
     <div class="flex m-1 h-2rem align-items-center justify-content-center">
-        <button pButton type="button"  class="flex h-2rem p-button-sm text-sm p-button-warning" pButton type="button" (click)="deleteStatus()">Delete Status</button>
+      <button
+        pButton
+        type="button"
+        class="flex h-2rem p-button-sm text-sm"
+        pButton
+        type="button"
+        (click)="setHostStatus('ubuntu-node01')"
+      >
+        Set hosts Green
+      </button>
     </div>
-
-    <div class="flex m-1 h-2rem align-items-center justify-content-center">
-        <button pButton type="button"  class="flex h-2rem p-button-sm text-sm" pButton type="button" (click)="set100Hosts()">Set 100 hosts</button>
-
-    <div class="flex m-1 h-2rem align-items-center justify-content-center">
-        <button pButton type="button"  class="flex h-2rem p-button-sm text-sm" pButton type="button" (click)="setTestStatus()">Test Status</button>
-    </div>
-
-    <div class="flex m-1 h-2rem align-items-center justify-content-center">
-        <button pButton type="button"  class="flex h-2rem p-button-sm text-sm" pButton type="button" (click)="setHostStatus('ubuntu-node01')">Set hosts Green</button>
-    </div>
+  </div>
 </div>

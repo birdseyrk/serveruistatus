@@ -2,370 +2,400 @@
 <h4>Status</h4>
 
 <div class="flex flex-row flex-wrap max-w-220rem">
-    <div class="flex flex-column col  " *ngFor="let group of serverService.groups">
-        <div class="flex w-12rem flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{group.status}}-300 font-bold px-5 py-3 ml-2 mr-2 border-solid border-1 border-{{group.status}}-300 border-round border-noround-bottom max-h-1rem ">{{group.group}}</div>
-        <div class="flex w-12rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 ml-2 mr-2 border-solid border-1 border-gray-400 border-noround-top">
-            <button pButton type="button" class="p-button-text text-sm 	color: var(--black-300);" (click)="serverService.onServer(group.group)" >
-                <div class="text-black-alpha-90">{{group.group}}</div>
-            </button>
-        </div>
+  <div class="flex flex-column col" *ngFor="let group of serverService.groups">
+    <div
+      class="flex w-12rem flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{
+        group.status
+      }}-300 font-bold px-5 py-3 ml-2 mr-2 border-solid border-1 border-{{
+        group.status
+      }}-300 border-round border-noround-bottom max-h-1rem "
+    >
+      {{ group.group }}
     </div>
+    <div
+      class="flex w-12rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 ml-2 mr-2 border-solid border-1 border-gray-400 border-noround-top"
+    >
+      <button
+        pButton
+        type="button"
+        class="p-button-text text-sm color: var(--black-300);"
+        (click)="serverService.onServer(group.group)"
+      >
+        <div class="text-black-alpha-90">{{ group.group }}</div>
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="" *ngIf="serverService.group.hosts">
+  <p-divider></p-divider>
 
-    <p-divider></p-divider>
-
-    <div >
-        <div class="flex flex-column col max-w-138rem">
-          <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{serverService.group.status}}-300 font-bold px-5 py-3 ml-2 mr-2 border-solid border-1 border-{{serverService.group.status}}-300 border-round border-noround-bottom max-h-1rem ">{{serverService.group.group}}</div>
-            <div class="flex flex-wrap flex-shrink-0 flex-grow-0 align-items-left justify-content-left text-sm px-1 py-1 ml-2 mr-2 border-solid border-1 border-gray-400 border-noround-top">
-                <div class="flex"  *ngFor="let host of serverService.group.hosts">
-                    <button pButton type="button" class="p-button-text text-sm 	color: var(--{{host.status}}-500);" (click)="serverService.onHost(host.hostname)" >
-                        <div class="text-{{host.status}}-500 ">{{host.hostname}}</div>
-                    </button>
-                </div>
-          
-            </div>
+  <div>
+    <div class="flex flex-column col max-w-138rem">
+      <div
+        class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{
+          serverService.group.status
+        }}-300 font-bold px-5 py-3 ml-2 mr-2 border-solid border-1 border-{{
+          serverService.group.status
+        }}-300 border-round border-noround-bottom max-h-1rem "
+      >
+        {{ serverService.group.group }}
+      </div>
+      <div
+        class="flex flex-wrap flex-shrink-0 flex-grow-0 align-items-left justify-content-left text-sm px-1 py-1 ml-2 mr-2 border-solid border-1 border-gray-400 border-noround-top"
+      >
+        <div class="flex" *ngFor="let host of serverService.group.hosts">
+          <button
+            pButton
+            type="button"
+            class="p-button-text text-sm 	color: var(--{{ host.status }}-500);"
+            (click)="serverService.onHost(host.hostname)"
+          >
+            <div class="text-{{ host.status }}-500 ">{{ host.hostname }}</div>
+          </button>
         </div>
-        
-        <button pButton type="button" class="p-button-text text-sm 	color: var(--blue-300);" (click)="closeGroups()" >
-            <div class="text-blue-300">close group</div>
-        </button>
+      </div>
     </div>
+
+    <button
+      pButton
+      type="button"
+      class="p-button-text text-sm color: var(--blue-300);"
+      (click)="closeGroups()"
+    >
+      <div class="text-blue-300">close group</div>
+    </button>
+  </div>
 </div>
 
 <div class="" *ngIf="serverService.groupHost.hostname">
-
-    <p-divider></p-divider>
-    <div class="flex flex-column max-w-138rem flex-nowrap max-h-138rem">
-        
-        <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{serverService.groupHost.status}}-300 font-bold px-5 py-3 border-solid border-1 border-{{serverService.groupHost.status}}-300 border-round border-noround-bottom max-h-1rem ">{{serverService.groupHost.hostname}} - {{serverService.groupHost.lastUpdate}}</div>
-        <div class="flex flex-wrap flex-shrink-0 flex-grow-0 align-items-left justify-content-left text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-            
-            <div class="flex flex-column max-w-15rem ml-2 mr-1 ">
-                
-                <div class="flex w-12rem flex-shrink-0 flex-grow-0 align-items-left justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem ">Operating System</div>
-                <div class="flex h-8rem w-12rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-                    <div class="flex-initial flex min-h-full min-w-full flex-wrap align-items-center justify-content-center">
-                        <div class="flex min-w-full">
-                            {{serverService.groupHost.os}}  Version:{{serverService.groupHost.osversion}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-column flex-nowrap max-w-20rem ml-1 mr-1">
-
-                <div class="flex w-15rem flex-shrink-0 flex-grow-0 align-items-left justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem ">Status Date/TIme</div>
-                <div class="flex h-8rem w-15rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-                    <div class="flex min-h-full min-w-full">
-                        <div class="flex-initial flex  flex-row min-w-full">
-                            <div class="flex-initial flex flex-wrap align-items-center justify-content-center">
-                                <div class="flex min-w-full">
-                                    LastUpdate:  {{serverService.groupHost.lastUpdate}}
-                                </div>
-                                <div class="flex min-w-full">
-                                    <!-- Uptime: {{(serverService.groupHost.uptime /60 /60/24).toFixed(2)}} days -->
-                                    Uptime: {{(serverService.groupHost.uptime /1).toFixed(2) + " " + serverService.groupHost.uptimeLabel}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-1">
-
-                <div class="flex  w-8rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem ">Memory</div>
-                <div class="flex h-8rem w-8rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-                    <div class="flex min-h-full min-w-full">
-                        <div class="flex-initial flex">
-                            <div class="flex-initial flex w-7rem flex-wrap align-items-start justify-content-center">
-                                <div class="flex min-w-full">
-                                    Free         - {{serverService.groupHost.memory.real.free }}
-                                </div>
-                                <div class="flex min-w-full">
-                                    Used         - {{serverService.groupHost.memory.real.used }}
-                                </div>
-                                <div class="flex min-w-full">
-                                    Total        - {{serverService.groupHost.memory.real.total }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-1">
-
-                <div class="flex  w-11rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem ">Memory Swap</div>
-                <div class="flex h-8rem w-11rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-                    <div class="flex min-h-full min-w-full">
-                        <div class="flex-initial flex">
-                            <div class="flex-initial flex w-7rem flex-wrap align-items-start justify-content-center">
-                                <div class="flex min-w-full">
-                                    swap-Free    - {{serverService.groupHost.memory.swap.free }}
-                                </div>
-                                <div class="flex min-w-full">
-                                    swap-Used    - {{serverService.groupHost.memory.swap.used }}
-                                </div>
-                                <div class="flex min-w-full">
-                                    swap-Total   - {{serverService.groupHost.memory.swap.total }}
-                                </div>
-                                <div class="flex min-w-full">
-                                    swap-Cached  - {{serverService.groupHost.memory.swap.cached }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-1">
-
-                <div class="flex  w-13rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem ">Memory No-Cached</div>
-                <div class="flex h-8rem w-13rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-                    <div class="flex min-h-full min-w-full">
-                        <div class="flex-initial flex">
-                            <div class="flex-initial flex w-9rem flex-wrap align-items-start justify-content-center">
-                                <div class="flex min-w-full">
-                                    nocache-Free - {{serverService.groupHost.memory.nocache.free }}
-                                </div>
-                                <div class="flex min-w-full">
-                                    nocache-Used - {{serverService.groupHost.memory.nocache.used }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-2">
-
-                <div class="flex  w-26rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem ">Disk Space</div>
-                <div class="flex h-8rem w-26rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-                    <div class="flex min-h-full min-w-full">
-                        <p-table [value]="serverService.groupHost.disks"  [autoLayout]="true">
-                            <ng-template pTemplate="header">
-                                <tr padding="3px">
-                                    <th width="5px">Disk</th>
-                                    <th width="60px">Available</th>
-                                    <th width="60px">Used</th>
-                                    <th width="60px">Total</th>
-                                    <th width="10px">Percent</th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-disk >
-                                <tr padding="3px">
-                                    <td width="5px">{{disk.name}}</td>
-                                    <td width="60px">{{disk.avail}}</td>
-                                    <td width="60px">{{disk.used}}</td>
-                                    <td width="60px">{{disk.total}}</td>
-                                    <td width="10px">{{disk.percent}}</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </div>
-                
-            </div>
-
-            <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-1">
-
-                <div class="flex  w-15rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem ">Program Info</div>
-                <div class="flex h-8rem w-15rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-                    <div class="flex min-h-full min-w-full">
-                        <div class="flex-initial flex">
-                            <div class="flex-initial flex w-15rem flex-wrap align-items-start justify-content-center">
-                                <div class="flex min-w-full">
-                                    local        - {{serverService.groupHost.local }}
-                                </div>
-                                <div class="flex min-w-full">
-                                    Node Mangers - {{serverService.groupHost.nodemanagers }}
-                                </div>
-                                <div class="flex min-w-full">
-                                    Sub-Agent    - {{serverService.groupHost.subagent }}
-                                </div>
-                                <div class="flex min-w-full">
-                                    Checksum     - {{serverService.groupHost.checksum }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-column max-w-138rem ">
-            
-                <p-divider class="flex flex-column max-w-138rem"></p-divider>
-                
-                <div class="flex  max-w-30rem ml-2 mr-1">
-
-                    <button pButton type="button" class="p-button-text text-sm 	color: var(--blue-300);" (click)="cpuInfo()" >
-                        <div>
-                            <i class="pi pi-gauge"style="font-size: 1.5rem" [ngStyle]="{ color:'var(--blue-500)'}"></i>
-                        </div>
-                        <div class="flex ml-2 text-blue-300">CPU Info</div>
-                    </button>
-
-                    <button pButton type="button" class="p-button-text text-sm 	color: var(--blue-300);" (click)="processInfo()" >
-                        <div>
-                            <i class="pi pi-align-justify"style="font-size: 1.5rem" [ngStyle]="{ color:'var(--blue-500)'}"></i>
-                        </div>
-                        <div class="flex ml-2  text-blue-300">Process Info</div>
-                    </button>
-
-                    <button pButton type="button" class="p-button-text text-sm 	color: var(--blue-300);" (click)="deleteHost(this.serverService.group, serverService.groupHost.hostname)" >
-                        <div>
-                            <i class="pi pi-trash"style="font-size: 1.5rem" [ngStyle]="{ color:'var(--blue-500)'}"></i>
-                        </div>
-                        <div class="flex ml-2 text-blue-300">Remove Host</div>
-                    </button>
-                </div>
-
-            </div>
-
-            <div class="flex flex-column max-w-138rem ">
-            
-                <p-divider class="flex flex-column max-w-138rem"></p-divider>
-                
-                <div class="flex  max-w-30rem ml-2 mr-1">
-
-                    <button pButton type="button" class="p-button-text text-sm 	color: var(--blue-300);" (click)="setHostUp(serverService.groupHost)" >
-                        <div class="text-blue-300">Set Host Up</div>
-                    </button>
-
-                    <button pButton type="button" class="p-button-text text-sm 	color: var(--blue-300);" (click)="setHostDown(serverService.groupHost)" >
-                        <div class="text-blue-300">Set Host Down</div>
-                    </button>
-
-                </div>
-            </div>
-        </div>
+  <p-divider></p-divider>
+  <div class="flex flex-column max-w-138rem flex-nowrap max-h-138rem">
+    <div
+      class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{
+        serverService.groupHost.status
+      }}-300 font-bold px-5 py-3 border-solid border-1 border-{{
+        serverService.groupHost.status
+      }}-300 border-round border-noround-bottom max-h-1rem "
+    >
+      {{ serverService.groupHost.hostname }} -
+      {{ serverService.groupHost.lastUpdate }}
     </div>
+    <div
+      class="flex flex-wrap flex-shrink-0 flex-grow-0 align-items-left justify-content-left text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top"
+    >
+      <div class="flex flex-column max-w-15rem ml-2 mr-1">
+        <div
+          class="flex w-12rem flex-shrink-0 flex-grow-0 align-items-left justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem"
+        >
+          Operating System
+        </div>
+        <div
+          class="flex h-8rem w-12rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top"
+        >
+          <div
+            class="flex-initial flex min-h-full min-w-full flex-wrap align-items-center justify-content-center"
+          >
+            <div class="flex min-w-full">
+              {{ serverService.groupHost.os }} Version:{{
+                serverService.groupHost.osversion
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <button pButton type="button" class="p-button-text text-sm 	color: var(--blue-300);" (click)="closeHost()" >
-        <div class="text-blue-300">close host</div>
-    </button>
+      <div class="flex flex-column flex-nowrap max-w-20rem ml-1 mr-1">
+        <div
+          class="flex w-15rem flex-shrink-0 flex-grow-0 align-items-left justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem"
+        >
+          Status Date/TIme
+        </div>
+        <div
+          class="flex h-8rem w-15rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top"
+        >
+          <div class="flex min-h-full min-w-full">
+            <div class="flex-initial flex flex-row min-w-full">
+              <div
+                class="flex-initial flex flex-wrap align-items-center justify-content-center"
+              >
+                <div class="flex min-w-full">
+                  LastUpdate: {{ serverService.groupHost.lastUpdate }}
+                </div>
+                <div class="flex min-w-full">
+                  Uptime:
+                  {{
+                    (serverService.groupHost.uptime / 1).toFixed(2) +
+                      " " +
+                      serverService.groupHost.uptimeLabel
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-1">
+        <div
+          class="flex w-8rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem"
+        >
+          Memory
+        </div>
+        <div
+          class="flex h-8rem w-8rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top"
+        >
+          <div class="flex min-h-full min-w-full">
+            <div class="flex-initial flex">
+              <div
+                class="flex-initial flex w-7rem flex-wrap align-items-start justify-content-center"
+              >
+                <div class="flex min-w-full">
+                  Free - {{ serverService.groupHost.memory.real.free }}
+                </div>
+                <div class="flex min-w-full">
+                  Used - {{ serverService.groupHost.memory.real.used }}
+                </div>
+                <div class="flex min-w-full">
+                  Total - {{ serverService.groupHost.memory.real.total }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-1">
+        <div
+          class="flex w-11rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem"
+        >
+          Memory Swap
+        </div>
+        <div
+          class="flex h-8rem w-11rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top"
+        >
+          <div class="flex min-h-full min-w-full">
+            <div class="flex-initial flex">
+              <div
+                class="flex-initial flex w-7rem flex-wrap align-items-start justify-content-center"
+              >
+                <div class="flex min-w-full">
+                  swap-Free - {{ serverService.groupHost.memory.swap.free }}
+                </div>
+                <div class="flex min-w-full">
+                  swap-Used - {{ serverService.groupHost.memory.swap.used }}
+                </div>
+                <div class="flex min-w-full">
+                  swap-Total - {{ serverService.groupHost.memory.swap.total }}
+                </div>
+                <div class="flex min-w-full">
+                  swap-Cached - {{ serverService.groupHost.memory.swap.cached }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-1">
+        <div
+          class="flex w-13rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem"
+        >
+          Memory No-Cached
+        </div>
+        <div
+          class="flex h-8rem w-13rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top"
+        >
+          <div class="flex min-h-full min-w-full">
+            <div class="flex-initial flex">
+              <div
+                class="flex-initial flex w-9rem flex-wrap align-items-start justify-content-center"
+              >
+                <div class="flex min-w-full">
+                  nocache-Free -
+                  {{ serverService.groupHost.memory.nocache.free }}
+                </div>
+                <div class="flex min-w-full">
+                  nocache-Used -
+                  {{ serverService.groupHost.memory.nocache.used }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-2">
+        <div
+          class="flex w-26rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem"
+        >
+          Disk Space
+        </div>
+        <div
+          class="flex h-8rem w-26rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top"
+        >
+          <div class="flex min-h-full min-w-full">
+            <p-table
+              [value]="serverService.groupHost.disks"
+              [autoLayout]="true"
+            >
+              <ng-template pTemplate="header">
+                <tr padding="3px">
+                  <th width="5px">Disk</th>
+                  <th width="60px">Available</th>
+                  <th width="60px">Used</th>
+                  <th width="60px">Total</th>
+                  <th width="10px">Percent</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-disk>
+                <tr padding="3px">
+                  <td width="5px">{{ disk.name }}</td>
+                  <td width="60px">{{ disk.avail }}</td>
+                  <td width="60px">{{ disk.used }}</td>
+                  <td width="60px">{{ disk.total }}</td>
+                  <td width="10px">{{ disk.percent }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-column flex-nowrap max-w-30rem ml-1 mr-1">
+        <div
+          class="flex w-15rem flex-shrink-0 flex-grow-0 align-items-start justify-content-center text-sm bg-blue-300 font-bold px-5 py-3 border-solid border-1 border-blue-300 border-round border-noround-bottom max-h-1rem"
+        >
+          Program Info
+        </div>
+        <div
+          class="flex h-8rem w-15rem flex-wrap flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top"
+        >
+          <div class="flex min-h-full min-w-full">
+            <div class="flex-initial flex">
+              <div
+                class="flex-initial flex w-15rem flex-wrap align-items-start justify-content-center"
+              >
+                <div class="flex min-w-full">
+                  local - {{ serverService.groupHost.local }}
+                </div>
+                <div class="flex min-w-full">
+                  Node Mangers - {{ serverService.groupHost.nodemanagers }}
+                </div>
+                <div class="flex min-w-full">
+                  Sub-Agent - {{ serverService.groupHost.subagent }}
+                </div>
+                <div class="flex min-w-full">
+                  Checksum - {{ serverService.groupHost.checksum }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-column max-w-138rem">
+        <p-divider class="flex flex-column max-w-138rem"></p-divider>
+
+        <div class="flex max-w-30rem ml-2 mr-1">
+          <button
+            pButton
+            type="button"
+            class="p-button-text text-sm color: var(--blue-300);"
+            (click)="cpuInfo()"
+          >
+            <div>
+              <i
+                class="pi pi-gauge"
+                style="font-size: 1.5rem"
+                [ngStyle]="{ color: 'var(--blue-500)' }"
+              ></i>
+            </div>
+            <div class="flex ml-2 text-blue-300">CPU Info</div>
+          </button>
+
+          <button
+            pButton
+            type="button"
+            class="p-button-text text-sm color: var(--blue-300);"
+            (click)="processInfo()"
+          >
+            <div>
+              <i
+                class="pi pi-align-justify"
+                style="font-size: 1.5rem"
+                [ngStyle]="{ color: 'var(--blue-500)' }"
+              ></i>
+            </div>
+            <div class="flex ml-2 text-blue-300">Process Info</div>
+          </button>
+
+          <button
+            pButton
+            type="button"
+            class="p-button-text text-sm color: var(--blue-300);"
+            (click)="
+              deleteHost(
+                this.serverService.group,
+                serverService.groupHost.hostname
+              )
+            "
+          >
+            <div>
+              <i
+                class="pi pi-trash"
+                style="font-size: 1.5rem"
+                [ngStyle]="{ color: 'var(--blue-500)' }"
+              ></i>
+            </div>
+            <div class="flex ml-2 text-blue-300">Remove Host</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-column max-w-138rem">
+        <p-divider class="flex flex-column max-w-138rem"></p-divider>
+
+        <div class="flex max-w-30rem ml-2 mr-1">
+          <button
+            pButton
+            type="button"
+            class="p-button-text text-sm color: var(--blue-300);"
+            (click)="setHostUp(serverService.groupHost)"
+          >
+            <div class="text-blue-300">Set Host Up</div>
+          </button>
+
+          <button
+            pButton
+            type="button"
+            class="p-button-text text-sm color: var(--blue-300);"
+            (click)="setHostDown(serverService.groupHost)"
+          >
+            <div class="text-blue-300">Set Host Down</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    pButton
+    type="button"
+    class="p-button-text text-sm color: var(--blue-300);"
+    (click)="closeHost()"
+  >
+    <div class="text-blue-300">close host</div>
+  </button>
 </div>
 
-<p-sidebar [(visible)]="showInfo" styleClass="p-sidebar-sm" position="right"  [style]="{width:'30em'}" [baseZIndex]="10000">
-    <h1 style="font-weight:normal">{{displaySideCarHeader}}</h1>
-    <p>{{displaySideCarInfo}}</p>
-    <!-- <p-button type="button" (click)="visibleSidebar2 = false" label="Save" styleClass="p-button-success"></p-button>
-    <p-button type="button" (click)="visibleSidebar2 = false" label="Cancel" styleClass="p-button-secondary"></p-button> -->
+<p-sidebar
+  [(visible)]="showInfo"
+  styleClass="p-sidebar-sm"
+  position="right"
+  [style]="{ width: '30em' }"
+  [baseZIndex]="10000"
+>
+  <h1 style="font-weight: normal">{{ displaySideCarHeader }}</h1>
+  <p>{{ displaySideCarInfo }}</p>
 </p-sidebar>
-
-<!-- <div  *ngFor="let group of serverService.groups">
-
-    <div >
-        <div class="flex flex-column col max-w-28rem">
-          <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{group.status}}-300 font-bold px-5 py-3 border-solid border-1 border-{{group.status}}-300 border-round border-noround-bottom max-h-1rem ">{{group.group}}</div>
-            <div class="flex flex-wrap flex-shrink-0 flex-grow-0 align-items-left justify-content-left text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-                <div  *ngFor="let host of group.hosts">
-                    <button pButton type="button" class="p-button-text text-sm 	color: var(--{{host.status}}-300);" (click)="onHost(host.hostname)" >
-                        <div class="text-{{group.status}}-300 ">{{host.hostname}}</div>
-                    </button>
-                </div>
-          
-            </div>
-        </div>
-    </div>
-</div>
-
-<p-divider></p-divider>
-
-<div class="flex flex-row flex-wrap max-w-220rem">
-    <div class="flex flex-column col  " *ngFor="let group of serverService.groups">
-                <div class="flex w-30rem flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{group.status}}-300 font-bold px-5 py-3 border-solid border-1 border-{{group.status}}-300 border-round border-noround-bottom max-h-1rem ">{{group.group}}</div>
-                <div class="flex w-30rem flex-wrap flex-shrink-0 flex-grow-0 align-items-left justify-content-left text-sm px-1 py-1 border-solid border-1 border-gray-400 border-noround-top">
-                    <div class="flex w-9rem flex-wrap "  *ngFor="let host of group.hosts">
-                        <button pButton type="button" class="p-button-text text-sm 	color: var(--{{host.status}}-300);" (click)="onHost(host.hostname)" >
-                            <div class="text-{{group.status}}-300 ">{{host.hostname}}</div>
-                        </button>
-                    </div>
-                
-                </div>
-
-    </div>
-</div> -->
-
-
-<!-- <div *ngIf="dataReady"> -->
-        <!-- <p-card header="Server Status" subheader="Host - {{hoststatus[0].hostname}}" [style]="{width: '360px'}" styleClass="shadow-2">
-            
-            <span *ngIf="dataReady"><b>{{hoststatus[0].checksum}}</b></span>
-            
-            
-                <ng-template pTemplate="footer">
-            </ng-template>
-        </p-card> -->
-
-    <!-- <div class="flex align-items-center justify-content-start">
-        <div *ngFor="let group of groups" >
-            <p-button label="{{group.name}}" styleClass="w-12rem h-4rem bg-{{group.status}}-300 flex align-items-center justify-content-center p-4 border-round mr-1" (onClick)="showGroups(group.name)"></p-button>
-        </div>
-    </div> -->
-        
-    <!-- <div *ngFor="let status of hoststatus">
-        <span *ngIf="dataReady"><b>{{status.hostname}}</b></span>
-        <p-card header="{{status.hostname}}" subheader="Host - {{status.hostname}}" [style]="{width: '360px'}" styleClass="shadow-2">
-            <span class="{{status.icon}}"  style="font-size: 1rem; color:{{status.status}}"></span>
-            <span *ngIf="dataReady"><b>{{status.checksum}}</b></span>
-            
-            
-                <ng-template pTemplate="footer">
-            </ng-template>
-        </p-card>
-    </div> -->
-<!-- </div> -->
-
-<!-- <p-button label="Status" icon="pi pi-check"  (click)="getStatus()"></p-button>
-<p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button> -->
-
-<!-- <p-menubar [model]="menuItems">
-</p-menubar> -->
-
-<!-- <div *ngFor="let group of serverService.groups">  delete this block
-    {{group.group}}  {{group.status}}
-    <div *ngFor="let host of group.hosts">
-        {{host.hostname}}  {{host.status}}
-    </div>
-
-    <div class="flex">
-        <div class="flex flex-column col max-w-15rem">
-          <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{group.status}}-300 font-bold px-5 py-3 border-round border-noround-bottom max-h-1rem ">{{group.group}}</div>
-          <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-5 py-3 border-solid border-1 border-{{groups.status}}-300 border-noround-top"><p-button class="text-sm" label="{{group.group}}"  (onClick)="onServer(group.group)" ></p-button></div>
-        </div>
-    </div>
-</div> -->
-
-<!-- <div class="flex">
-    <div class="flex flex-column col max-w-15rem">
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{groups[0].status}}-300 font-bold px-5 py-3 border-round border-noround-bottom max-h-1rem ">{{groups[0].name}}</div>
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-5 py-3 border-solid border-1 border-{{groups[0].status}}-300 border-noround-top"><p-button class="text-sm" label="{{groups[0].name}}"  (onClick)="onServer(groups[0])" /></div>
-    </div>
-</div> -->
-  
-    <!-- <div class="flex flex-column col max-w-15rem">
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{groups[1].status}}-300 font-bold px-5 py-3 border-round border-noround-bottom max-h-1rem ">{{groups[1].name}}</div>
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-5 py-3 border-solid border-1 border-{{groups[1].status}}-300 border-noround-top"><p-button class="text-sm" label="{{groups[1].name}}" [link]="true" (onClick)="onServer(groups[1])" /></div>
-    </div>
-  
-    <div class="flex flex-column col max-w-15rem">
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{groups[2].status}}-300 font-bold px-5 py-3 border-round border-noround-bottom max-h-1rem ">{{groups[2].name}}</div>
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-5 py-3 border-solid border-1 border-{{groups[2].status}}-300 border-noround-top"><p-button class="text-sm" label="{{groups[2].name}}" [link]="true" (onClick)="onServer(groups[2])" /></div>
-    </div>
-  
-    <div class="flex flex-column col max-w-15rem">
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{groups[3].status}}-300 font-bold px-5 py-3 border-round border-noround-bottom max-h-1rem ">{{groups[3].name}}</div>
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-5 py-3 border-solid border-1 border-{{groups[3].status}}-300 border-noround-top"><p-button class="text-sm" label="{{groups[3].name}}" [link]="true" (onClick)="onServer(groups[3])" /></div>
-    </div>
-  
-    <div class="flex flex-column col max-w-15rem">
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm bg-{{groups[4].status}}-300 font-bold px-5 py-3 border-round border-noround-bottom max-h-1rem ">{{groups[4].name}}</div>
-      <div class="flex flex-shrink-0 flex-grow-0 align-items-center justify-content-center text-sm px-5 py-3 border-solid border-1 border-{{groups[4].status}}-300 border-noround-top"><p-button class="text-sm" label="{{groups[4].name}}" [link]="true" (onClick)="onServer(groups[4])" /></div>
-    </div> -->
-  

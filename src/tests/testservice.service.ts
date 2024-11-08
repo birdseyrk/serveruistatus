@@ -75,16 +75,8 @@ export class TestserviceService {
     // console.log("Color " + myStatus);
     
     const myDate = new Date();
-    
-    //this.servers = [];
-    //this.hosts = this.hosts;
-    // this.loadedServers =[];
 
-    //let serverData:Server[] = [];
     let postsArray:any = this.serverService.status;
-
-    //let myServer:Server = new Server;
-
 
     const currentEpoch = (myDate.valueOf() / 1000 );
 
@@ -124,8 +116,7 @@ export class TestserviceService {
 
       //Need to roll up the displayed group
       this.serverService.rollupGroup(this.serverService.group);
-
-    //this.getHostStatus();
+      
 
     this.serverService.group = {};
     this.serverService.groupHost = {};
@@ -160,7 +151,6 @@ export class TestserviceService {
       
       const myDate = new Date();
 
-      let serverData:Server[] = [];
       let postsArray:any = this.serverService.status;
 
       const currentEpoch = (myDate.valueOf() / 1000 );
