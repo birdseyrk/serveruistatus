@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 import { interval, Subscription, take } from 'rxjs';  // throws something every second or what you define
 //import { ServerStatusComponent } from "../app/serverstatus/serverstatus.component";
 import { Server } from "../modules/server.module";
-import { ServerService } from './servers.Service';
+import { ServerService } from '../app/services/server.service';
 
 
 @Injectable({
