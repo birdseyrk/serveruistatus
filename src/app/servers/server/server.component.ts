@@ -13,40 +13,6 @@ import { Server } from '../../modules/server.module';
   styleUrl: './server.component.css'
 })
 export class ServerComponent implements OnInit, OnDestroy {
-
-        
-  // server: Server = new Server(
-  //   /*checksun*/       "",
-  //   /*cpuinfo*/        [],
-  //   /*disks*/          [],
-  //   /*epoch*/          "",
-  //   /*groups*/         [],
-  //   /*hostname*/       "",
-  //   /*icon*/           "pi pi-server",
-  //   /*lastUpdate*/     "",
-  //   /*local*/          "",
-  //   /*logavail*/       "",
-  //   /*logpercent*/     "",
-  //   /*logtotal*/       "",
-  //   /*logused*/        "",
-  //   /*memory*/         {},
-  //   /*nodemanagers*/   [],
-  //   /*opsavail*/       "",
-  //   /*opspercent*/     "",
-  //   /*opstotal*/       "",
-  //   /*opsused*/        "",
-  //   /*os*/             "",
-  //   /*osversion*/      "",
-  //   /*processinfo*/    [],
-  //   /*status*/         "red",
-  //   /*subagent*/       [],
-  //   /*tmpavail*/       "",
-  //   /*tmppercent*/     "",
-  //   /*tmptotal*/       "",
-  //   /*tmpused*/        "",
-  //   /*type*/           "",
-  //   /*uptime*/         ""
-  // ); 
   
   server: Server = new Server();
   
@@ -82,10 +48,8 @@ export class ServerComponent implements OnInit, OnDestroy {
 
   host = "";
 
-  //paramSubscription: Subscription;constructor
   constructor(
     private route: ActivatedRoute, 
-    //private http: HttpClient,
     public serverService: ServerService
   ) {
 
@@ -170,23 +134,6 @@ export class ServerComponent implements OnInit, OnDestroy {
     this.processCols = [
       { field: 'processor', header: 'Process' }
     ];
-
-    // this.route.data
-    //   .subscribe(
-    //     (data: Data) => {
-    //       this.server = data['server'];
-    //     }
-    //   );
-
-    //  this.host = this.route.snapshot.params['server'];
-
-    // this.route.params
-    //   .subscribe(
-    //     (params: Params) => {
-    //       this.host = params['server'];
-    //       this.server = this.serverService.getServer(params['server']);
-    //     }
-    //   );
   }
 
   ngOnDestroy() {
@@ -481,8 +428,9 @@ export class ServerComponent implements OnInit, OnDestroy {
     return myStatus;
   }
 
+  //TODO Remove this
   onServer(myHost:any) {
-    console.log('--- onServer ---');
+    console.log('--- TODO Remove this - onServer ---');
     // console.log(myHost);
     // myHost.status = this.roleUpHostStatus(myHost);
     // this.host=myHost

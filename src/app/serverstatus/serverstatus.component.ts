@@ -135,7 +135,7 @@ export class ServerstatusComponent {
       
     this.datePipe = new DatePipe('en-US');
 
-    this.messageService.add({severity:'info', summary:  host.hostname, detail: 'Setting Host - ' + host.hostname + ' to Up'});
+    this.messageService.add({severity:'success', summary:  host.hostname, detail: 'Setting Host - ' + host.hostname + ' to Up'});
 
   }
 
@@ -146,13 +146,13 @@ export class ServerstatusComponent {
     host.lastUpdate   = this.serverService.getStatusDate(host.epoch);
     this.serverService.rollupGroup(this.serverService.group);
 
-    this.messageService.add({severity:'info', summary:  host.hostname, detail: 'Setting Host - ' + host.hostname + ' to down'});
+    this.messageService.add({severity:'error', summary:  host.hostname, detail: 'Setting Host - ' + host.hostname + ' to down'});
   }
 
   deleteHost(group:any, hostname:string) {
     console.log("--- deleteHost --- " + hostname);
     this.serverService.deleteHost(group, hostname);
-    this.messageService.add({severity:'success', summary: 'Success', detail: 'Deleted Host - ' + hostname});
+    this.messageService.add({severity:'info', summary: 'Delete Host', detail: 'Deleted Host - ' + hostname});
   }
 
   cpuInfo() {
