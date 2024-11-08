@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Server } from "./server.module";
+import { Server } from "../../modules/server.module";
 import { DatePipe } from '@angular/common';
 
 import { Injectable } from '@angular/core';
@@ -113,7 +113,7 @@ export class ServerService {
                 }
 
             if ( this.hosts.includes(serverData[host].hostname) ) {
-                this.loadedServers[serverData[host].hostname].hostName = serverData[host].hostname;
+                this.loadedServers[serverData[host].hostname].hostname = serverData[host].hostname;
                 this.loadedServers[serverData[host].hostname].epoch = serverData[host].epoch;
                 this.loadedServers[serverData[host].hostname].lastUpdate = serverData[host].lastupdate;
                 this.loadedServers[serverData[host].hostname].uptime = (Number(Number(serverData[host].uptime)/3600)).toFixed(3);
@@ -236,7 +236,7 @@ export class ServerService {
     addServer(server: Server) {
         // console.log("--------- ServerService addServer ---------");
         // console.log(server);
-        this.servers[server.hostName] = server;
+        this.servers[server.hostname] = server;
     }
 
     getServers() {
