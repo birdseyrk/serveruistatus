@@ -41,6 +41,8 @@ export class ServerService {
 
     private numbers = interval(60000); //one minute
     private takeFourNumbers = this.numbers.pipe();
+
+    public httpError = null;
     
     constructor(
         private http: HttpClient

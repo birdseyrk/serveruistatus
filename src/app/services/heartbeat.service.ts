@@ -59,21 +59,13 @@ export class HeartbeatService {
     
     //console.log("--------- ServerService getStatus --------- " + this.uptimeUrl + " " + myDate.getFullYear() + "-" + pad(myDate.getMonth() + 1) + "-" + pad(myDate.getDate()) + ":" + pad(myDate.getHours()) + ":" + pad(myDate.getMinutes()) + ":" + pad(myDate.getSeconds()));
    
-    //console.log("*** TODO Remove return ***");
-    
-    //this.serverService.checkStatus(); // #####   remove this ####
-
-    //return;   // #####   remove this ####
-
-    //will have to get working when I get the http workiing
-
     this.serverService.hosts = []; //TODO we do not want to set this to blank and we do not want to add the same host twice.
     this.serverService.status = [];
     this.http
-      .get(this.hostStatusUrl)
+      .get<Server>(this.hostStatusUrl)
       .pipe(
-        map(responseData => {
-          const postsArray = [];
+        map( responseData => {
+          const postsArray: Server[] = [];
 
           // console.log("--- responseData ---");
           // console.log(responseData)
@@ -86,14 +78,10 @@ export class HeartbeatService {
           // console.log("--------- ServerService getStatus postsArray --------- ");
           // console.log(postsArray);
           return postsArray;
-        },
-      error => {
-        console.log('rsponse error');
-        console.log(error.message);
-      })
+        })
       )
       .subscribe(serverData => {
-        
+        this.serverService.httpError = null;
         // console.log("--------- ServerService subscribe serverData ---------");
         // console.log(serverData);
 
@@ -107,19 +95,24 @@ export class HeartbeatService {
               //TODO need to figure this out and then remove this
               if ((serverData[host].hostname === 'creede') || (serverData[host].hostname === 'creede02') || (serverData[host].hostname === 'creede03')) {
                 serverData[host].type = "Server";
-                myIcon = "pi pi-server";
+                serverData[host].icon = "pi pi-server";
+                //myIcon = "pi pi-server";
               } else if (serverData[host].hostname === 'ansible-master') {
                 serverData[host].type = "Cloud"
-                myIcon = "pi pi-cloud";
+                serverData[host].icon = "pi pi-cloud";
+                //myIcon = "pi pi-cloud";
               } else if (serverData[host].hostname.substring(0,11) === 'ubuntu-node') {
                 serverData[host].type = "Cloud"
-                myIcon = "pi pi-cloud";
+                serverData[host].icon = "pi pi-cloud";
+                //myIcon = "pi pi-cloud";
               } else if (serverData[host].hostname.substring(0,3) === '172') {
                 serverData[host].type = "Cloud"
-                myIcon = "pi pi-cloud";
+                serverData[host].icon = "pi pi-cloud";
+                //myIcon = "pi pi-cloud";
               } else {
                 serverData[host].type = "Laptop"
-                myIcon = "pi pi-briefcase";
+                serverData[host].icon = "pi pi-briefcase";
+                //myIcon = "pi pi-briefcase";
               }
 
               // console.log("host " + serverData[host].hostname + " type " + serverData[host].type + " icon " + myIcon);
@@ -136,48 +129,56 @@ export class HeartbeatService {
           } else {
             // console.log("does not includes - " + serverData[host].hostname);
             
-            const myServer = new Server();
+            // const myServer = new Server();
 
-            myServer.cpuinfo      = serverData[host];
-            myServer.checksum     = serverData[host].checksum;
-            myServer.cpuinfo      = serverData[host].cpuinfo;
-            myServer.disks        = [];  //Set in translate
-            myServer.epoch        = serverData[host].epoch;
-            myServer.groups       = serverData[host].groups;
-            myServer.hostname     = serverData[host].hostname;
-            myServer.icon         = myIcon;
-            myServer.lastUpdate   = this.serverService.getStatusDate(myServer.epoch);
-            myServer.local        = serverData[host].local;
-            myServer.logavail     = serverData[host].logavail;
-            myServer.logpercent   = serverData[host].logpercent;
-            myServer.logtotal     = serverData[host].logtotal;
-            myServer.logused      = serverData[host].logused;
-            myServer.memory       = serverData[host].memory;
-            myServer.nodemanagers = serverData[host].nodemanagers;
-            myServer.opsavail     = serverData[host].opsavail;
-            myServer.opspercent   = serverData[host].opspercent;
-            myServer.opstotal     = serverData[host].opstotal;
-            myServer.opsused      = serverData[host].opsused;
-            myServer.os           = serverData[host].os;
-            myServer.osversion    = serverData[host].osversion;
-            myServer.processinfo  = serverData[host].processinfo;
-            myServer.status       = "";
-            myServer.subagent     = serverData[host].subagent;
-            myServer.tmpavail     = serverData[host].tmpavail;
-            myServer.tmppercent   = serverData[host].tmppercent;
-            myServer.tmptotal     = serverData[host].tmptotal;
-            myServer.tmpused      = serverData[host].tmpused;
-            myServer.type         = serverData[host].type;
-            myServer.uptime       = serverData[host].uptime;
-            this.serverService.getHostUptime(myServer);
+            // myServer.cpuinfo      = serverData[host];
+            // myServer.checksum     = serverData[host].checksum;
+            // myServer.cpuinfo      = serverData[host].cpuinfo;
+            // myServer.disks        = [];  //Set in translate
+            // myServer.epoch        = serverData[host].epoch;
+            // myServer.groups       = serverData[host].groups;
+            // myServer.hostname     = serverData[host].hostname;
+            // myServer.icon         = myIcon;
+            // myServer.lastUpdate   = this.serverService.getStatusDate(myServer.epoch);
+            // myServer.local        = serverData[host].local;
+            // myServer.logavail     = serverData[host].logavail;
+            // myServer.logpercent   = serverData[host].logpercent;
+            // myServer.logtotal     = serverData[host].logtotal;
+            // myServer.logused      = serverData[host].logused;
+            // myServer.memory       = serverData[host].memory;
+            // myServer.nodemanagers = serverData[host].nodemanagers;
+            // myServer.opsavail     = serverData[host].opsavail;
+            // myServer.opspercent   = serverData[host].opspercent;
+            // myServer.opstotal     = serverData[host].opstotal;
+            // myServer.opsused      = serverData[host].opsused;
+            // myServer.os           = serverData[host].os;
+            // myServer.osversion    = serverData[host].osversion;
+            // myServer.processinfo  = serverData[host].processinfo;
+            // myServer.status       = "";
+            // myServer.subagent     = serverData[host].subagent;
+            // myServer.tmpavail     = serverData[host].tmpavail;
+            // myServer.tmppercent   = serverData[host].tmppercent;
+            // myServer.tmptotal     = serverData[host].tmptotal;
+            // myServer.tmpused      = serverData[host].tmpused;
+            // myServer.type         = serverData[host].type;
+            // myServer.uptime       = serverData[host].uptime;
+            // this.serverService.getHostUptime(myServer);
 
-            this.serverService.hosts.push(myServer.hostname);
-            this.serverService.status.push(myServer);
+            // this.serverService.hosts.push(myServer.hostname);
+            // this.serverService.status.push(myServer);
+
+            
+            
+            serverData[host].lastUpdate   = this.serverService.getStatusDate(serverData[host].epoch);
+            this.serverService.getHostUptime(serverData[host]);
+            this.serverService.hosts.push(serverData[host].hostname);
 
             // console.log("host " + myServer.hostname + " type " + myServer.type + " icon " + myServer.icon);
           }
 
         }
+        
+        this.serverService.status = serverData;
         
         this.serverService.hosts = this.serverService.hosts.sort();
         // console.log("this.serverService.hosts Sorted");
@@ -213,6 +214,11 @@ export class HeartbeatService {
    
        console.log("===================================== info end =====================================");
       
+      }, error => {
+        console.log("*** get Error ****");
+        this.serverService.httpError = error;
+        console.log(error);
+        console.log(this.serverService.httpError);
       });
   }
   

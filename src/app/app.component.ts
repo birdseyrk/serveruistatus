@@ -12,13 +12,19 @@ import { HeartbeatService } from './services/heartbeat.service';
 export class AppComponent {
   constructor(
     private heartbeatService: HeartbeatService,
-    private serverService: ServerService,
+    public serverService: ServerService,
     private messageService: MessageService
-    ) { }
+  ) { }
 
+  myError = null;
   ngOnInit() {
     console.log('******** AppComponent ********');
     this.heartbeatService.getStatus();
     this.heartbeatService.startStatusTimer();
+    console.log("error 1 ["+ this.myError + "]");
+    this.myError = this.serverService.httpError;
+    console.log("error 2 ["+ this.myError + "]");
   }
+
+ 
 }

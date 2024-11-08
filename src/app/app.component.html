@@ -1,34 +1,41 @@
 
 <div style="padding-left: 20px;">
-  <div class="container-fluid p-0" >
-      <div class="row no-gutters">
-        <div class="col-xs-12 col-sm-10 col-md-8">
-          <ul class="nav nav-tabs">
+  <div class="container-fluid p-0"  *ngIf="!serverService.httpError">
+    <div class="row no-gutters">
+      <div class="col-xs-12 col-sm-10 col-md-8">
+        <ul class="nav nav-tabs">
   
-            <li role="presentation"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: true}">
-              <a routerLink="/servers">Servers</a>
-            </li>
+          <li role="presentation"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">
+            <a routerLink="/servers">Servers</a>
+          </li>
          
-            <li role="presentation"
-                routerLinkActive="active">
-              <a [routerLink]="['/server']">Server</a>
-            </li>
+          <li role="presentation"
+              routerLinkActive="active">
+            <a [routerLink]="['/server']">Server</a>
+          </li>
 
-            <li role="presentation"
-                routerLinkActive="active">
-              <a routerLink="/serverstatus">Status</a>
-            </li>
+          <li role="presentation"
+              routerLinkActive="active">
+            <a routerLink="/serverstatus">Status</a>
+          </li>
 
-          </ul>
-        </div>
+        </ul>
       </div>
+    </div>
 
-      <div class="row no-gutters">
-        <div class="col-xs-12 col-sm-10 col-md-8">
-          <router-outlet></router-outlet>
-        </div>
+    <div class="row no-gutters">
+      <div class="col-xs-12 col-sm-10 col-md-8">
+        <router-outlet></router-outlet>
       </div>
+    </div>
   </div>
+  <!-- <div *ngIf="serverService.httpError">
+    <h1>Error: {{serverService.httpError.statusText}}</h1>
+    <p>Error: {{serverService.httpError.message}}</p>
+  </div> -->
+  <div *ngIf="serverService.httpError">
+    <app-error-page></app-error-page>
   </div>
+</div>
