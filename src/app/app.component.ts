@@ -21,8 +21,8 @@ export class AppComponent {
     console.log('******** AppComponent ********');
     this.heartbeatService.getStatus();
     this.heartbeatService.startStatusTimer();
-    console.log('error 1 [' + this.myError + ']');
+    // console.log('error 1 [' + this.myError + ']');
     this.myError = this.serverService.httpError;
-    console.log('error 2 [' + this.myError + ']');
+    // console.log('error 2 [' + this.myError + ']');
   }
 }

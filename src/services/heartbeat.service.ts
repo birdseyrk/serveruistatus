@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 import { interval, Subscription, take } from 'rxjs'; // throws something every second or what you define
-import { Server } from '../app/modules/server.module';
+import { Server } from '../modules/server.module';
 import { ServerService } from './server.service';
 
 @Injectable({
@@ -72,7 +72,7 @@ export class HeartbeatService {
           const postsArray: Server[] = [];
 
           // console.log("--- responseData ---");
-          // console.log(responseData)
+          // console.log(responseData);
 
           for (const key in responseData) {
             if (responseData.hasOwnProperty(key)) {
@@ -140,6 +140,7 @@ export class HeartbeatService {
 
               // console.log("host " + myServer.hostname + " type " + myServer.type + " icon " + myServer.icon);
             }
+
           }
 
           this.serverService.status = serverData;
@@ -154,8 +155,7 @@ export class HeartbeatService {
             this.serverService.status
           );
 
-          this.serverService.translateToGroups(this.serverService.status);
-
+          //TODO remove this.serverService.translateToGroups(this.serverService.status);
           //Need to roll up the displayed group
           this.serverService.rollupGroup(this.serverService.group);
 

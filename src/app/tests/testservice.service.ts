@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Server } from '../modules/server.module';
+import { Server } from '../../modules/server.module';
 import { ServerService } from '../../services/server.service';
 
 @Injectable({

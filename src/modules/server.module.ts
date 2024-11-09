@@ -1,6 +1,18 @@
+// import { NgModule, Inject } from '@angular/core';
+// import { CommonModule } from '@angular/common';
+
+// @NgModule({
+//   declarations: [],
+//   imports: [
+//     CommonModule
+//   ]
+// })
+
 export class Server {
+
   public checksum: string = '';
   public cpuinfo: any = [];
+  //public cpuinfo: string = '';
   public disks: any = [];
   public epoch: string = '';
   public groups: any = [];
@@ -29,84 +41,86 @@ export class Server {
   public tmpused: string = '';
   public type: string = '';
   public uptime: string = '0.000';
+  public uptimeLabel: string ="xxx";
 
   constructor(
-    checksum: string,
-    cpuinfo: any,
-    disks: any,
-    epoch: string,
-    groups: any,
-    hostname: string,
-    icon: string,
-    lastUpdate: string,
-    local: string,
-    logavail: string,
-    logpercent: string,
-    logtotal: string,
-    logused: string,
-    memory: any,
-    nodemanagers: any,
-    opsavail: string,
-    opspercent: string,
-    opstotal: string,
-    opsused: string,
-    os: string,
-    osversion: string,
-    processinfo: any,
-    status: string,
-    subagent: any,
-    tmpavail: string,
-    tmppercent: string,
-    tmptotal: string,
-    tmpused: string,
-    type: string,
-    uptime: string
+    // checksum: string,
+    // cpuinfo: any,
+    // disks: any,
+    // epoch: string,
+    // groups: any,
+    // hostname: string,
+    // icon: string,
+    // lastUpdate: string,
+    // local: string,
+    // logavail: string,
+    // logpercent: string,
+    // logtotal: string,
+    // logused: string,
+    // memory: any,
+    // nodemanagers: any,
+    // opsavail: string,
+    // opspercent: string,
+    // opstotal: string,
+    // opsused: string,
+    // os: string,
+    // osversion: string,
+    // processinfo: any,
+    // status: string,
+    // subagent: any,
+    // tmpavail: string,
+    // tmppercent: string,
+    // tmptotal: string,
+    // tmpused: string,
+    // type: string,
+    // uptime: string,
+    // uptimeLabel: string
   ) {
-    this.checksum = checksum;
-    this.cpuinfo = cpuinfo;
-    this.disks = disks;
-    this.epoch = epoch;
-    this.groups = groups;
-    this.hostname = hostname;
-    this.icon = icon;
-    this.lastUpdate = lastUpdate;
-    this.local = local;
-    this.logavail = logavail;
-    this.logpercent = logpercent;
-    this.logtotal = logtotal;
-    this.logused = logused;
-    this.memory = memory;
-    this.nodemanagers = nodemanagers;
-    this.opsavail = opsavail;
-    this.opspercent = opspercent;
-    this.opstotal = opstotal;
-    this.opsused = opsused;
-    this.os = os;
-    this.osversion = osversion;
-    this.processinfo = processinfo;
-    this.status = status;
-    this.subagent = subagent;
-    this.tmpavail = tmpavail;
-    this.tmppercent = tmppercent;
-    this.tmptotal = tmptotal;
-    this.tmpused = tmpused;
-    this.type = type;
-    this.uptime = uptime;
+    // this.checksum = checksum;
+    // this.cpuinfo = cpuinfo;
+    // this.disks = disks;
+    // this.epoch = epoch;
+    // this.groups = groups;
+    // this.hostname = hostname;
+    // this.icon = icon;
+    // this.lastUpdate = lastUpdate;
+    // this.local = local;
+    // this.logavail = logavail;
+    // this.logpercent = logpercent;
+    // this.logtotal = logtotal;
+    // this.logused = logused;
+    // this.memory = memory;
+    // this.nodemanagers = nodemanagers;
+    // this.opsavail = opsavail;
+    // this.opspercent = opspercent;
+    // this.opstotal = opstotal;
+    // this.opsused = opsused;
+    // this.os = os;
+    // this.osversion = osversion;
+    // this.processinfo = processinfo;
+    // this.status = status;
+    // this.subagent = subagent;
+    // this.tmpavail = tmpavail;
+    // this.tmppercent = tmppercent;
+    // this.tmptotal = tmptotal;
+    // this.tmpused = tmpused;
+    // this.type = type;
+    // this.uptime = uptime;
 
     //this.logServerModule();
   }
 
-  sethostname(hostname: string) {
-    this.hostname = hostname;
-  }
+  // sethostname(hostname: string) {
+  //   this.hostname = hostname;
+  // }
 
-  setIcon(icon: string) {
-    this.icon = icon;
-  }
+  // setIcon(icon: string) {
+  //   this.icon = icon;
+  // }
 
-  setstatus(status: string) {
-    this.status = status;
-  }
+  // setstatus(status: string) {
+  //   this.status = status;
+  // }
 
   logServerModule() {
     console.log('--------- Server Module Log Server ---------');

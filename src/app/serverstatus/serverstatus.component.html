@@ -1,5 +1,5 @@
 <p-toast [life]="6000" position="top-right"></p-toast>
-<h4>Status</h4>
+<h4>Group Status</h4>
 
 <div class="flex flex-row flex-wrap max-w-220rem">
   <div class="flex flex-column col" *ngFor="let group of serverService.groups">
@@ -390,12 +390,52 @@
 </div>
 
 <p-sidebar
-  [(visible)]="showInfo"
+  [(visible)]="showProcessInfo"
   styleClass="p-sidebar-sm"
   position="right"
   [style]="{ width: '30em' }"
   [baseZIndex]="10000"
 >
-  <h1 style="font-weight: normal">{{ displaySideCarHeader }}</h1>
-  <p>{{ displaySideCarInfo }}</p>
+  <h3 class="flex  align-items-center justify-content-center font-normal">{{ displayProcessesHeader }}</h3>
+
+  <p-table [value]="displayProcessesInfo"  [autoLayout]="true">
+    <ng-template pTemplate="header">
+        <tr padding="3px">
+            <th width="100px"><div class="flex  align-items-center justify-content-center" >Processes</div></th>
+        </tr>
+    </ng-template>
+    <ng-template  pTemplate="body" let-process >
+        <tr padding="3px" >
+            <td width="100px"><div class="flex align-items-center" >{{process.data}}</div></td>
+        </tr>
+    </ng-template>
+</p-table>
+</p-sidebar>
+
+<p-sidebar
+  [(visible)]="showCPUInfo"
+  styleClass="p-sidebar-sm"
+  position="right"
+  [style]="{ width: '30em' }"
+  [baseZIndex]="10000"
+>
+
+  <h3 class="flex  align-items-center justify-content-center font-normal" >{{ displayCPUHeader }}</h3>
+
+  
+        <p-table [value]="displayCPUInfo"  [autoLayout]="true">
+            <ng-template pTemplate="header">
+                <tr padding="3px">
+                    <th width="55px"><div class="flex  align-items-center justify-content-center" >Key</div></th>
+                    <th width="60px"><div class="flex  align-items-center justify-content-center" >Value</div></th>
+                </tr>
+            </ng-template>
+            <ng-template  pTemplate="body" let-cpu >
+                <tr padding="3px" >
+                    <td width="55px"><div class="flex {{cpu.color}} {{cpu.font}} {{cpu.height}}" >{{cpu.key}}</div></td>
+                    <td width="60px"><div class="flex {{cpu.color}} {{cpu.font}} {{cpu.height}} {{cpu.align}}">{{cpu.value}}</div></td>
+                </tr>
+            </ng-template>
+        </p-table>
+
 </p-sidebar>

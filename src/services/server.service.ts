@@ -1,7 +1,7 @@
 import { Injectable, Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Server } from '../app/modules/server.module';
+import { Server } from '../modules/server.module';
 import { DatePipe } from '@angular/common';
 
 import { interval, Subscription, take } from 'rxjs'; // throws something every second or what you define

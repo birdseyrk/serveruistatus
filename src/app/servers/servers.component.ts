@@ -11,7 +11,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { ServerService } from '../../services/server.service';
 import { TestserviceService } from '../tests/testservice.service';
-import { Server } from '../modules/server.module';
+import { Server } from '../../modules/server.module';
 
 @Component({
   selector: 'app-servers',

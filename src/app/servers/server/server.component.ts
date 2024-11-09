@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Data } from '@angular/router';
 import { SortEvent } from 'primeng/api';
 
 import { ServerService } from '../../../services/server.service';
-import { Server } from '../../modules/server.module';
+import { Server } from '../../../modules/server.module';
 
 @Component({
   selector: 'app-server',
@@ -233,7 +233,7 @@ export class ServerComponent implements OnInit, OnDestroy {
   }
 
   getCPUInfo() {
-    //console.log("---------- ServerComponent - getCPUInfo [" + this.host + "] ----------");
+    console.log("---------- ServerComponent - getCPUInfo [" + this.host + "] ----------");
     if (typeof this.host !== 'undefined' && this.host.length > 1) {
       this.cpuInfo = this.serverService.getCPUInfo(this.host);
 
@@ -244,7 +244,7 @@ export class ServerComponent implements OnInit, OnDestroy {
       this.osInfoAvailable = false;
       this.processInfoAvailable = false;
 
-      // console.log(this.cpuInfo);
+      console.log(this.cpuInfo);
     }
   }
 

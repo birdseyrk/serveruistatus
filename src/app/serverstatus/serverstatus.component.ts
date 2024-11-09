@@ -6,7 +6,7 @@ import { MenuItem } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 
 import { ServerService } from '../../services/server.service';
-import { Server } from '../modules/server.module';
+import { Server } from '../../modules/server.module';
 
 import { interval, Subscription, take } from 'rxjs'; // throws something every second or what you define
 
@@ -31,9 +31,13 @@ export class ServerstatusComponent {
   status: any = [];
   menuItems: MenuItem[] = [];
 
-  showInfo: boolean = false;
-  displaySideCarInfo: string = '';
-  displaySideCarHeader: string = '';
+  showProcessInfo: boolean = false;
+  displayProcessesInfo: any[] = [];
+  displayProcessesHeader: string = '';
+
+  showCPUInfo: boolean = false;
+  displayCPUHeader: string = '';
+  displayCPUInfo: any[] = [];
 
   dataReady = false;
 
@@ -113,18 +117,70 @@ export class ServerstatusComponent {
     });
   }
 
+  // translateCPU(data:any): string[] {
+
+  //   let myString:string[] = [];
+
+  //   for (let i = 0; i < data.length; i++) {
+  //     if (data[i].substring(0,9) === "processor") {
+  //       myString.push("---------------------------------------------------------------------");
+  //     }
+  //     myString.push(data[i]); 
+  //     //console.log(data[i].split(":"))
+  //   }
+  //   return myString;
+  // }
+
+  translateCPU(data:any): string[] {
+
+    let myObjects:any[] = [];
+
+    for (let i = 0; i < data.length; i++) {
+      let mySplit:string[] = data[i].split(":");
+      let myObject = {"key":mySplit[0], "value":mySplit[1],"color":"", "font":"", "height":"", "align":"align-items-center"};
+      
+      if (data[i].substring(0,9) === "processor") {
+        myObject.color = "bg-blue-300";
+        myObject.font  = "font-semibold";
+        myObject.height  = "h-2rem";
+        myObject.align  = "align-items-center justify-content-center";
+      }
+      //console.log(myObject);
+      myObjects.push(myObject); 
+    }
+    return myObjects;
+  }
+
   cpuInfo() {
     console.log('--- cpuInfo ---');
-    this.showInfo = true;
-    this.displaySideCarHeader = 'CPU Information';
-    this.displaySideCarInfo = this.serverService.groupHost.cpuinfo;
+    this.showProcessInfo = false;
+    this.showCPUInfo = true;
+    this.displayCPUHeader = 'CPU Information';
+    //this.displayProcessesInfo =  this.translateCPU(this.serverService.groupHost.cpuinfo);
+    this.displayCPUInfo =  this.translateCPU(this.serverService.groupHost.cpuinfo);
+    console.log(this.displayProcessesInfo);
+  }
+
+
+  translateProcesses(data:any): string[] {
+
+    let myObjects:any[] = [];
+
+    for (let i = 0; i < data.length; i++) {
+      let myObject = {"data":data[i]};
+      console.log(myObject);
+      myObjects.push(myObject); 
+    }
+    return myObjects;
   }
 
   processInfo() {
     console.log('--- processInfo ---');
-    this.showInfo = true;
-    this.displaySideCarHeader = 'Process Information';
-    this.displaySideCarInfo = this.serverService.groupHost.processinfo;
+    this.showCPUInfo = false;
+    this.showProcessInfo = true;
+    this.displayProcessesHeader = 'Process Information';
+    this.displayProcessesInfo = this.translateProcesses(this.serverService.groupHost.processinfo);
+    console.log(this.serverService.groupHost.processinfo);
   }
 
   onLogin() {
