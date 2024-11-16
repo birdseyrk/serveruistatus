@@ -58,6 +58,7 @@ export class ServersComponent implements OnInit {
   }
 
   onRowSelect(event: any) {
+    console.log('--- onRowSelect ---');
     console.log(this.selectedServer);
     this.router.navigate(['/server', this.selectedServer.hostname]);
   }

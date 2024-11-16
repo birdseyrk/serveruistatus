@@ -45,7 +45,7 @@
         <td>
           <i
             class="{{ host.icon }}"
-            style="font-size: 1rem; color:{{ host.status }}"
+            style="font-size: 1.2rem; color:{{ host.status }}"
           ></i>
         </td>
         <td>{{ host.hostname }}</td>
@@ -61,7 +61,7 @@
     <button
       pButton
       type="button"
-      class="flex h-2rem p-button-sm text-sm"
+      class="flex h-2rem p-button-sm text-sm bg-blue-300"
       pButton
       type="button"
       (click)="getStatus()"
@@ -74,7 +74,7 @@
     <button
       pButton
       type="button"
-      class="flex h-2rem p-button-sm text-sm p-button-warning"
+      class="flex h-2rem p-button-sm text-sm bg-red-300"
       pButton
       type="button"
       (click)="deleteStatus()"
@@ -87,7 +87,7 @@
     <button
       pButton
       type="button"
-      class="flex h-2rem p-button-sm text-sm"
+      class="flex h-2rem p-button-sm text-sm bg-blue-300"
       pButton
       type="button"
       (click)="set100Hosts()"
@@ -99,7 +99,7 @@
       <button
         pButton
         type="button"
-        class="flex h-2rem p-button-sm text-sm"
+        class="flex h-2rem p-button-sm text-sm bg-blue-300"
         pButton
         type="button"
         (click)="setTestStatus()"
@@ -112,7 +112,7 @@
       <button
         pButton
         type="button"
-        class="flex h-2rem p-button-sm text-sm"
+        class="flex h-2rem p-button-sm text-sm bg-blue-300"
         pButton
         type="button"
         (click)="setHostStatus('ubuntu-node01')"

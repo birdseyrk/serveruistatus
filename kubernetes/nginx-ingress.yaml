@@ -180,29 +180,29 @@ spec:
               name: serverstatus-service
               port:
                 number: 30850
-    - host: my.fruits.com
-    - http:
-        paths:
-          - path: /apple
-          #   pathType: Prefix
-          # - path: /(/|$)(.*)
-          #   pathType: ImplementationSpecific
-          # - path: /(.*)  #half way works with IP address if /$1 or $2 is above
-            pathType: Prefix
-            #pathType: ImplementationSpecific
-            backend:
-              service:
-                name: apple-service
-                port:
-                  number: 5678 
-              #serviceName: apple-service
-              #servicePort: 5678
-          - path: /banana
-            pathType: Prefix
-            backend:
-              service:
-                name: banana-service
-                port:
-                  number: 5678 
-              #serviceName: banana-service
-              #servicePort: 5678
+    # - host: my.fruits.com
+    # - http:
+    #     paths:
+    #       - path: /apple
+    #       #   pathType: Prefix
+    #       # - path: /(/|$)(.*)
+    #       #   pathType: ImplementationSpecific
+    #       # - path: /(.*)  #half way works with IP address if /$1 or $2 is above
+    #         pathType: Prefix
+    #         #pathType: ImplementationSpecific
+    #         backend:
+    #           service:
+    #             name: apple-service
+    #             port:
+    #               number: 5678 
+    #           #serviceName: apple-service
+    #           #servicePort: 5678
+    #       - path: /banana
+    #         pathType: Prefix
+    #         backend:
+    #           service:
+    #             name: banana-service
+    #             port:
+    #               number: 5678 
+    #           #serviceName: banana-service
+    #           #servicePort: 5678
